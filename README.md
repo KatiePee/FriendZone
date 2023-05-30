@@ -1,0 +1,1 @@
+This is the Read Me for Fakebook. In this Repo we can share all of our planning work. Please add a new file with your plan contributions.
