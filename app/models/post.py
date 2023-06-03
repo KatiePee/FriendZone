@@ -15,7 +15,7 @@ class Post(db.Model):
 
     user = db.relationship('User', back_populates='posts')
     # user_likes = db.relationship('User', secondary="user_likes", back_populates="likes")
-    # post_images = db.relationship('PostImage', back_populates='post')
+    post_images = db.relationship('PostImage', back_populates='post')
 
     def to_dict(self):
         return {
