@@ -13,6 +13,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(50), nullable = False)
+    last_name = db.Column(db.String(50), nullable = False)
+    profile_picture_url = db.Column(db.String(255), nullable = False)
+    cover_photo_url = db.Column(db.String(255), nullable = False)
+    date_of_birth = db.Column(db.Date, nullable = False)
+    gender = db.Column(db.String, nullable = False)
+    age = db.Column(db.Integer, nullable = False)
+    created_at = db.Column(db.TIMESTAMP)
+    # should created at be string formate and we can do all the date manipulation on the font end?
+    # we need to be consistent with what were putting into the db
+    # posts = db.relationship('Post', back_popultes='user')
+    # friendships = db.relationship('Friendship', back_populates='user')
+    # likes = db.relationship('Post', secondary="user_likes",  back_populates="user_likes")
+
+    # comments = db.relationship('Comment', back_populates='user')
 
     @property
     def password(self):
@@ -27,7 +42,16 @@ class User(db.Model, UserMixin):
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "firstName": self.first_name,
+            "lastName": self.last_name,
+            "profilePicURL": self.profile_picture_url,
+            "coverPhotoURL": self.cover_photo_url,
+            "gender": self.gender,
+            "age": self.age,
+            "createdAt": self.created_at # TODO: maybe convert to string here?
+       }
+    
+    
