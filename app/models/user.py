@@ -24,10 +24,10 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     # should created at be string formate and we can do all the date manipulation on the font end?
     # we need to be consistent with what were putting into the db
-    # posts = db.relationship('Post', back_popultes='user')
-    # friendships = db.relationship('Friendship', back_populates='user')
-    # likes = db.relationship('Post', secondary="user_likes",  back_populates="user_likes")
+    posts = db.relationship('Post', back_populates='user')
+    likes = db.relationship('Post', secondary="likes",  back_populates="likes")
 
+    # friendships = db.relationship('Friendship', back_populates='user')
     # comments = db.relationship('Comment', back_populates='user')
 
     @property
