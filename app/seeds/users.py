@@ -1,19 +1,31 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
+from datetime import datetime
 
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        username='Demo', 
+        email='demo@aa.io', 
+        password='password',
+        first_name = 'Demoyshia',
+        last_name = 'Userea',
+        profile_picture_url = 'https://marketplace.canva.com/EAE_4-ugJng/1/0/1600w/canva-blue-yellow-simple-professional-instagram-profile-picture-kpwvs_syWG8.jpg',
+        cover_photo_url = 'https://cdn.discordapp.com/attachments/1114339565491200170/1114339683044954172/1667592397009.png',
+        date_of_birth = datetime.strptime('01/01/86', '%m/%d/%y'),
+        gender = 'Female',
+        age = 36,
+        )
+    
+    # marnie = User(
+    #     username='marnie', email='marnie@aa.io', password='password')
+    # bobbie = User(
+    #     username='bobbie', email='bobbie@aa.io', password='password')
 
     db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    # db.session.add(marnie)
+    # db.session.add(bobbie)
     db.session.commit()
 
 
