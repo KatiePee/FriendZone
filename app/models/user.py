@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 
 class User(db.Model, UserMixin):
@@ -20,7 +21,7 @@ class User(db.Model, UserMixin):
     date_of_birth = db.Column(db.Date, nullable = False)
     gender = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer, nullable = False)
-    created_at = db.Column(db.TIMESTAMP)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
     # should created at be string formate and we can do all the date manipulation on the font end?
     # we need to be consistent with what were putting into the db
     # posts = db.relationship('Post', back_popultes='user')
@@ -53,5 +54,3 @@ class User(db.Model, UserMixin):
             "age": self.age,
             "createdAt": self.created_at # TODO: maybe convert to string here?
        }
-    
-    
