@@ -14,7 +14,7 @@ friendships = db.Table(
         db.ForeignKey(add_prefix_for_prod("users.id")),
         primary_key=True
     ),
-    # db.UniqueContrainst("userA_id", "userB_id")
+    db.UniqueConstraint("userA_id", "userB_id")
 )
 
 if environment == "production":
