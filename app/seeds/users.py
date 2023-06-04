@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
+    user1 = User(
         username='Demo',
         email='demo@aa.io',
         password='password',
@@ -18,7 +18,7 @@ def seed_users():
         age=36,
         )
 
-    marnie = User(
+    user2 = User(
         username='marnie',
         email='marnie@aa.io',
         password='password',
@@ -31,7 +31,7 @@ def seed_users():
         age=27
         )
 
-    bobbie = User(
+    user3 = User(
         username='bobbie',
         email='bobbie@aa.io',
         password='password',
@@ -44,7 +44,7 @@ def seed_users():
         age=27
         )
 
-    adanna = User(
+    user4 = User(
         username = 'adanna.liu',
         email = 'adanna.c.liu@gmail.com',
         password = 'adanna',
@@ -57,7 +57,7 @@ def seed_users():
         age = '24'
     )
 
-    albert = User(
+    user5 = User(
         username = 'trebs',
         email = 'Alberthsk115@gmail.com',
         password = 'albert',
@@ -70,7 +70,7 @@ def seed_users():
         age = '27'
     )
 
-    katie = User(
+    user6 = User(
         username = 'KatiePee',
         email = 'katie@gmail.com',
         password = 'katie',
@@ -84,7 +84,7 @@ def seed_users():
     )
 
 
-    pj = User(
+    user7 = User(
         username = 'pjsingh22',
         email = 'pjsingh1359@gmail.com',
         password = 'password',
@@ -97,7 +97,7 @@ def seed_users():
         age = '27'
     )
 
-    lord_keegan = User(
+    user8 = User(
         username = 'LordKeegan',
         email = 'lordkeegan@gmail.com',
         password = 'password',
@@ -110,16 +110,8 @@ def seed_users():
         age = '33'
     )
 
-
-
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
-    db.session.add(adanna)
-    db.session.add(katie)
-    db.session.add(pj)
-    db.session.add(albert)
-    db.session.add(lord_keegan)
+    users = [user1, user2, user3, user4, user5, user6, user7, user8]
+    [db.session.add(user) for user in users]
     db.session.commit()
 
 

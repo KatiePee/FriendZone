@@ -15,7 +15,7 @@ def seed_post_images():
   post_image3 = PostImage(
     post_id = 4,
     image_url = 'https://cdn.discordapp.com/attachments/1106274559671418943/1107553002258169896/IMG_2938.jpg'
-)
+  )
 
   post_image4 = PostImage(
     post_id = 5,
