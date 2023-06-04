@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
-friendship = db.Table(
+friendships = db.Table(
     "friendships",
     db.Column(
         'userA_id',
@@ -18,4 +18,4 @@ friendship = db.Table(
 )
 
 if environment == "production":
-    friendship.schema = SCHEMA
+    friendships.schema = SCHEMA
