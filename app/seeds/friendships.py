@@ -2,8 +2,10 @@ from app.models import db, friendship, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-def seed_friendhips():
-    pass
+def seed_friendships():
+  users = User.query.all()
+
+  print('users in friendship seed', users)
 
 def undo_friendships():
   if environment == "production":
