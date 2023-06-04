@@ -1,12 +1,22 @@
 from app.models import db, Post, User, environment, SCHEMA
+# from .users import users
+# from .posts import posts
 from sqlalchemy.sql import text
+from random import randint
+
+def post(posts):
+    index = randint(0, len(posts) -1)
+    return posts[index]
+    
 
 def seed_likes():
-    user1 = User.query.get(1)
-    post1 = Post.query.get(1)
-    user1.likes.append(post1)
+    users = User.query.all()
+    posts = Post.query.all()
 
+    [[post(posts).likes.append(user) for user in users] for n in range(3)]
+    
     db.session.commit()
+   
 
 def undo_likes():
     if environment == "production":
