@@ -7,16 +7,18 @@ from random import randint
 def post(posts):
     index = randint(0, len(posts) -1)
     return posts[index]
-    
+
 
 def seed_likes():
     users = User.query.all()
     posts = Post.query.all()
 
-    [[post(posts).likes.append(user) for user in users] for n in range(3)]
-    
+    users[0].likes.append(posts[0])
+
+    # [[post(posts).likes.append(user) for user in users] for n in range(3)]
+
     db.session.commit()
-   
+
 
 def undo_likes():
     if environment == "production":

@@ -1,10 +1,17 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .friendship import friendships
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
 
 class User(db.Model, UserMixin):
+    """
+    create a user model
+
+    documentation:
+      - self referential many-to-many: https://docs.sqlalchemy.org/en/20/orm/join_conditions.html#self-referential-many-to-many
+    """
     __tablename__ = 'users'
 
     if environment == "production":
@@ -28,6 +35,13 @@ class User(db.Model, UserMixin):
     likes = db.relationship('Post', secondary="likes",  back_populates="likes")
 
     # friendships = db.relationship('Friendship', back_populates='user')
+    friendships = db.relationship(
+        "User",
+        secondary="friendships",
+        primaryjoin=friendships.c.userA_id == id,
+        secondaryjoin=friendships.c.userB_id == id,
+        backref="friends" #barely know what this means, I think it creates another association for the other end of the friendship?
+        )
     comments = db.relationship('Comment', back_populates='user')
 
     @property
