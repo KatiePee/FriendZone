@@ -6,7 +6,7 @@ from datetime import datetime
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     user1 = User(
-        username='Demo',
+        username='demoyshia.userea',
         email='demo@aa.io',
         password='password',
         first_name = 'Demoyshia',
@@ -19,11 +19,11 @@ def seed_users():
         )
 
     user2 = User(
-        username='marnie',
+        username='mariniesa.paprika',
         email='marnie@aa.io',
         password='password',
         first_name='Mariniesa',
-        last_name='paprika',
+        last_name='Paprika',
         profile_picture_url= 'https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg',
         cover_photo_url= 'https://t4.ftcdn.net/jpg/04/67/93/01/360_F_467930159_UcfrOkjhFG436zoT9fSetYccBgpNkokp.jpg',
         date_of_birth= datetime.strptime('05/05/96', '%m/%d/%y'),
@@ -32,11 +32,11 @@ def seed_users():
         )
 
     user3 = User(
-        username='bobbie',
+        username='bobathu.barthalemu',
         email='bobbie@aa.io',
         password='password',
-        first_name='bobathu',
-        last_name='barthalemu',
+        first_name='Bobathu',
+        last_name='Barthalemu',
         profile_picture_url= 'https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg',
         cover_photo_url= 'https://marketplace.canva.com/EAENvp21inc/1/0/1600w/canva-simple-work-linkedin-banner-qt_TMRJF4m0.jpg',
         date_of_birth= datetime.strptime('12/25/96', '%m/%d/%y'),
@@ -58,7 +58,7 @@ def seed_users():
     )
 
     user5 = User(
-        username = 'trebs',
+        username = 'albert.kim',
         email = 'Alberthsk115@gmail.com',
         password = 'albert',
         first_name = 'Albert',
@@ -71,7 +71,7 @@ def seed_users():
     )
 
     user6 = User(
-        username = 'KatiePee',
+        username = 'katie.pee',
         email = 'katie@gmail.com',
         password = 'katie',
         first_name = 'Katie',
@@ -85,10 +85,10 @@ def seed_users():
 
 
     user7 = User(
-        username = 'pjsingh22',
+        username = 'pj.singh',
         email = 'pjsingh1359@gmail.com',
         password = 'password',
-        first_name = 'Pj',
+        first_name = 'PJ',
         last_name = 'Singh',
         profile_picture_url = 'https://cdn.discordapp.com/attachments/1113217055446024242/1114668789393522878/profile-pic-professional.jpg',
         cover_photo_url = 'https://static.vecteezy.com/system/resources/thumbnails/005/715/816/small/banner-abstract-background-board-for-text-and-message-design-modern-free-vector.jpg',
@@ -98,7 +98,7 @@ def seed_users():
     )
 
     user8 = User(
-        username = 'LordKeegan',
+        username = 'keegan.abley',
         email = 'lordkeegan@gmail.com',
         password = 'password',
         first_name = 'Keegan',

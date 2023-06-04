@@ -22,7 +22,7 @@ def seed_posts():
 
     post2 = Post(
         user_id = 2,
-        content = 'Marie had a little lamb, little lamb, little lamb',
+        content = 'Mary had a little lamb, little lamb, little lamb 🐑',
         created_at = random_date(datetime(2022, 1, 1), datetime(2023,5,1))
     )
 
