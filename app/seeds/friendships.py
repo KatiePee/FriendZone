@@ -8,6 +8,20 @@ def seed_friendships():
   friendships_to_seed = [
     {'userA_id': 1, 'userB_id': 2},
     {'userA_id': 1, 'userB_id': 3},
+    {'userA_id': 1, 'userB_id': 4},
+    {'userA_id': 1, 'userB_id': 5},
+    {'userA_id': 1, 'userB_id': 6},
+    {'userA_id': 1, 'userB_id': 7},
+    {'userA_id': 1, 'userB_id': 8},
+    {'userA_id': 4, 'userB_id': 5},
+    {'userA_id': 4, 'userB_id': 6},
+    {'userA_id': 4, 'userB_id': 7},
+    {'userA_id': 4, 'userB_id': 8},
+    {'userA_id': 5, 'userB_id': 8},
+    {'userA_id': 5, 'userB_id': 7},
+    {'userA_id': 5, 'userB_id': 6},
+    {'userA_id': 6, 'userB_id': 7},
+    {'userA_id': 7, 'userB_id': 8},
   ]
 
   for friendship_data in friendships_to_seed:
