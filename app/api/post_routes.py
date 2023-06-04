@@ -17,11 +17,22 @@ def posts():
     return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
     # return {'posts': [post.to_dict() for post in posts]}
 
-@post_routes.route('/<int:id>')
+
+@post_routes.route("/new", methods=['GET','POST'])
 @login_required
-def single_post():
+def create_post():
     """
-    Query for a single post and returns it in a dictionary 
+    Create a post
     """
     
 
+
+
+@post_routes.route('/<int:id>')
+@login_required
+def single_post(id):
+    """
+    Query for a single post and returns it in a dictionary 
+    """
+    post = Post.query.filter_by(id=id).join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).first()
+    return {'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } 
