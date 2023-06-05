@@ -3,6 +3,7 @@ from .friendship import friendships
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy import or_
 
 
 class User(db.Model, UserMixin):
@@ -31,16 +32,16 @@ class User(db.Model, UserMixin):
     # we need to be consistent with what were putting into the db
     posts = db.relationship('Post', back_populates='user')
     likes = db.relationship('Post', secondary="likes",  back_populates="likes")
+    comments = db.relationship('Comment', back_populates='user')
 
     # friendships = db.relationship('Friendship', back_populates='user')
     friendships = db.relationship(
         "User",
         secondary="friendships",
-        primaryjoin=friendships.c.userA_id == id,
-        secondaryjoin=friendships.c.userB_id == id,
-        backref="friends" #barely know what this means, I think it creates another association for the other end of the friendship?
+        primaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
+        secondaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
+        backref="friends"
         )
-    comments = db.relationship('Comment', back_populates='user')
 
     @property
     def password(self):

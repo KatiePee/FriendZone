@@ -1,72 +1,57 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, session, request
 from flask_login import login_required, current_user
 from app.models import Post, User, PostImage, db, friendships, likes, Comment
 from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
-from sqlalchemy.orm import joinedload
-from sqlalchemy import or_
-
 
 post_routes = Blueprint('posts', __name__)
 
 ## Get all posts - FINISHED
 @post_routes.route("/")
-# @login_required
+@login_required
 def posts():
     """
     Query for all posts and returns then in a list of post dictionaries
     """
-    # get the current user
+    #Grabs current user
+    user = User.query.get(current_user.id)
 
-    # posts = Post.query.all()
-    # posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
-    # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
+    #Grabs current user friendships
+    friends = user.friendships
 
-    #get current user
-    user = current_user.id
+    posts_list = []
+    for friend in friends:
+        posts = friend.posts
+        for post in posts:
+            post_dict = post.to_dict()
 
-    # get curretn users friends
-    print('------------------user-----------', user)
-    friends = User.query \
-        .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
-        .where(or_(friendships.c.userA_id == user, friendships.c.userB_id == user)) \
-        .all()
+            post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-    print('-------------------frinds--------------', friends)
-    #get ids of friends to filter by
-    friend_ids = [user.id for user in friends]
+            post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
 
-    #get all posts of the friends of users order in desc order
-    # post.query.filter(post.user_id)
+            likes = post.likes
+            post_dict['numLikes'] = len(likes)
+            likedBy = [like.to_dict() for like in likes]
 
-    posts = Post.query \
-        .join(User) \
-        .join(PostImage, isouter=True) \
-        .join(likes, Post.id == likes.c.post_id, isouter=True) \
-        .options(joinedload(Post.post_images)) \
-        .filter(User.id.in_(friend_ids))\
-        .order_by(Post.created_at.desc())\
-        .all()
+            author = User.query.get(post_dict["userId"])
+            author_dict = author.to_dict()
 
+            keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+            for key in keys_to_remove:
+                if key in author_dict:
+                    del author_dict[key]
+                for like in likedBy:
+                    if key in like:
+                        del like[key]
 
-    #  .join(Comment, Comment.post_id == Post.id, isouter=True) \
-    #organize the data
-    return_posts = []
-    for post in posts:
-        post_dic = {}
+            post_dict['author'] = author_dict
+            post_dict['likedBy'] = likedBy
 
-        post_dic.update(post.to_dict())
-        post_dic.update({'user': post.user.to_dict()} )
-        post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
-        del post_dic['userId']
-        post_likes = post.likes
-        liked_by = [user.to_dict() for user in post_likes]
-        post_dic['likes'] = len(post.likes)
-        post_dic['liked_by'] = liked_by
-        post_dic.update({'comments': [post.comment.to_dict() for post.comment in post.comments]})
-        return_posts.append(post_dic)
+            del post_dict['userId']
 
-    return return_posts
+            posts_list.append(post_dict)
+    return posts_list
+
 
 ## Create New Post - FINISHED
 @post_routes.route("/new", methods=['POST'])
@@ -85,54 +70,131 @@ def create_post():
         )
         db.session.add(new_post)
         db.session.commit()
-        return new_post.to_dict()
+        return {'res': new_post.to_dict()}
 
 
-## Delete A Post - NOT FINISHED/CHECKED
+## Delete A Post - NEEDS TESTING
 @post_routes.route("/<int:id>", methods=['DELETE'])
 @login_required
 def remove_post(id):
     """
     Delete a post
     """
-
-    """
-        1. Query the post id
-        2. Check to see if the post_id matches the owner of the id? I guess we can do this in react
-        3. Remove post
-    """
     post = Post.query.get(id)
-    if post:
-        post.remove()
-        return jsonify({'message': 'Post deleted successfully'})
+
+    if not post:
+        return {'message': 'Post not found'}, 404
+
+    if id != current_user.id:
+        return {'message': 'Forbidden'}, 403
+
+    db.session.delete(post)
+    return {'message': 'Post successfully deleted'}
 
 
-
-
-## Get Single Post
+## Get Single Post - FINISHED
 @post_routes.route('/<int:id>')
 @login_required
 def single_post(id):
     """
     Query for a single post and returns it in a dictionary
     """
-    post = Post.query\
-        .filter_by(id=id)\
-        .join(User)\
-        .join(PostImage, isouter=True)\
-        .options(joinedload(Post.post_images))\
-        .join(likes, Post.id == likes.c.post_id, isouter=True) \
-        .first()
+    post = Post.query.get(id)
+    post_dict = post.to_dict()
 
-    post_dic = {}
+    post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-    post_dic.update(post.to_dict())
-    post_dic.update({'user': post.user.to_dict()} )
-    post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
-    del post_dic['userId']
-    post_likes = post.likes
-    liked_by = [user.to_dict() for user in post_likes]
-    post_dic['likes'] = len(post.likes)
-    post_dic['liked_by'] = liked_by
+    post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
 
-    return post_dic
+    likes = post.likes
+    post_dict['numLikes'] = len(likes)
+    likedBy = [like.to_dict() for like in likes]
+
+    author = User.query.get(post_dict["userId"])
+    author_dict = author.to_dict()
+
+    keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+    for key in keys_to_remove:
+        if key in author_dict:
+            del author_dict[key]
+        for like in likedBy:
+            if key in like:
+                del like[key]
+
+    post_dict['author'] = author_dict
+    post_dict['likedBy'] = likedBy
+
+    del post_dict['userId']
+
+    return post_dict
+
+## Update Post - NEEDS TESTING
+@post_routes.route("/<int:id>/edit", methods=['PUT'])
+@login_required
+def update_post():
+    """
+    Update a post
+    """
+    post = Post.query.get(id)
+
+    if not post:
+        return {'message': 'Post not found'}, 404
+
+    if id != current_user.id:
+        return {'message': 'Forbidden'}, 403
+
+    form = PostForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        post.content = form.data['content']
+
+        db.session.commit()
+        return {'res': post.to_dict()}
+
+    if form.errors:
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+
+## Get User Posts - FINISHED
+@post_routes.route("/current")
+@login_required
+def user_posts():
+    """
+    Query for all posts and returns then in a list of post dictionaries
+    """
+    #Grabs current user
+    user = User.query.get(current_user.id)
+
+    #Grabs current user posts
+    user_posts = user.posts
+
+    posts_list = []
+    for post in user_posts:
+        post_dict = post.to_dict()
+
+        post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
+
+        post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
+
+        likes = post.likes
+        post_dict['numLikes'] = len(likes)
+        likedBy = [like.to_dict() for like in likes]
+
+        author = User.query.get(post_dict["userId"])
+        author_dict = author.to_dict()
+
+        keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+        for key in keys_to_remove:
+            if key in author_dict:
+                del author_dict[key]
+            for like in likedBy:
+                if key in like:
+                    del like[key]
+
+        post_dict['author'] = author_dict
+        post_dict['likedBy'] = likedBy
+
+        del post_dict['userId']
+
+        posts_list.append(post_dict)
+    return posts_list
