@@ -1,15 +1,23 @@
 const ALL_POSTS = 'post/allPosts'
 const SINGLE_POST = 'post/singlePosts'
+const CREATE_POST = 'posts/new'
 
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
   payload: posts
 })
 
+const createPostThunkAction = (post) => ({
+  type: CREATE_POST,
+  payload: post
+})
+
 const singlePostAction = (post) => ({
   type: SINGLE_POST,
   payload: post
 })
+
+
 
 export const allPostsThunk = () => async dispatch => {
   const res = await fetch("/api/posts/", {
