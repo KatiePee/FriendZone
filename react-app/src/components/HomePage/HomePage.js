@@ -1,6 +1,6 @@
 import React, { useSelector, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { allPostsThunk } from "../../store/posts";
+// import { allPostsThunk } from "../../store/posts";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -11,9 +11,9 @@ function HomePage() {
   console.log('---------------after useselector---------')
 
 
-  useEffect(() => {
-    dispatch(allPostsThunk());
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(allPostsThunk());
+  // }, [dispatch])
 
   // if (!posts.length) return null;
   return (<h1>HomePage!</h1>)

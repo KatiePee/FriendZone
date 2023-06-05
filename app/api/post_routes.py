@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from app.models import Post, User, PostImage, db, friendships, likes
+from app.models import Post, User, PostImage, db, friendships, likes, Comment
 from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
 from sqlalchemy.orm import joinedload
@@ -16,14 +16,26 @@ def posts():
     Query for all posts and returns then in a list of post dictionaries
     """
     # get the current user
-    user = current_user.id
- 
+
+    # posts = Post.query.all()
+    # posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
+    # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
+
+    #get current user
+    # user = current_user.id
+    user = 2
+    # get curretn users friends
+    print('------------------user-----------', user)
     friends = User.query \
         .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
         .filter(friendships.c.userA_id == user or friendships.c.userB_id == user)\
         .all()
-    
+    print('-------------------frinds--------------', friends)
+    #get ids of friends to filter by
     friend_ids = [user.id for user in friends]
+
+    #get all posts of the friends of users order in desc order
+    # post.query.filter(post.user_id)
 
     posts = Post.query \
         .join(User) \
@@ -33,7 +45,10 @@ def posts():
         .filter(User.id.in_(friend_ids))\
         .order_by(Post.created_at.desc())\
         .all()
+
     
+    #  .join(Comment, Comment.post_id == Post.id, isouter=True) \
+    #organize the data
     return_posts = []
     for post in posts:
         post_dic = {}
@@ -46,6 +61,7 @@ def posts():
         liked_by = [user.to_dict() for user in post_likes]
         post_dic['likes'] = len(post.likes)
         post_dic['liked_by'] = liked_by
+        # post_dic.update({'comments': [post.comment.to_dict() for post.comment in post.comments]})
         return_posts.append(post_dic)
 
     return return_posts
