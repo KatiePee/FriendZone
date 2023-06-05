@@ -18,7 +18,6 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(50), nullable = False)
@@ -27,7 +26,6 @@ class User(db.Model, UserMixin):
     cover_photo_url = db.Column(db.String(255), nullable = False)
     date_of_birth = db.Column(db.Date, nullable = False)
     gender = db.Column(db.String, nullable = False)
-    age = db.Column(db.Integer, nullable = False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
     # should created at be string formate and we can do all the date manipulation on the font end?
     # we need to be consistent with what were putting into the db
