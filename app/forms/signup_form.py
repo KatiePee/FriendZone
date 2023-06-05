@@ -25,6 +25,5 @@ class SignUpForm(FlaskForm):
     last_name = StringField("Last Name", validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), user_exists])
     password = StringField('New Password', validators=[DataRequired()])
-    date_of_birth = DateField("Birthday", nullable = False)
+    date_of_birth = DateField("Birthday", validators=[DataRequired()])
     gender = SelectField("Gender", choices=[("Female"), ("Male"), ("Custom")])
-    
