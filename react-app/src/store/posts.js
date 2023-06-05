@@ -1,6 +1,7 @@
-const ALL_POSTS = 'post/allPosts'
-const SINGLE_POST = 'post/singlePosts'
-const DELETE_POST = 'post/deletePost'
+const ALL_POSTS = 'posts/allPosts'
+const SINGLE_POST = 'posts/singlePosts'
+const CREATE_POST = 'posts/createPost'
+const DELETE_POST = 'posts/deletePost'
 
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
@@ -9,6 +10,11 @@ const allPostsAction = (posts) => ({
 
 const singlePostAction = (post) => ({
   type: SINGLE_POST,
+  payload: post
+})
+
+const createPostAction = (post) => ({
+  type: CREATE_POST,
   payload: post
 })
 
@@ -43,6 +49,22 @@ export const singlePostThunk = (postId) => async dispatch => {
   }
 }
 
+export const createPostThunk = (post) => async dispatch => {
+  const res = await fetch(`/api/posts/new`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(post)
+  })
+  if (res.ok) {
+    const response = await res.json()
+    dispatch(createPostAction(post))
+    return response
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+}
+
 export const deletePostThunk = (postId) => async dispatch => {
   const res = await fetch(`/api/posts/${postId}`, {
     method: 'DELETE',
@@ -50,7 +72,7 @@ export const deletePostThunk = (postId) => async dispatch => {
   if (res.ok) {
     const response = await res.json()
     dispatch(deletePostAction(postId))
-    return res
+    return response
   } else {
     const errors = await res.json();
     return errors;
@@ -64,10 +86,15 @@ const postReducer = (state = initialState, action) => {
   let newState = {}
   switch (action.type) {
     case ALL_POSTS:
+      newState = {...state, allPosts: {}, singlePost: {}}
       action.payload.forEach(post => {
-        newState[post.id] = post
+        newState.allPosts[post.id] = post
       })
-      return { ...state, allPosts: newState }
+      return newState
+    case CREATE_POST:
+      newState = {...state, allPosts: {}, singlePost: {}}
+      newState.allPosts[action.payload.id] = action.payload
+      return newState
     case DELETE_POST:
       newState = { ...state, allPosts: { ...state.allPosts } }
       delete newState.allPosts[action.payload]
