@@ -17,21 +17,14 @@ def posts():
     """
     # get the current user
     user = current_user.id
-    print('----------user----------', user)
+ 
     friends = User.query \
         .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
         .filter(friendships.c.userA_id == user or friendships.c.userB_id == user)\
         .all()
     
-    print('--------friends----------', friends)
-
     friend_ids = [user.id for user in friends]
-    print('--------friend ids-----------', friend_ids)
-    
-    user4 = User.query.get(4)
-    print('-------user4 in friends-------', user4 in friends)
 
-    # posts = Post.query.all()
     posts = Post.query \
         .join(User) \
         .join(PostImage, isouter=True) \
@@ -41,8 +34,6 @@ def posts():
         .order_by(Post.created_at.desc())\
         .all()
     
-    # .filter(Post.user in friends) \
-    # all_posts = [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
     return_posts = []
     for post in posts:
         post_dic = {}
@@ -51,9 +42,7 @@ def posts():
         post_dic.update({'user': post.user.to_dict()} )
         post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
         del post_dic['userId']
-        # post_likes = likes.query.filter(likes.post_id == post_dic.id).all()
         post_likes = post.likes
-        print('-----------post likes-------------', post_likes)
         liked_by = [user.to_dict() for user in post_likes]
         post_dic['likes'] = len(post.likes)
         post_dic['liked_by'] = liked_by
@@ -109,5 +98,25 @@ def single_post(id):
     """
     Query for a single post and returns it in a dictionary
     """
-    post = Post.query.filter_by(id=id).join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).first()
-    return {'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] }
+    post = Post.query\
+        .filter_by(id=id)\
+        .join(User)\
+        .join(PostImage, isouter=True)\
+        .options(joinedload(Post.post_images))\
+        .join(likes, Post.id == likes.c.post_id, isouter=True) \
+        .first()
+    
+    post_dic = {}
+
+    post_dic.update(post.to_dict())
+    post_dic.update({'user': post.user.to_dict()} )
+    post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
+    del post_dic['userId']
+    post_likes = post.likes
+    liked_by = [user.to_dict() for user in post_likes]
+    post_dic['likes'] = len(post.likes)
+    post_dic['liked_by'] = liked_by
+
+    # return {'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] }
+
+    return post_dic
