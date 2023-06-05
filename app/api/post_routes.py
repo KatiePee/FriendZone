@@ -22,23 +22,45 @@ def posts():
     # posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
     # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
 
-    #get current user
-    
+
+    #Grabs current user
     user = User.query.get(current_user.id)
-    print('------------------quiered user-----------', user)
+    print('------------------queried user-----------', user)
+    #Grabs current user posts
     user_posts = user.posts
     print('----------------user posts---------', user_posts)
+    #Grabs current user friendships
     friends = user.friendships
-    print('------------------quiered friends-----------', friends)
 
-    posts = friends[0].posts
-    print('-------------q_posts-----------', posts)
+    # friends_from_userA = user.friendships.filter(friendships.c.userA_id == user.id)
+    # friends_from_userB = user.friendships.filter(friendships.c.userB_id == user.id)
+
+    # friends = friends_from_userA.union_all(friends_from_userB).all()
+    print('------------------queried friends-----------', friends)
+
+    # for friend in friends:
+    #     posts = friend.posts
+    #     print('-----------posts-------------', posts)
+
+    # posts = [friend.posts.to_dict() for friend in friends]
+
+
+    # post_images = posts.post_images
+    # print('--------------post_images--------', post_images)
+    # post_comments = posts.comments
+    # print('-----------post of the comments-------------', post_comments)
+
+    # Put this in for loop
+    # Grabs friend 1's posts
+    # posts = friends[0].posts
+    # print('-------------q_posts-----------', posts)
     # posts.append(user_posts)
     # print('-------------user posts-----------', user_posts)
-    posts_images = posts[0].post_images
-    print('-------------post images---------', posts_images)
+    # posts_images = posts[0].post_images
+    # print('-------------post images---------', posts_images)
 
-    post_commetns = posts[0].comments
+    # post_comments = posts[0].comments
+
     # get curretn users friends
 
     #get ids of friends to filter by
@@ -117,7 +139,7 @@ def remove_post(id):
 
 
 
-## Get Single Post
+## Get Single Post - CHECK THIS
 @post_routes.route('/<int:id>')
 @login_required
 def single_post(id):
@@ -144,3 +166,7 @@ def single_post(id):
     post_dic['liked_by'] = liked_by
 
     return post_dic
+
+# TODO: Update Post
+
+# TODO: Get User Posts
