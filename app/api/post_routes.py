@@ -129,7 +129,7 @@ def single_post(id):
     return post_dict
 
 ## Update Post - NEEDS TESTING
-@post_routes.route("/<int:id>/edit", methods=['PUT'])
+@post_routes.route("/<int:id>", methods=['PUT'])
 @login_required
 def update_post():
     """
