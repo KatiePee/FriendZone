@@ -117,6 +117,4 @@ def single_post(id):
     post_dic['likes'] = len(post.likes)
     post_dic['liked_by'] = liked_by
 
-    # return {'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] }
-
     return post_dic
