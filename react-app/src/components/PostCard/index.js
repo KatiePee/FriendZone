@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import "./postcard.css"
 
 function PostCard({ post }) {
-  const { id, content, likes, user, postImages, liked_by, comments, createdAt } = post
-  const { firstName, lastName, profilePicURL } = user
+  const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
+  const { firstName, lastName, profilePicURL } = author
 
   const [text, setText] = useState("")
 
@@ -69,7 +69,7 @@ function PostCard({ post }) {
         })}
       </div>
       <div className="post-card__details">
-        <div className="post-card__engagement">{likes <= 0 ? "" : `❤ ${likes}` }</div>
+        <div className="post-card__engagement">{numLikes <= 0 ? "" : `❤ ${numLikes}` }</div>
         <div className="post-card__buttons">
           <span>LIKE</span>
           <span>COMMENT</span>

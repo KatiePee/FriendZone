@@ -10,7 +10,7 @@ comment_routes = Blueprint('comments', __name__)
 
 
 #Create - NEED TESTING
-@comment_routes.routes('/new', methods=["POST"])
+@comment_routes.route('/new', methods=["POST"])
 @login_required
 def create_comment():
     """
@@ -32,7 +32,7 @@ def create_comment():
         return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 #Update - NEED TESTING
-@comment_routes.routes('/<int:id>/edit', methods=['PUT'])
+@comment_routes.route('/<int:id>/edit', methods=['PUT'])
 @login_required
 def update_comment(id):
     """
@@ -49,7 +49,7 @@ def update_comment(id):
 
 
 #Delete - NEED TESTING
-@comment_routes.routes('/<int:id>/delete', methods=['DELETE'])
+@comment_routes.route('/<int:id>/delete', methods=['DELETE'])
 def delete_comment(id):
     comment_to_delete = Comment.query.get(id)
     db.session.delete(comment_to_delete)
