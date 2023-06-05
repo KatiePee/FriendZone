@@ -5,7 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
-import HomePage from "./components/HomePage/HomePage";
+import HomePage from "./components/HomePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div style={{backgroundColor: "#F0F2F5"}}>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -30,7 +30,7 @@ function App() {
           </Route>
         </Switch>
       )}
-    </>
+    </div>
   );
 }
 
