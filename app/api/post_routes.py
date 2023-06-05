@@ -24,14 +24,14 @@ def posts():
 
     #get current user
     user = current_user.id
-    
+
     # get curretn users friends
     print('------------------user-----------', user)
     friends = User.query \
         .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
         .where(or_(friendships.c.userA_id == user, friendships.c.userB_id == user)) \
         .all()
-  
+
     print('-------------------frinds--------------', friends)
     #get ids of friends to filter by
     friend_ids = [user.id for user in friends]
@@ -48,7 +48,7 @@ def posts():
         .order_by(Post.created_at.desc())\
         .all()
 
-    
+
     #  .join(Comment, Comment.post_id == Post.id, isouter=True) \
     #organize the data
     return_posts = []
@@ -63,7 +63,7 @@ def posts():
         liked_by = [user.to_dict() for user in post_likes]
         post_dic['likes'] = len(post.likes)
         post_dic['liked_by'] = liked_by
-        # post_dic.update({'comments': [post.comment.to_dict() for post.comment in post.comments]})
+        post_dic.update({'comments': [post.comment.to_dict() for post.comment in post.comments]})
         return_posts.append(post_dic)
 
     return return_posts
@@ -123,7 +123,7 @@ def single_post(id):
         .options(joinedload(Post.post_images))\
         .join(likes, Post.id == likes.c.post_id, isouter=True) \
         .first()
-    
+
     post_dic = {}
 
     post_dic.update(post.to_dict())
