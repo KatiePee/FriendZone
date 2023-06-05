@@ -83,17 +83,13 @@ export const signUp = (first_name, last_name, email, password, date_of_birth, ge
 		}),
 	});
 
-	console.log('------------SIGN UP ACTION-------------')
-
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(setUser(data));
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
-		console.log('THIS IS THE DATA--------------', data)
 		if (data.errors) {
-			console.log("THESE ARE THE DATA.ERRORS-----------", data.errors)
 			return data.errors;
 		}
 	} else {
@@ -104,6 +100,7 @@ export const signUp = (first_name, last_name, email, password, date_of_birth, ge
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_USER:
+			console.log("THIS IS THE ACTION", action.payload)
 			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };

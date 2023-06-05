@@ -56,13 +56,11 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "username": self.username,
             "email": self.email,
             "firstName": self.first_name,
             "lastName": self.last_name,
             "profilePicURL": self.profile_picture_url,
             "coverPhotoURL": self.cover_photo_url,
             "gender": self.gender,
-            "age": self.age,
             "createdAt": self.created_at # TODO: maybe convert to string here?
        }
