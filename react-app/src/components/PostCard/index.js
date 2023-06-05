@@ -5,6 +5,17 @@ function PostCard({ post }) {
   const { id, content, likes, user, postImages, liked_by, comments, createdAt } = post
   const { firstName, lastName, profilePicURL } = user
 
+  const [text, setText] = useState("")
+
+  const handleInputChange = (e) => {
+    setText(e.target.value);
+  }
+
+  const textareaStyle = {
+    resize: 'none',
+    overflow: 'hidden'
+  };
+
   const timeAgo = (dateObj) => {
     const date = new Date(dateObj);
     const currentDate = new Date()
@@ -64,7 +75,11 @@ function PostCard({ post }) {
           <span>COMMENT</span>
         </div>
         <div className="post-card__comment-bar">
-
+          <img className="post-card__profile-pic" src={profilePicURL} alt="profile" />
+          <div>
+            <textarea className="add-comment" value={text} onChange={handleInputChange} rows={1}></textarea>
+            <span>➡</span>
+          </div>
         </div>
       </div>
     </div>

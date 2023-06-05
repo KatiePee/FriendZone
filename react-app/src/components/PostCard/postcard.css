@@ -61,3 +61,20 @@
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgrey;
 }
+
+.post-card__comment-bar {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.post-card__comment-bar > div {
+
+}
+
+.add-comment {
+  height: fit-content;
+  resize: none;
+  overflow: hidden;
+  max-width: 80%;
+}
