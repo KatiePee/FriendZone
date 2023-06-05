@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import login_required, current_user
-from app.models import Post, User, PostImage, db
+from app.models import Post, User, PostImage, db, friendships, likes
 from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
 from sqlalchemy.orm import joinedload
@@ -15,11 +15,48 @@ def posts():
     """
     Query for all posts and returns then in a list of post dictionaries
     """
+    # get the current user
+    user = current_user.id
+    print('----------user----------', user)
+    friends = User.query \
+        .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
+        .filter(friendships.c.userA_id == user or friendships.c.userB_id == user)\
+        .all()
+    
+    print('--------friends----------', friends)
+
+    friend_ids = [user.id for user in friends]
+    print('--------friend ids-----------', friend_ids)
+    
+    user4 = User.query.get(4)
+    print('-------user4 in friends-------', user4 in friends)
 
     # posts = Post.query.all()
-    posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
-    return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
+    posts = Post.query \
+        .join(User) \
+        .join(PostImage, isouter=True) \
+        .join(likes, Post.id == likes.c.post_id, isouter=True) \
+        .options(joinedload(Post.post_images)) \
+        .filter(User.id.in_(friend_ids))\
+        .order_by(Post.created_at.desc())\
+        .all()
+    
+    # .filter(Post.user in friends) \
+    # all_posts = [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
+    return_posts = []
+    for post in posts:
+        post_dic = {}
+        
+        post_dic.update(post.to_dict())
+        post_dic.update({'user': post.user.to_dict()} )
+        post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
+        del post_dic['userId']
 
+
+        return_posts.append(post_dic)
+
+    all_posts = [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
+    return return_posts
 
 ## Create New Post - FINISHED
 @post_routes.route("/new", methods=['POST'])
