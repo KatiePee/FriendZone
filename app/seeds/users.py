@@ -6,46 +6,39 @@ from datetime import datetime
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     user1 = User(
-        username='demoyshia.userea',
         email='demo@aa.io',
         password='password',
-        first_name = 'Demoyshia',
-        last_name = 'Userea',
+        first_name = 'Demo',
+        last_name = 'User',
         profile_picture_url = 'https://marketplace.canva.com/EAE_4-ugJng/1/0/1600w/canva-blue-yellow-simple-professional-instagram-profile-picture-kpwvs_syWG8.jpg',
         cover_photo_url = 'https://cdn.discordapp.com/attachments/1114339565491200170/1114339683044954172/1667592397009.png',
         date_of_birth = datetime.strptime('01/01/86', '%m/%d/%y'),
         gender='Female',
-        age=36,
         )
 
     user2 = User(
-        username='mariniesa.paprika',
         email='marnie@aa.io',
         password='password',
-        first_name='Mariniesa',
-        last_name='Paprika',
+        first_name='Marnie',
+        last_name='Demo',
         profile_picture_url= 'https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg',
         cover_photo_url= 'https://t4.ftcdn.net/jpg/04/67/93/01/360_F_467930159_UcfrOkjhFG436zoT9fSetYccBgpNkokp.jpg',
         date_of_birth= datetime.strptime('05/05/96', '%m/%d/%y'),
         gender='Female',
-        age=27
         )
 
     user3 = User(
-        username='bobathu.barthalemu',
         email='bobbie@aa.io',
         password='password',
-        first_name='Bobathu',
-        last_name='Barthalemu',
+        first_name='Bobbie',
+        last_name='Demo',
         profile_picture_url= 'https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg',
         cover_photo_url= 'https://marketplace.canva.com/EAENvp21inc/1/0/1600w/canva-simple-work-linkedin-banner-qt_TMRJF4m0.jpg',
         date_of_birth= datetime.strptime('12/25/96', '%m/%d/%y'),
         gender='Male',
-        age=27
         )
 
     user4 = User(
-        username = 'adanna.liu',
         email = 'adanna.c.liu@gmail.com',
         password = 'adanna',
         first_name = 'Adanna',
@@ -54,11 +47,9 @@ def seed_users():
         cover_photo_url = 'https://cdn.discordapp.com/attachments/1114339565491200170/1114339683044954172/1667592397009.png',
         date_of_birth = datetime.strptime('06/10/98', '%m/%d/%y'),
         gender = 'Female',
-        age = '24'
     )
 
     user5 = User(
-        username = 'albert.kim',
         email = 'Alberthsk115@gmail.com',
         password = 'albert',
         first_name = 'Albert',
@@ -67,11 +58,9 @@ def seed_users():
         cover_photo_url = 'https://i.imgur.com/fYT3mbn.jpg',
         date_of_birth = datetime.strptime('01/15/96', '%m/%d/%y'),
         gender = 'Male',
-        age = '27'
     )
 
     user6 = User(
-        username = 'katie.pee',
         email = 'katie@gmail.com',
         password = 'katie',
         first_name = 'Katie',
@@ -80,12 +69,10 @@ def seed_users():
         cover_photo_url = 'https://cdn.discordapp.com/attachments/1106274559671418943/1114339866310889492/coverphoto_1.jpeg',
         date_of_birth = datetime.strptime('08/16/89', '%m/%d/%y'),
         gender = 'Female',
-        age = '34'
     )
 
 
     user7 = User(
-        username = 'pj.singh',
         email = 'pjsingh1359@gmail.com',
         password = 'password',
         first_name = 'PJ',
@@ -94,11 +81,9 @@ def seed_users():
         cover_photo_url = 'https://static.vecteezy.com/system/resources/thumbnails/005/715/816/small/banner-abstract-background-board-for-text-and-message-design-modern-free-vector.jpg',
         date_of_birth = datetime.strptime('05/03/96', '%m/%d/%y'),
         gender = 'Male',
-        age = '27'
     )
 
     user8 = User(
-        username = 'keegan.abley',
         email = 'lordkeegan@gmail.com',
         password = 'password',
         first_name = 'Keegan',
@@ -107,7 +92,6 @@ def seed_users():
         cover_photo_url = 'https://www.pokeharbor.com/wp-content/uploads/2021/04/Firefighter-Squirtle-Squad.jpg',
         date_of_birth = datetime.strptime('02/05/92', '%m/%d/%y'),
         gender = 'Male',
-        age = '33'
     )
 
     users = [user1, user2, user3, user4, user5, user6, user7, user8]
