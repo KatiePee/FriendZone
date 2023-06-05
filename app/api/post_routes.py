@@ -23,16 +23,24 @@ def posts():
     # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
 
     #get current user
-    user = current_user.id
+    
+    user = User.query.get(current_user.id)
+    print('------------------quiered user-----------', user)
+    user_posts = user.posts
+    print('----------------user posts---------', user_posts)
+    friends = user.friendships
+    print('------------------quiered friends-----------', friends)
 
+    posts = friends[0].posts
+    print('-------------q_posts-----------', posts)
+    # posts.append(user_posts)
+    # print('-------------user posts-----------', user_posts)
+    posts_images = posts[0].post_images
+    print('-------------post images---------', posts_images)
+
+    post_commetns = posts[0].comments
     # get curretn users friends
-    print('------------------user-----------', user)
-    friends = User.query \
-        .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
-        .where(or_(friendships.c.userA_id == user, friendships.c.userB_id == user)) \
-        .all()
 
-    print('-------------------frinds--------------', friends)
     #get ids of friends to filter by
     friend_ids = [user.id for user in friends]
 
