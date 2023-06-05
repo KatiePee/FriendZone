@@ -1,0 +1,80 @@
+.post-card__container {
+  border: var(--border);
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.post-card__info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-card__user-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.post-card__profile-info {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.post-card__profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.profile-info__left-side > p {
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
+.profile-info__post-date {
+  font-size: 0.9rem;
+}
+
+.post-card__images {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.post-card__images > img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.post-card__buttons {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgrey;
+}
+
+.post-card__comment-bar {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.post-card__comment-bar > div {
+
+}
+
+.add-comment {
+  height: fit-content;
+  resize: none;
+  overflow: hidden;
+  max-width: 80%;
+}
