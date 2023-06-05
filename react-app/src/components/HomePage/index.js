@@ -1,29 +1,29 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { allPostsThunk } from "../../store/posts";
+import PostCard from "../PostCard";
+import "./homepage.css"
 
 function HomePage() {
   const dispatch = useDispatch();
-  console.log('---------------before useselector---------')
-  const postsState = useSelector(state => state.posts)
-  console.log("---------INSIDE HOMEPAGE---------", postsState)
-  // const posts = postsState ? Object.values(postsState) : [];
-  console.log('---------------after useselector---------')
+  const postsState = useSelector(state => state.posts.allPosts)
+
+  const posts = postsState ? Object.values(postsState) : [];
+
 
 
   useEffect(() => {
     dispatch(allPostsThunk());
   }, [dispatch])
 
-  // if (!posts.length) return null;
-  return (<h1>HomePage!</h1>)
-  // return (
-  //   <div className="landing-page-wrapper">
-  //     {posts.map(post => (
-  //       // <SpotCard spot={spot} key={spot.id} />
-  //       <h3>{post.content}</h3>
-  //     ))}
-  //   </div>
-  // )
+  if (!posts.length) return null;
+  // return (<h1>HomePage!</h1>)
+  return (
+    <div className="home-page-wrapper">
+      {posts.map(post => (
+        <PostCard post={post} key={post.id} />
+      ))}
+    </div>
+  )
 }
 export default HomePage

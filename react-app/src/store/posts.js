@@ -12,19 +12,14 @@ const singlePostAction = (post) => ({
 })
 
 export const allPostsThunk = () => async dispatch => {
-  console.log("all posts thunk being called")
   const res = await fetch("/api/posts/", {
     headers: {
 			"Content-Type": "application/json",
 		},
   })
 
-  // console.log("-----RES IN THUNK--------", res)
-  // console.log('-------------------- all post thunk -- res------------------', res)
   if (res.ok) {
     const posts = await res.json()
-    console.log("--------INSIDE THUNK---------- ",posts);
-    console.log("posts", posts)
     dispatch(allPostsAction(posts))
     return res
   } else return null
@@ -42,21 +37,18 @@ export const singlePostThunk = (postId) => async dispatch => {
   }
 }
 
-// const initialState = { allPosts: {}, singlePost: {} }
-const initialState = { }
+const initialState = { allPosts: {}, singlePost: {} }
+// const initialState = { }
 const postReducer = (state = initialState, action) => {
   // let newState;
   switch (action.type) {
     case ALL_POSTS:
 
-      console.log("PAYLOAD IN POST STATE REDUCER",action.payload)
       let someState = {}
       action.payload.forEach(post => {
         someState[post.id] = post
       })
-      return { allPosts: someState, ...state}
-      // newState.allPosts = {...state,  allPosts: action.payload }
-      // return newState
+      return { ...state, allPosts: someState }
     default:
       return state;
   }

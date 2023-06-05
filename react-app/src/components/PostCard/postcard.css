@@ -1,0 +1,15 @@
+.post-card__container {
+  border: var(--border);
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 50%;
+}
+
+.post-card__profile-info > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
