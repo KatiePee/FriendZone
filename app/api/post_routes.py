@@ -46,16 +46,19 @@ def posts():
     return_posts = []
     for post in posts:
         post_dic = {}
-        
+
         post_dic.update(post.to_dict())
         post_dic.update({'user': post.user.to_dict()} )
         post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
         del post_dic['userId']
-
-
+        # post_likes = likes.query.filter(likes.post_id == post_dic.id).all()
+        post_likes = post.likes
+        print('-----------post likes-------------', post_likes)
+        liked_by = [user.to_dict() for user in post_likes]
+        post_dic['likes'] = len(post.likes)
+        post_dic['liked_by'] = liked_by
         return_posts.append(post_dic)
 
-    all_posts = [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
     return return_posts
 
 ## Create New Post - FINISHED
