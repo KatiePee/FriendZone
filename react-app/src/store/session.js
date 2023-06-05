@@ -67,18 +67,23 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (first_name, last_name, email, password, date_of_birth, gender) => async (dispatch) => {
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			username,
+			first_name,
+			last_name,
 			email,
 			password,
+			date_of_birth,
+			gender
 		}),
 	});
+
+	console.log('------------SIGN UP ACTION-------------')
 
 	if (response.ok) {
 		const data = await response.json();
@@ -86,7 +91,9 @@ export const signUp = (username, email, password) => async (dispatch) => {
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
+		console.log('THIS IS THE DATA--------------', data)
 		if (data.errors) {
+			console.log("THESE ARE THE DATA.ERRORS-----------", data.errors)
 			return data.errors;
 		}
 	} else {
