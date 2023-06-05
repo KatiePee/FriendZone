@@ -25,7 +25,7 @@ function PostFormModal() {
         .then(closeModal())
     } else {
       setErrors([
-        "Confirm Password field must be the same as the Password field",
+        "Post Cannot Be Blank!",
       ]);
     }
   };

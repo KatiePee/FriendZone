@@ -8,7 +8,7 @@ from sqlalchemy.orm import joinedload
 
 post_routes = Blueprint('posts', __name__)
 
-## Get all posts
+## Get all posts - FINISHED
 @post_routes.route("/")
 # @login_required
 def posts():
@@ -19,10 +19,9 @@ def posts():
     # posts = Post.query.all()
     posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
     return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
-    # return {'posts': [post.to_dict() for post in posts]}
 
 
-## Create New Post
+## Create New Post - FINISHED
 @post_routes.route("/new", methods=['POST'])
 @login_required
 def create_post():
@@ -40,9 +39,9 @@ def create_post():
         db.session.add(new_post)
         db.session.commit()
         return new_post.to_dict()
-    
 
-## Delete A Post
+
+## Delete A Post - NOT FINISHED/CHECKED
 @post_routes.route("/<int:id>", methods=['DELETE'])
 @login_required
 def remove_post(id):
