@@ -63,9 +63,14 @@ def sign_up():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(
-            username=form.data['username'],
+            first_name=form.data['first_name'],
+            last_name=form.data['last_name'],
+            profile_picture_url='https://cdn.discordapp.com/attachments/1114339565491200170/1115050230333849721/5770f01a32c3c53e90ecda61483ccb08.png',
+            cover_photo_url='https://cdn.discordapp.com/attachments/1114339565491200170/1115064534189744128/9k.png',
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            date_of_birth=form.data['date_of_birth'],
+            gender=form.data['gender'],
         )
         db.session.add(user)
         db.session.commit()
