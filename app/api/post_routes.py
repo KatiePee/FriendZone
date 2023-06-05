@@ -16,87 +16,45 @@ def posts():
     """
     Query for all posts and returns then in a list of post dictionaries
     """
-    # get the current user
-
-    # posts = Post.query.all()
-    # posts = Post.query.join(User).join(PostImage, isouter=True).options(joinedload(Post.post_images)).all()
-    # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
-
-
     #Grabs current user
     user = User.query.get(current_user.id)
-    print('------------------queried user-----------', user)
-    #Grabs current user posts
-    user_posts = user.posts
-    print('----------------user posts---------', user_posts)
+
     #Grabs current user friendships
     friends = user.friendships
 
-    # friends_from_userA = user.friendships.filter(friendships.c.userA_id == user.id)
-    # friends_from_userB = user.friendships.filter(friendships.c.userB_id == user.id)
+    posts_list = []
+    for friend in friends:
+        posts = friend.posts
+        for post in posts:
+            post_dict = post.to_dict()
 
-    # friends = friends_from_userA.union_all(friends_from_userB).all()
-    print('------------------queried friends-----------', friends)
+            post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-    # for friend in friends:
-    #     posts = friend.posts
-    #     print('-----------posts-------------', posts)
+            post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
 
-    # posts = [friend.posts.to_dict() for friend in friends]
+            likes = post.likes
+            post_dict['numLikes'] = len(likes)
+            likedBy = [like.to_dict() for like in likes]
 
+            author = User.query.get(post_dict["userId"])
+            author_dict = author.to_dict()
 
-    # post_images = posts.post_images
-    # print('--------------post_images--------', post_images)
-    # post_comments = posts.comments
-    # print('-----------post of the comments-------------', post_comments)
+            keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+            for key in keys_to_remove:
+                if key in author_dict:
+                    del author_dict[key]
+                for like in likedBy:
+                    if key in like:
+                        del like[key]
 
-    # Put this in for loop
-    # Grabs friend 1's posts
-    # posts = friends[0].posts
-    # print('-------------q_posts-----------', posts)
-    # posts.append(user_posts)
-    # print('-------------user posts-----------', user_posts)
-    # posts_images = posts[0].post_images
-    # print('-------------post images---------', posts_images)
+            post_dict['author'] = author_dict
+            post_dict['likedBy'] = likedBy
 
-    # post_comments = posts[0].comments
+            del post_dict['userId']
 
-    # get curretn users friends
+            posts_list.append(post_dict)
+    return posts_list
 
-    #get ids of friends to filter by
-    friend_ids = [user.id for user in friends]
-
-    #get all posts of the friends of users order in desc order
-    # post.query.filter(post.user_id)
-
-    posts = Post.query \
-        .join(User) \
-        .join(PostImage, isouter=True) \
-        .join(likes, Post.id == likes.c.post_id, isouter=True) \
-        .options(joinedload(Post.post_images)) \
-        .filter(User.id.in_(friend_ids))\
-        .order_by(Post.created_at.desc())\
-        .all()
-
-
-    #  .join(Comment, Comment.post_id == Post.id, isouter=True) \
-    #organize the data
-    return_posts = []
-    for post in posts:
-        post_dic = {}
-
-        post_dic.update(post.to_dict())
-        post_dic.update({'user': post.user.to_dict()} )
-        post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
-        del post_dic['userId']
-        post_likes = post.likes
-        liked_by = [user.to_dict() for user in post_likes]
-        post_dic['likes'] = len(post.likes)
-        post_dic['liked_by'] = liked_by
-        post_dic.update({'comments': [post.comment.to_dict() for post.comment in post.comments]})
-        return_posts.append(post_dic)
-
-    return return_posts
 
 ## Create New Post - FINISHED
 @post_routes.route("/new", methods=['POST'])
@@ -167,6 +125,29 @@ def single_post(id):
 
     return post_dic
 
-# TODO: Update Post
+# TODO: Update Post - INCOMPLETE
+@post_routes.route("/<int:id>", methods=['PUT'])
+@login_required
+def update_post():
+    """
+    Update a post
+    """
+    form = PostForm()
+    print(current_user)
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_post = Post(
+            content = form.data['content'],
+            user_id = current_user.id
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return new_post.to_dict()
 
 # TODO: Get User Posts
+    #Grabs current user
+    # user = User.query.get(current_user.id)
+
+    # #Grabs current user posts
+    # user_posts = user.posts
+    # print('----------------user posts---------', user_posts)

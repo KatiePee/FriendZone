@@ -40,7 +40,7 @@ class User(db.Model, UserMixin):
         secondary="friendships",
         primaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
         secondaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
-        backref="friends" #barely know what this means, I think it creates another association for the other end of the friendship?
+        backref="friends"
         )
 
     @property
