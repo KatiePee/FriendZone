@@ -30,14 +30,12 @@ function PostCard({ post }) {
 
   }
 
-console.log(postImages)
-
   return (
     <div className="post-card__container">
       <div className="post-card__info-content">
         <div className="post-card__user-info">
           <div className="post-card__profile-info">
-            <img src={profilePicURL} alt="profile" />
+            <img className="post-card__profile-pic" src={profilePicURL} alt="profile" />
             <div className="profile-info__left-side">
               <p>{firstName} {lastName}</p>
               <div className="profile-info__post-date">
@@ -60,9 +58,14 @@ console.log(postImages)
         })}
       </div>
       <div className="post-card__details">
-        <div className="post-card__engagement">{likes <= 0 ? "" : likes}</div>
-        <div className="post-card__buttons"></div>
-        <div className="post-card__comment-bar"></div>
+        <div className="post-card__engagement">{likes <= 0 ? "" : `❤ ${likes}` }</div>
+        <div className="post-card__buttons">
+          <span>LIKE</span>
+          <span>COMMENT</span>
+        </div>
+        <div className="post-card__comment-bar">
+
+        </div>
       </div>
     </div>
   )

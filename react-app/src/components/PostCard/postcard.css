@@ -26,7 +26,7 @@
   align-items: center;
 }
 
-.post-card__profile-info > img {
+.post-card__profile-pic {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -46,13 +46,18 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-  /* height: 10px; */
-  /* min-height: 20%; */
 }
-
 
 .post-card__images > img {
   max-width: 100%;
   height: auto;
   object-fit: cover;
+}
+
+.post-card__buttons {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgrey;
 }
