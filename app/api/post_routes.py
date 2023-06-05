@@ -11,7 +11,7 @@ post_routes = Blueprint('posts', __name__)
 
 ## Get all posts - FINISHED
 @post_routes.route("/")
-# @login_required
+@login_required
 def posts():
     """
     Query for all posts and returns then in a list of post dictionaries
@@ -104,26 +104,34 @@ def single_post(id):
     """
     Query for a single post and returns it in a dictionary
     """
-    post = Post.query\
-        .filter_by(id=id)\
-        .join(User)\
-        .join(PostImage, isouter=True)\
-        .options(joinedload(Post.post_images))\
-        .join(likes, Post.id == likes.c.post_id, isouter=True) \
-        .first()
+    post = Post.query.get(id)
+    post_dict = post.to_dict()
 
-    post_dic = {}
+    post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-    post_dic.update(post.to_dict())
-    post_dic.update({'user': post.user.to_dict()} )
-    post_dic.update({'postImages': [post.post_image.to_dict() for post.post_image in post.post_images]})
-    del post_dic['userId']
-    post_likes = post.likes
-    liked_by = [user.to_dict() for user in post_likes]
-    post_dic['likes'] = len(post.likes)
-    post_dic['liked_by'] = liked_by
+    post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
 
-    return post_dic
+    likes = post.likes
+    post_dict['numLikes'] = len(likes)
+    likedBy = [like.to_dict() for like in likes]
+
+    author = User.query.get(post_dict["userId"])
+    author_dict = author.to_dict()
+
+    keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+    for key in keys_to_remove:
+        if key in author_dict:
+            del author_dict[key]
+        for like in likedBy:
+            if key in like:
+                del like[key]
+
+    post_dict['author'] = author_dict
+    post_dict['likedBy'] = likedBy
+
+    del post_dict['userId']
+
+    return post_dict
 
 # TODO: Update Post - INCOMPLETE
 @post_routes.route("/<int:id>", methods=['PUT'])
