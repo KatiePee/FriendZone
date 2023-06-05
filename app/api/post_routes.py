@@ -4,6 +4,7 @@ from app.models import Post, User, PostImage, db, friendships, likes, Comment
 from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
 from sqlalchemy.orm import joinedload
+from sqlalchemy import or_
 
 
 post_routes = Blueprint('posts', __name__)
@@ -22,14 +23,15 @@ def posts():
     # return [{'post': post.to_dict(), 'user': post.user.to_dict(), 'postImages': [post.post_image.to_dict() for post.post_image in post.post_images] } for post in posts]
 
     #get current user
-    # user = current_user.id
-    user = 2
+    user = current_user.id
+    
     # get curretn users friends
     print('------------------user-----------', user)
     friends = User.query \
         .join(friendships, (User.id == friendships.c.userA_id) | (User.id == friendships.c.userB_id)) \
-        .filter(friendships.c.userA_id == user or friendships.c.userB_id == user)\
+        .where(or_(friendships.c.userA_id == user, friendships.c.userB_id == user)) \
         .all()
+  
     print('-------------------frinds--------------', friends)
     #get ids of friends to filter by
     friend_ids = [user.id for user in friends]
