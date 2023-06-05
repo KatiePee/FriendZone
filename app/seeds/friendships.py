@@ -22,6 +22,7 @@ def seed_friendships():
     {'userA_id': 5, 'userB_id': 6},
     {'userA_id': 6, 'userB_id': 7},
     {'userA_id': 7, 'userB_id': 8},
+    {'userA_id': 2, 'userB_id': 8},
   ]
 
   for friendship_data in friendships_to_seed:
