@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import PostDetailModal from "../PostDetailModal";
 import DeletePostModal from "../DeletePostModal";
+import EditPostModal from "../EditPostModal";
 import "./PostCard.css"
 
 function PostCard({ post }) {
@@ -60,13 +61,19 @@ function PostCard({ post }) {
             </div>
           </div>
           <div className="post-card__edit-delete">
-            <span>EDIT</span>
             {user.id === post.author.id && (
-              <OpenModalButton
-                buttonText="Delete"
+              <>
+                <OpenModalButton
+                buttonText="Edit"
                 onItemClick={closeModal}
-                modalComponent={<DeletePostModal post={post} />}
-              />
+                modalComponent={<EditPostModal user={user} post={post} />}
+                />
+                <OpenModalButton
+                  buttonText="Delete"
+                  onItemClick={closeModal}
+                  modalComponent={<DeletePostModal post={post} />}
+                />
+              </>
             )}
           </div>
         </div>
