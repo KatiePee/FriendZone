@@ -1,35 +1,17 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useState } from "react"
+import { useModal } from "../../context/Modal";
 import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import PostDetailModal from "../PostDetailModal";
-import "./postcard.css"
+import DeletePostModal from "../DeletePostModal";
+import "./PostCard.css"
 
 function PostCard({ post }) {
   const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
   const user = useSelector(state => state.session.user)
-  const [showMenu, setShowMenu] = useState(false);
   const [text, setText] = useState("")
-  const ulRef = useRef();
-
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
-
-  useEffect(() => {
-    if (!showMenu) return;
-
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
-
-    document.addEventListener("click", closeMenu);
-
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  const { closeModal } = useModal();
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -62,10 +44,7 @@ function PostCard({ post }) {
     else if (days >= 1) return `${days}d`
     else if (hours >= 1) return `${hours}d`
     else return minutes ? `${minutes}m` : '1m'
-
   }
-
-  const closeMenu = () => setShowMenu(false);
 
   return (
     <div className="post-card__container">
@@ -82,7 +61,13 @@ function PostCard({ post }) {
           </div>
           <div className="post-card__edit-delete">
             <span>EDIT</span>
-            <span>DEL</span>
+            {user.id === post.author.id && (
+              <OpenModalButton
+                buttonText="Delete"
+                onItemClick={closeModal}
+                modalComponent={<DeletePostModal post={post} />}
+              />
+            )}
           </div>
         </div>
         <div className="post-card__content">
@@ -99,10 +84,10 @@ function PostCard({ post }) {
         <div className="post-card__buttons">
           <span>LIKE</span>
           <OpenModalButton
-              buttonText="Comment"
-              onItemClick={closeMenu}
-              modalComponent={<PostDetailModal post={post} />}
-            />
+            buttonText="Comment"
+            onItemClick={closeModal}
+            modalComponent={<PostDetailModal post={post} />}
+          />
         </div>
         <div className="post-card__comment-bar">
           <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />

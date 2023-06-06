@@ -83,7 +83,7 @@ def create_post():
         return new_post.to_dict()
 
 
-## Delete A Post - NEEDS TESTING
+## Delete A Post - FINISHED
 @post_routes.route("/<int:id>", methods=['DELETE'])
 @login_required
 def remove_post(id):
@@ -92,13 +92,8 @@ def remove_post(id):
     """
     post = Post.query.get(id)
 
-    if not post:
-        return {'message': 'Post not found'}, 404
-
-    if id != current_user.id:
-        return {'message': 'Forbidden'}, 403
-
     db.session.delete(post)
+    db.session.commit()
     return {'message': 'Post successfully deleted'}
 
 
@@ -160,7 +155,7 @@ def update_post(id):
         post.content = form.data['content']
 
         db.session.commit()
-        return {'res': post.to_dict()}
+        return post.to_dict()
 
     if form.errors:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 400

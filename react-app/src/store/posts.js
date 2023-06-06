@@ -61,7 +61,7 @@ export const createPostThunk = (post) => async dispatch => {
   }
 }
 
-export const deletePostThunk = (postId) => async dispatch => {
+export const deletePostThunk = (postId) => async (dispatch) => {
   const res = await fetch(`/api/posts/${postId}`, {
     method: 'DELETE',
   })
@@ -82,7 +82,7 @@ export const currentUserPostsThunk = (userId) => async (dispatch) => {
     dispatch(allPostsAction(posts))
     return res
   } catch (e) {
-    return null
+    return e
   }
 }
 
