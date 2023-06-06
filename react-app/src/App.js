@@ -15,7 +15,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div style={{backgroundColor: "#F0F2F5"}}>
+    <div style={{ backgroundColor: "#F0F2F5" }}>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -25,7 +25,7 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path='/posts'>
+          <Route path='/home'>
             <HomePage />
           </Route>
         </Switch>
