@@ -8,6 +8,11 @@ const allPostsAction = (posts) => ({
   payload: posts
 })
 
+const createPostThunkAction = (post) => ({
+  type: CREATE_POST,
+  payload: post
+})
+
 const singlePostAction = (post) => ({
   type: SINGLE_POST,
   payload: post
