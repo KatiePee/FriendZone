@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import Post, User, PostImage, db, friendships, likes, Comment
 from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
+from .AWS_helpers import upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
 post_routes = Blueprint('posts', __name__)
 
@@ -71,7 +72,7 @@ def create_post():
     Create a post
     """
     form = PostForm()
-    print(current_user)
+    # print(current_user)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_post = Post(
