@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import { addCommentThunk } from "../../store/posts";
+import OpenModalButton from "../OpenModalButton";
 // import "./postcard.css"
 import "./postdetailmodal.css"
 
@@ -112,16 +113,28 @@ function PostDetailModal({ post }) {
           {comments.map((comment) => (
             <>
               <div className="post-card__profile-info">
-                <img
-                  className="post-card__profile-pic"
-                  src={comment.commentAuthor.profilePicURL}
-                  alt="profile pic"
-                />
                 <div className="profile-info__left-side">
+                  <img
+                    className="post-card__profile-pic"
+                    src={comment.commentAuthor.profilePicURL}
+                    alt="profile pic"
+                  />
                   <p>
                     {comment.commentAuthor.firstName}{" "}
                     {comment.commentAuthor.lastName}
                   </p>
+                </div>
+                <div className="profile-info__right-side">
+                  <OpenModalButton
+                  buttonText="Edit"
+                  onItemClick={closeModal}
+                  // modalComponent={}
+                  />
+                  <OpenModalButton
+                    buttonText="Delete"
+                    onItemClick={closeModal}
+                    // modalComponent={}
+                  />
                 </div>
               </div>
               <div className="post-card__comment-content">

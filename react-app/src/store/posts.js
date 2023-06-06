@@ -157,7 +157,6 @@ const postReducer = (state = initialState, action) => {
     case ADD_COMMENT:
       console.log(action.payload);
       let newCommentsInState = { ...state }
-      // let newCommentsInState = { ...state, allPosts: { ...state.allPosts } }
       newCommentsInState.allPosts[action.payload.postId].comments.push(action.payload)
 
       return newCommentsInState;
