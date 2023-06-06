@@ -4,7 +4,6 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import PostFormModal from "../PostFormModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -48,11 +47,6 @@ function ProfileButton({ user }) {
           <>
             <li>{user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
-            <OpenModalButton
-              buttonText="Post"
-              onItemClick={closeMenu}
-              modalComponent={<PostFormModal />}
-            />
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>

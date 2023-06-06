@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div style={{backgroundColor: "#F0F2F5"}}>
+    <div style={{ backgroundColor: "#F0F2F5" }}>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
@@ -25,8 +26,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path='/posts'>
+          <Route path='/home'>
             <HomePage />
+          </Route>
+          <Route path='/:userId'>
+            <UserProfile />
           </Route>
         </Switch>
       )}
