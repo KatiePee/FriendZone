@@ -26,7 +26,7 @@ function HomePage() {
         <img src={profilePicURL} className="post-card__profile-pic" />
         <OpenModalButton
           buttonText={`What's on your mind, ${firstName}?`}
-          modalComponent={<PostFormModal />}
+          modalComponent={<PostFormModal user={user}/>}
         />
       </div>
       {posts.map(post => (
