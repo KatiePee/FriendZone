@@ -32,8 +32,8 @@ function PostFormModal() {
       }
       console.log('------post form handle submit----------', post)
       dispatch(createPostThunk(post))
-      dispatch(allPostsThunk())
       history.push('/home')
+      closeModal()
 
     } else {
       setErrors([
