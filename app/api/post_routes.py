@@ -142,11 +142,11 @@ def update_post(id):
     """
     post = Post.query.get(id)
 
-    if not post:
-        return {'message': 'Post not found'}, 404
+    # if not post:
+    #     return {'message': 'Post not found'}, 404
 
-    if id != current_user.id:
-        return {'message': 'Forbidden'}, 403
+    # if id != current_user.id:
+    #     return {'message': 'Forbidden'}, 403
 
     form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']

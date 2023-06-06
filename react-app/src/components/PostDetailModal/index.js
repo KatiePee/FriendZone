@@ -25,6 +25,16 @@ function PostDetailModal({ post }) {
     setText(e.target.value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (content.length > 1) {
+      const comment = {
+        content
+      }
+      dispatchEvent()
+    }
+  }
+
   const textareaStyle = {
     resize: "none",
     overflow: "hidden",
@@ -126,8 +136,9 @@ function PostDetailModal({ post }) {
             <textarea
               className="add-comment"
               value={text}
+              onSubmit={handleSubmit}
               onChange={handleInputChange}
-              rows={1}
+              rows={5}
             ></textarea>
             <span>➡</span>
           </div>

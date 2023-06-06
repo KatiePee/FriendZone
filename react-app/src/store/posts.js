@@ -1,6 +1,7 @@
 const ALL_POSTS = 'posts/allPosts'
 const SINGLE_POST = 'posts/singlePosts'
 const DELETE_POST = 'posts/deletePost'
+const EDIT_POST = 'posts/editPost'
 
 
 const allPostsAction = (posts) => ({
@@ -16,6 +17,11 @@ const singlePostAction = (post) => ({
 const deletePostAction = (postId) => ({
   type: DELETE_POST,
   payload: postId
+})
+
+const editPostAction = (post) => ({
+  type: EDIT_POST,
+  payload: post
 })
 
 
@@ -86,6 +92,20 @@ export const currentUserPostsThunk = (userId) => async (dispatch) => {
   }
 }
 
+export const editPostThunk = (post, postId) => async (dispatch) => {
+  const res = await fetch(`/api/posts/${postId}`, {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(post)
+  });
+
+  if(res.ok) {
+    const updatedPost = await res.json();
+    dispatch(editPostAction(updatedPost))
+    //was thinking about dispatching in here too.
+    return updatedPost;
+  }
+}
 
 const initialState = { allPosts: {}, singlePost: {} }
 
@@ -101,6 +121,11 @@ const postReducer = (state = initialState, action) => {
     case DELETE_POST:
       newState = { ...state, allPosts: { ...state.allPosts } }
       delete newState.allPosts[action.payload]
+      return newState
+    case EDIT_POST:
+      //Check if this the correct state!
+      newState = {...state};
+      newState.allPosts = action.post;
       return newState
     default:
       return state;
