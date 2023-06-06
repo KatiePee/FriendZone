@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from 'react-router-dom'
 import { allPostsThunk, editPostThunk, singlePostThunk} from "../../store/posts";
@@ -11,6 +11,7 @@ function EditPostModal({user, post}) {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const history = useHistory()
+    const editPost = useSelector(state => state.posts.allPosts)
     const {firstName, lastName, profilePicURL} = user
     const {id} = post
 
@@ -29,8 +30,6 @@ function EditPostModal({user, post}) {
                 content
             };
         await dispatch(editPostThunk(updated_post, id))
-        //Is there a better way to do this???
-        await dispatch(allPostsThunk())
         closeModal()
       } else {
         setErrors([
