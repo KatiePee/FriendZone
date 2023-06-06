@@ -24,7 +24,12 @@ function PostFormModal({ user }) {
 
     const postFormData = new FormData();
     postFormData.append('content', content);
-    postFormData.append('image', images);
+
+    for (let i = 0; i < images.length; i++) {
+      postFormData.append('images', images[i]);
+    }
+
+    // postFormData.append('image', images);
     console.log("🚀 ~~~~~~~~~~~~~ file: index.js:26 ~ handleSubmit ~ postFormData:", postFormData)
     for (const pair of postFormData.entries()) {
       console.log('❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️', pair[0], pair[1]);
@@ -36,7 +41,7 @@ function PostFormModal({ user }) {
     history.push("/home");
     closeModal();
     // else {
-    //   setErrors(["Post Cannot Be Blank!"]);  
+    //   setErrors(["Post Cannot Be Blank!"]);
     // }
   };
 
