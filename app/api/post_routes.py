@@ -27,7 +27,13 @@ def posts():
 
             post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-            post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
+            comments = post.comments
+            comments_list = []
+            for comment in comments:
+                commentAuthor = comment.user.to_dict()
+                comment_dict = comment.to_dict()
+                comment_dict["commentAuthor"] = commentAuthor
+                comments_list.append(comment_dict)
 
             likes = post.likes
             post_dict['numLikes'] = len(likes)
@@ -43,7 +49,11 @@ def posts():
                 for like in likedBy:
                     if key in like:
                         del like[key]
+                for comment in comments_list:
+                    if key in comment["commentAuthor"]:
+                        del comment["commentAuthor"][key]
 
+            post_dict['comments'] = comments_list
             post_dict['author'] = author_dict
             post_dict['likedBy'] = likedBy
 
@@ -131,7 +141,7 @@ def single_post(id):
 ## Update Post - NEEDS TESTING
 @post_routes.route("/<int:id>", methods=['PUT'])
 @login_required
-def update_post():
+def update_post(id):
     """
     Update a post
     """
@@ -155,15 +165,16 @@ def update_post():
     if form.errors:
         return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
-## Get User Posts - FINISHED
-@post_routes.route("/current")
+
+## Get Posts by User ID - FINISHED
+@post_routes.route("/users/<int:id>")
 @login_required
-def user_posts():
+def user_posts(id):
     """
-    Query for all posts and returns then in a list of post dictionaries
+    Query for all posts by userId
     """
-    #Grabs current user
-    user = User.query.get(current_user.id)
+    #Grabs user
+    user = User.query.get(id)
 
     #Grabs current user posts
     user_posts = user.posts

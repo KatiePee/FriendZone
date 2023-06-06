@@ -1,5 +1,6 @@
 const ALL_POSTS = 'posts/allPosts'
 const SINGLE_POST = 'posts/singlePosts'
+// const USER_POSTS = 'posts/userPosts'
 const DELETE_POST = 'posts/deletePost'
 
 const allPostsAction = (posts) => ({
@@ -11,6 +12,11 @@ const singlePostAction = (post) => ({
   type: SINGLE_POST,
   payload: post
 })
+
+// const userPostsAction = (userId) => ({
+//   type: USER_POSTS,
+//   payload: userId
+// })
 
 const deletePostAction = (postId) => ({
   type: DELETE_POST,
@@ -73,9 +79,9 @@ export const deletePostThunk = (postId) => async dispatch => {
   }
 }
 
-export const currentUserPostsThunk = () => async (dispatch) => {
+export const currentUserPostsThunk = (userId) => async (dispatch) => {
   try {
-    const res = await fetch('/api/posts/current');
+    const res = await fetch(`/api/posts/users/${userId}`);
     const posts = await res.json()
     dispatch(allPostsAction(posts))
     return res
