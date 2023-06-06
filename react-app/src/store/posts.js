@@ -1,6 +1,5 @@
 const ALL_POSTS = 'posts/allPosts'
 const SINGLE_POST = 'posts/singlePosts'
-// const CREATE_POST = 'posts/createPost'
 const DELETE_POST = 'posts/deletePost'
 
 const allPostsAction = (posts) => ({
@@ -12,11 +11,6 @@ const singlePostAction = (post) => ({
   type: SINGLE_POST,
   payload: post
 })
-
-// const createPostAction = (post) => ({
-//   type: CREATE_POST,
-//   payload: post
-// })
 
 const deletePostAction = (postId) => ({
   type: DELETE_POST,
@@ -78,6 +72,7 @@ export const deletePostThunk = (postId) => async dispatch => {
     return errors;
   }
 }
+
 export const currentUserPostsThunk = () => async (dispatch) => {
   try {
     const res = await fetch('/api/posts/current');
@@ -89,20 +84,10 @@ export const currentUserPostsThunk = () => async (dispatch) => {
   }
 }
 
-export const currentUserSpots = () => async (dispatch) => {
-  try {
-    const res = await csrfFetch('/api/posts/current');
-    const posts = await res.json()
-    dispatch(getAllSpots(posts))
-    return res
-  } catch (e) {
-    return null
-  }
-}
 
 
 const initialState = { allPosts: {}, singlePost: {} }
-// const initialState = { }
+
 const postReducer = (state = initialState, action) => {
   let newState = {}
   switch (action.type) {
@@ -112,11 +97,6 @@ const postReducer = (state = initialState, action) => {
         newState.allPosts[post.id] = post
       })
       return newState
-    // case CREATE_POST:
-    //   newState = { ...state, allPosts: {}, singlePost: {} }
-    //   console.log('-----------action . payload--------', action.payload)
-    //   newState.allPosts[action.payload.id] = action.payload
-    //   return newState
     case DELETE_POST:
       newState = { ...state, allPosts: { ...state.allPosts } }
       delete newState.allPosts[action.payload]
