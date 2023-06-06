@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from 'react-router-dom'
 
-import { createPostThunk, allPostsThunk } from "../../store/posts";
+import { createPostThunk } from "../../store/posts";
 
 function PostFormModal({user}) {
   const dispatch = useDispatch();
@@ -11,7 +11,6 @@ function PostFormModal({user}) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory()
-  console.log("🚀 ~ file: index.js:9 ~ PostFormModal ~ user:", user)
   const {firstName, lastName, profilePicURL} = user
 
   const handleSubmit = async (e) => {

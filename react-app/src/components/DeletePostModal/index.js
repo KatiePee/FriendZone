@@ -4,7 +4,6 @@ import { deletePostThunk } from "../../store/posts";
 // import "../DeleteReviewModal/DeleteModal.css";
 
 const DeletePostModal = ({post}) => {
-  console.log("🚀 ~ file: index.js:7 ~ DeletePostModal ~ post:", post.id)
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 

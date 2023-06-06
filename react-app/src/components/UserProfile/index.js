@@ -12,7 +12,6 @@ function UserProfile() {
   const postsState = useSelector((state) => state.posts.allPosts);
   const currentUser = useSelector((state) => state.session.user);
   const userId = useParams().userId;
-  console.log("🚀 ~ file: index.js:15 ~ UserProfile ~ userId:", currentUser.id == userId)
   const posts = postsState ? Object.values(postsState) : [];
   const { firstName, profilePicURL } = currentUser;
 
@@ -23,7 +22,7 @@ function UserProfile() {
   if (!posts.length) return null;
   return (
     <div className="home-page-wrapper">
-      {currentUser.id == userId && (<div className="home-page__write-post">
+      {currentUser.id === +userId && (<div className="home-page__write-post">
         <img src={profilePicURL} className="post-card__profile-pic" />
         <OpenModalButton
           buttonText={`What's on your mind, ${firstName}?`}
