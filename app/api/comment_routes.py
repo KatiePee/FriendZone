@@ -34,6 +34,12 @@ def create_comment():
         comment = new_comment.to_dict()
         comment["commentAuthor"] = author.to_dict()
 
+        keys_to_remove = ["coverPhotoURL", "createdAt", "gender", "email"]
+
+        for key in keys_to_remove:
+          if key in comment["commentAuthor"]:
+                        del comment["commentAuthor"][key]
+
         # new_comment["commentAuthor"].append(author.to_dict())
 
         return comment

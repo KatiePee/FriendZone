@@ -35,6 +35,8 @@ function PostDetailModal({ post }) {
         "content": text
       }
       await dispatch(addCommentThunk(comment))
+
+      setText("")
     }
   }
 
@@ -137,7 +139,6 @@ function PostDetailModal({ post }) {
           />
           <div>
             <form onSubmit={handleSubmit}>
-              <input type="hidden" value={id}></input>
               <textarea
                 className="add-comment"
                 value={text}
