@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import { addCommentThunk } from "../../store/posts";
 import OpenModalButton from "../OpenModalButton";
+import DeleteCommentModal from "../DeleteCommentModal";
 // import "./postcard.css"
 import "./postdetailmodal.css"
 
@@ -128,12 +129,12 @@ function PostDetailModal({ post }) {
                   <OpenModalButton
                   buttonText="Edit"
                   onItemClick={closeModal}
-                  // modalComponent={}
+                  // modalComponent={EditPos}
                   />
                   <OpenModalButton
                     buttonText="Delete"
                     onItemClick={closeModal}
-                    // modalComponent={}
+                    modalComponent={<DeleteCommentModal comment={comment} />}
                   />
                 </div>
               </div>

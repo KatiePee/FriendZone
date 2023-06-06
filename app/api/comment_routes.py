@@ -9,7 +9,7 @@ from sqlalchemy import or_
 comment_routes = Blueprint('comments', __name__)
 
 
-#Create - NEED TESTING
+#Create - FINISHED AND WORKING!!!
 @comment_routes.route('/new', methods=["POST"])
 @login_required
 def create_comment():
@@ -70,4 +70,4 @@ def delete_comment(id):
     comment_to_delete = Comment.query.get(id)
     db.session.delete(comment_to_delete)
     db.session.commit()
-    return "Sucessfully delete"
+    return jsonify({"message": "Sucessfully deleted"})

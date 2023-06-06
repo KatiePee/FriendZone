@@ -4,10 +4,19 @@ const DELETE_POST = 'posts/deletePost'
 const EDIT_POST = 'posts/editPost'
 
 const ADD_COMMENT = 'comments/addComment'
+const DELETE_COMMENT = 'comments/deleteComment'
 
 const addCommentAction = (comment) => ({
   type: ADD_COMMENT,
   payload: comment
+})
+
+const deleteCommentAction = (postId, commentId) => ({
+  type: DELETE_COMMENT,
+  payload: {
+    postId,
+    commentId
+  }
 })
 
 
@@ -40,7 +49,6 @@ export const addCommentThunk = (content) => async (dispatch) => {
 
   if (res.ok) {
       const comment = await res.json()
-      console.log("CREATED COMMENT", comment)
       dispatch(addCommentAction(comment))
       return res
   } else {
@@ -48,9 +56,24 @@ export const addCommentThunk = (content) => async (dispatch) => {
   }
 }
 
+export const deleteCommentThunk = (comment) => async (dispatch) => {
+  const { postId, id } = comment
+  const res = await fetch(`/api/comments/${id}/delete`, {
+      method: "DELETE"
+  })
+
+  if(res.ok) {
+    const response = await res.json()
+    dispatch(deleteCommentAction(postId, id))
+      return response
+  } else {
+      const errors = await res.json();
+      return errors;
+  }
+}
+
 
 export const allPostsThunk = () => async dispatch => {
-  console.log("all post thunk called")
   const res = await fetch("/api/posts/", {
     headers: {
       "Content-Type": "application/json",
@@ -155,11 +178,21 @@ const postReducer = (state = initialState, action) => {
       // aState.allPosts[action.payload.id].postImages = [...action.payload.postImages];
       return aState
     case ADD_COMMENT:
-      console.log(action.payload);
       let newCommentsInState = { ...state }
       newCommentsInState.allPosts[action.payload.postId].comments.push(action.payload)
 
       return newCommentsInState;
+
+    case DELETE_COMMENT:
+      const { postId, commentId } = action.payload
+      let newCommentsState = { ...state }
+      // delete newCommentsState.allPosts[postId].comments[commentId - 1]
+      let postComments = newCommentsState.allPosts[postId].comments
+      let newCommentsList = postComments.filter(comment => comment.id !== commentId)
+
+      newCommentsState.allPosts[postId].comments = newCommentsList
+
+      return { ...state, allPosts: newCommentsState.allPosts }
     default:
       return state;
   }
