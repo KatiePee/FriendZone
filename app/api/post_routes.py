@@ -109,7 +109,13 @@ def single_post(id):
 
     post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-    post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
+    comments = post.comments
+    comments_list = []
+    for comment in comments:
+        commentAuthor = comment.user.to_dict()
+        comment_dict = comment.to_dict()
+        comment_dict["commentAuthor"] = commentAuthor
+        comments_list.append(comment_dict)
 
     likes = post.likes
     post_dict['numLikes'] = len(likes)
@@ -125,7 +131,11 @@ def single_post(id):
         for like in likedBy:
             if key in like:
                 del like[key]
+        for comment in comments_list:
+                    if key in comment["commentAuthor"]:
+                        del comment["commentAuthor"][key]
 
+    post_dict['comments'] = comments_list
     post_dict['author'] = author_dict
     post_dict['likedBy'] = likedBy
 
@@ -180,7 +190,13 @@ def user_posts(id):
 
         post_dict['postImages'] = [post.post_image.to_dict() for post.post_image in post.post_images]
 
-        post_dict['comments'] = [post.comment.to_dict() for post.comment in post.comments]
+        comments = post.comments
+        comments_list = []
+        for comment in comments:
+            commentAuthor = comment.user.to_dict()
+            comment_dict = comment.to_dict()
+            comment_dict["commentAuthor"] = commentAuthor
+            comments_list.append(comment_dict)
 
         likes = post.likes
         post_dict['numLikes'] = len(likes)
@@ -196,7 +212,11 @@ def user_posts(id):
             for like in likedBy:
                 if key in like:
                     del like[key]
+            for comment in comments_list:
+                    if key in comment["commentAuthor"]:
+                        del comment["commentAuthor"][key]
 
+        post_dict['comments'] = comments_list
         post_dict['author'] = author_dict
         post_dict['likedBy'] = likedBy
 
