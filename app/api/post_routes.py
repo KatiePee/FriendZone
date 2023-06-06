@@ -1,7 +1,7 @@
 from flask import Blueprint, session, request
 from flask_login import login_required, current_user
 from app.models import Post, User, PostImage, db, friendships, likes, Comment
-from app.forms import PostForm
+from app.forms import PostForm, PostImageForm
 from .auth_routes import validation_errors_to_error_messages
 from .AWS_helpers import upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
@@ -71,17 +71,40 @@ def create_post():
     """
     Create a post
     """
-    form = PostForm()
+    postForm = PostForm()
+    postImageForm = PostImageForm()
     # print(current_user)
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
+    postForm['csrf_token'].data = request.cookies['csrf_token']
+    post = {}
+    if postForm.validate_on_submit():
         new_post = Post(
-            content = form.data['content'],
+            content = postForm.data['content'],
             user_id = current_user.id
         )
         db.session.add(new_post)
         db.session.commit()
-        return new_post.to_dict()
+        post = new_post.to_dict()
+
+    if postImageForm.validate_on_submit():
+
+        image = postImageForm.data["image"]
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+
+        #  if "url" not in upload:
+            # return render_template("post_form.html", form=form, type="post", errors=[upload])
+        
+        new_image = PostImage(
+            post_id = post.id,
+            image_url = upload["url"]
+        )
+        db.session.add(new_image)
+        db.session.commit()
+
+    return post
+
+
+
 
 
 ## Delete A Post - FINISHED
