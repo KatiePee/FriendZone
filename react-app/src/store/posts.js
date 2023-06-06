@@ -4,11 +4,20 @@ const DELETE_POST = 'posts/deletePost'
 const EDIT_POST = 'posts/editPost'
 
 const ADD_COMMENT = 'comments/addComment'
+const EDIT_COMMENT = 'comments/editComment'
 const DELETE_COMMENT = 'comments/deleteComment'
 
 const addCommentAction = (comment) => ({
   type: ADD_COMMENT,
   payload: comment
+})
+
+const editCommentAction = (postId, commentId) => ({
+  type: EDIT_COMMENT,
+  payload: {
+    postId,
+    commentId
+  }
 })
 
 const deleteCommentAction = (postId, commentId) => ({
@@ -53,6 +62,20 @@ export const addCommentThunk = (content) => async (dispatch) => {
       return res
   } else {
     console.log(res.errors)
+  }
+}
+
+export const editCommentThunk = (comment, commentId) => async (dispatch) => {
+  const res = await fetch(`/api/comments/${commentId}`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(comment)
+  });
+
+  if(res.ok) {
+      const updatedComment = await res.json();
+      dispatch(editCommentAction(updatedComment))
+      return updatedComment
   }
 }
 
@@ -186,7 +209,6 @@ const postReducer = (state = initialState, action) => {
     case DELETE_COMMENT:
       const { postId, commentId } = action.payload
       let newCommentsState = { ...state }
-      // delete newCommentsState.allPosts[postId].comments[commentId - 1]
       let postComments = newCommentsState.allPosts[postId].comments
       let newCommentsList = postComments.filter(comment => comment.id !== commentId)
 
