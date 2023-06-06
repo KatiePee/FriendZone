@@ -1,5 +1,7 @@
-const ALL_POSTS = 'post/allPosts'
-const SINGLE_POST = 'post/singlePosts'
+const ALL_POSTS = 'posts/allPosts'
+const SINGLE_POST = 'posts/singlePosts'
+// const USER_POSTS = 'posts/userPosts'
+const DELETE_POST = 'posts/deletePost'
 
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
@@ -11,11 +13,21 @@ const singlePostAction = (post) => ({
   payload: post
 })
 
+// const userPostsAction = (userId) => ({
+//   type: USER_POSTS,
+//   payload: userId
+// })
+
+const deletePostAction = (postId) => ({
+  type: DELETE_POST,
+  payload: postId
+})
+
 export const allPostsThunk = () => async dispatch => {
   const res = await fetch("/api/posts/", {
     headers: {
-			"Content-Type": "application/json",
-		},
+      "Content-Type": "application/json",
+    },
   })
 
   if (res.ok) {
@@ -37,18 +49,64 @@ export const singlePostThunk = (postId) => async dispatch => {
   }
 }
 
+export const createPostThunk = (post) => async dispatch => {
+  const res = await fetch(`/api/posts/new`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(post)
+  })
+  if (res.ok) {
+    const newPost = await res.json()
+    dispatch(allPostsThunk())
+    return newPost
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+}
+
+export const deletePostThunk = (postId) => async dispatch => {
+  const res = await fetch(`/api/posts/${postId}`, {
+    method: 'DELETE',
+  })
+  if (res.ok) {
+    const response = await res.json()
+    dispatch(deletePostAction(postId))
+    return response
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+}
+
+export const currentUserPostsThunk = (userId) => async (dispatch) => {
+  try {
+    const res = await fetch(`/api/posts/users/${userId}`);
+    const posts = await res.json()
+    dispatch(allPostsAction(posts))
+    return res
+  } catch (e) {
+    return null
+  }
+}
+
+
+
 const initialState = { allPosts: {}, singlePost: {} }
-// const initialState = { }
+
 const postReducer = (state = initialState, action) => {
-  // let newState;
+  let newState = {}
   switch (action.type) {
     case ALL_POSTS:
-
-      let someState = {}
+      newState = { ...state, allPosts: {}, singlePost: {} }
       action.payload.forEach(post => {
-        someState[post.id] = post
+        newState.allPosts[post.id] = post
       })
-      return { ...state, allPosts: someState }
+      return newState
+    case DELETE_POST:
+      newState = { ...state, allPosts: { ...state.allPosts } }
+      delete newState.allPosts[action.payload]
+      return newState
     default:
       return state;
   }

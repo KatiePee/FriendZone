@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { useHistory } from 'react-router-dom'
 
-function PostFormModal() {
+import { createPostThunk, allPostsThunk } from "../../store/posts";
+
+function PostFormModal({user}) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory()
+  console.log("🚀 ~ file: index.js:9 ~ PostFormModal ~ user:", user)
+  const {firstName, lastName, profilePicURL} = user
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (content.length > 1) {
-        fetch('/api/posts/new', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                content
-            }),
-        })
-        .then(response => response.json())
-        .then(data => console.log("THIS IS THE NEW POST", data))
-        .then(closeModal())
+      const post = {
+        content
+      }
+      dispatch(createPostThunk(post))
+      history.push('/home')
+      closeModal()
     } else {
       setErrors([
         "Post Cannot Be Blank!",
@@ -32,7 +32,13 @@ function PostFormModal() {
 
   return (
     <>
-      <h1>What's on your mind?</h1>
+      <h3>Create post</h3>
+      <div className="post-card__profile-info">
+        <img className="post-card__profile-pic" src={profilePicURL} alt="profile" />
+        <div className="profile-info__left-side">
+          <p>{firstName} {lastName}</p>
+        </div>
+      </div>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -42,7 +48,7 @@ function PostFormModal() {
         <label>
           <input
             type="text"
-			placeholder="What's on your mind?"
+            placeholder={`What's on your mind, ${firstName}?`}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
