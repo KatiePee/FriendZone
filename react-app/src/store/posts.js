@@ -1,16 +1,11 @@
 const ALL_POSTS = 'posts/allPosts'
 const SINGLE_POST = 'posts/singlePosts'
-// const USER_POSTS = 'posts/userPosts'
 const DELETE_POST = 'posts/deletePost'
+
 
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
   payload: posts
-})
-
-const createPostThunkAction = (post) => ({
-  type: CREATE_POST,
-  payload: post
 })
 
 const singlePostAction = (post) => ({
@@ -18,15 +13,11 @@ const singlePostAction = (post) => ({
   payload: post
 })
 
-// const userPostsAction = (userId) => ({
-//   type: USER_POSTS,
-//   payload: userId
-// })
-
 const deletePostAction = (postId) => ({
   type: DELETE_POST,
   payload: postId
 })
+
 
 export const allPostsThunk = () => async dispatch => {
   const res = await fetch("/api/posts/", {
@@ -96,7 +87,6 @@ export const currentUserPostsThunk = (userId) => async (dispatch) => {
 }
 
 
-
 const initialState = { allPosts: {}, singlePost: {} }
 
 const postReducer = (state = initialState, action) => {
@@ -118,39 +108,3 @@ const postReducer = (state = initialState, action) => {
 }
 
 export default postReducer
-// const CREATE_POST = "posts/CREATE_POST";
-
-// const createPostAction = (post) => {
-//   return {
-//     type: CREATE_POST,
-//     post
-//   };
-// };
-
-// export const createPostThunk = (content) => async (dispatch) => {
-//   const response = await fetch("/api/spots/new", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       content,
-//       // add ability to add photos
-//     }),
-//   });
-
-//   if (response.ok) {
-//     const data = await response.json();
-//     dispatch(createPostAction(data));
-//   } else {
-//     return "Cannot Create A New Post!";
-//   }
-// };
-
-
-// export default function postReducer(state = initialState, action) {
-//     switch (action.type) {
-//         case CREATE_POST:
-//            pass
-//     }
-// }
