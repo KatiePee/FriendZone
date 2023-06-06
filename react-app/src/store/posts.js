@@ -77,8 +77,29 @@ export const deletePostThunk = (postId) => async dispatch => {
     const errors = await res.json();
     return errors;
   }
-
 }
+export const currentUserPostsThunk = () => async (dispatch) => {
+  try {
+    const res = await fetch('/api/posts/current');
+    const posts = await res.json()
+    dispatch(allPostsAction(posts))
+    return res
+  } catch (e) {
+    return null
+  }
+}
+
+export const currentUserSpots = () => async (dispatch) => {
+  try {
+    const res = await csrfFetch('/api/posts/current');
+    const posts = await res.json()
+    dispatch(getAllSpots(posts))
+    return res
+  } catch (e) {
+    return null
+  }
+}
+
 
 const initialState = { allPosts: {}, singlePost: {} }
 // const initialState = { }
