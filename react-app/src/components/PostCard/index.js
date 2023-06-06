@@ -8,7 +8,6 @@ function PostCard({ post }) {
   const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
   const user = useSelector(state => state.session.user)
-  console.log("THIS IS THE USER!!", user)
   const [showMenu, setShowMenu] = useState(false);
   const [text, setText] = useState("")
   const ulRef = useRef();

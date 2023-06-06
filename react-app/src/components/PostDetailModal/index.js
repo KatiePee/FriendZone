@@ -76,11 +76,11 @@ function PostDetailModal({ post }) {
         </div>
         <div>
             {comments.map((comment) => (
-                <div>{comment.content}</div>
+                <div>{comment.userId} {comment.content}</div>
             ))}
         </div>
         <div className="post-card__comment-bar">
-          <img className="post-card__profile-pic" src={profilePicURL} alt="profile" />
+          <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />
           <div>
             <textarea className="add-comment" value={text} onChange={handleInputChange} rows={1}></textarea>
             <span>➡</span>
