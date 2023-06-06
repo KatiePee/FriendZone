@@ -92,13 +92,8 @@ def remove_post(id):
     """
     post = Post.query.get(id)
 
-    if not post:
-        return {'message': 'Post not found'}, 404
-
-    if id != current_user.id:
-        return {'message': 'Forbidden'}, 403
-
     db.session.delete(post)
+    db.session.commit()
     return {'message': 'Post successfully deleted'}
 
 

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import PostDetailModal from "../PostDetailModal";
 import "./postcard.css"
+import DeletePostModal from "../DeletePostModal";
 
 function PostCard({ post }) {
   const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
@@ -12,24 +13,24 @@ function PostCard({ post }) {
   const [text, setText] = useState("")
   const ulRef = useRef();
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true);
+  // };
 
-  useEffect(() => {
-    if (!showMenu) return;
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
+  //   const closeMenu = (e) => {
+  //     if (!ulRef.current.contains(e.target)) {
+  //       setShowMenu(false);
+  //     }
+  //   };
 
-    document.addEventListener("click", closeMenu);
+  //   document.addEventListener("click", closeMenu);
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  //   return () => document.removeEventListener("click", closeMenu);
+  // }, [showMenu]);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -82,7 +83,13 @@ function PostCard({ post }) {
           </div>
           <div className="post-card__edit-delete">
             <span>EDIT</span>
-            <span>DEL</span>
+            {user.id === post.author.id && (
+              <OpenModalButton
+                buttonText="Delete"
+                onItemClick={closeMenu}
+                modalComponent={<DeletePostModal post={post} />}
+              />
+            )}
           </div>
         </div>
         <div className="post-card__content">
