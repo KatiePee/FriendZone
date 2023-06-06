@@ -22,7 +22,6 @@ function PostDetailModal({ post }) {
   const user = useSelector((state) => state.session.user);
   const [text, setText] = useState("");
   const { closeModal } = useModal()
-  console.log("POST ID", id)
   const handleInputChange = (e) => {
     setText(e.target.value);
   };

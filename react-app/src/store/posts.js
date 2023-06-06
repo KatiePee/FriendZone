@@ -40,9 +40,8 @@ export const addCommentThunk = (content) => async (dispatch) => {
 
   if (res.ok) {
       const comment = await res.json()
-      console.log("COMMENT BACK", comment)
-      // dispatch(addCommentAction(comment))
-      // return res
+      dispatch(addCommentAction(comment))
+      return res
   } else {
     console.log(res.errors)
   }
@@ -154,6 +153,12 @@ const postReducer = (state = initialState, action) => {
       // TODO: work on ability to edit pictures
       // aState.allPosts[action.payload.id].postImages = [...action.payload.postImages];
       return aState
+    case ADD_COMMENT:
+      console.log(action.payload);
+      let newCommentsInState = { ...state }
+      newCommentsInState.allPosts[action.payload.postId].comments.push(action.payload)
+
+      return newCommentsInState;
     default:
       return state;
   }
