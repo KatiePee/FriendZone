@@ -31,15 +31,20 @@ const editPostAction = (post) => ({
   payload: post
 })
 
-export const addCommentThunk = () => async (dispatch) => {
-  const res = await fetch("/api/comments/", {
+export const addCommentThunk = (content) => async (dispatch) => {
+  const res = await fetch("/api/comments/new", {
+      method: "POST",
       headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(content)
   })
 
   if (res.ok) {
       const comment = await res.json()
-      dispatch(addCommentAction(comment))
-      return res
+      console.log("COMMENT BACK", comment)
+      // dispatch(addCommentAction(comment))
+      // return res
+  } else {
+    console.log(res.errors)
   }
 }
 

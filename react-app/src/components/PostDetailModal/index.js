@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
+import { addCommentThunk } from "../../store/posts";
 // import "./postcard.css"
 import "./postdetailmodal.css"
 
@@ -17,10 +18,11 @@ function PostDetailModal({ post }) {
     createdAt,
   } = post;
   const { firstName, lastName, profilePicURL } = author;
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.session.user);
   const [text, setText] = useState("");
   const { closeModal } = useModal()
-
+  console.log("POST ID", id)
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -29,9 +31,11 @@ function PostDetailModal({ post }) {
     e.preventDefault()
     if (content.length > 1) {
       const comment = {
-        content
+        "post_id": id,
+        "user_id": user.id,
+        "content": text
       }
-      dispatchEvent()
+      await dispatch(addCommentThunk(comment))
     }
   }
 
@@ -133,14 +137,16 @@ function PostDetailModal({ post }) {
             alt="profile"
           />
           <div>
-            <textarea
-              className="add-comment"
-              value={text}
-              onSubmit={handleSubmit}
-              onChange={handleInputChange}
-              rows={5}
-            ></textarea>
-            <span>➡</span>
+            <form onSubmit={handleSubmit}>
+              <input type="hidden" value={id}></input>
+              <textarea
+                className="add-comment"
+                value={text}
+                onChange={handleInputChange}
+                rows={5}
+              ></textarea>
+              <button>➡</button>
+            </form>
           </div>
         </div>
       </div>

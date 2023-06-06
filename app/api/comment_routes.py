@@ -11,7 +11,7 @@ comment_routes = Blueprint('comments', __name__)
 
 #Create - NEED TESTING
 @comment_routes.route('/new', methods=["POST"])
-@login_required
+# @login_required
 def create_comment():
     """
     Create a comment
@@ -20,9 +20,11 @@ def create_comment():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        print("------------------FORM DATA----------------", form.data)
         new_comment = Comment(
             content = form.data['content'],
-            user_id = current_user.id
+            user_id = current_user.id,
+            post_id = form.data["post_id"]
         )
         db.session.add(new_comment)
         db.session.commit()
