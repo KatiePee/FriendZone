@@ -78,7 +78,7 @@ def create_post():
     post = {}
     if postForm.validate_on_submit():
         print("🚀 ~ file: post_routes.py:80 ~ postForm:", postForm)
-        print("🚀 ~ file: post_routes.py:81 ~ postForm.data:", postForm.data)
+        print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:81 ~ postForm.data:", postForm.data)
         new_post = Post(
             content = postForm.data['content'],
             user_id = current_user.id
@@ -94,11 +94,12 @@ def create_post():
 
         #  if "url" not in upload:
             # return render_template("post_form.html", form=form, type="post", errors=[upload])
-
+        print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:89 ~ image:", image)
         new_image = PostImage(
             post_id = post["id"],
             image_url = upload["url"]
         )
+
         print("🚀 ~ file: post_routes.py:101 ~ new_image:", new_image)
         db.session.add(new_image)
         db.session.commit()
