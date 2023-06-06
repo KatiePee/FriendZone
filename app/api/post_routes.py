@@ -77,6 +77,8 @@ def create_post():
     postForm['csrf_token'].data = request.cookies['csrf_token']
     post = {}
     if postForm.validate_on_submit():
+        print("🚀 ~ file: post_routes.py:80 ~ postForm:", postForm)
+        print("🚀 ~ file: post_routes.py:81 ~ postForm.data:", postForm.data)
         new_post = Post(
             content = postForm.data['content'],
             user_id = current_user.id
@@ -84,22 +86,29 @@ def create_post():
         db.session.add(new_post)
         db.session.commit()
         post = new_post.to_dict()
+        print("🚀 ~ file: post_routes.py:89 ~ post:", post)
 
-    if postImageForm.validate_on_submit():
-
-        image = postImageForm.data["image"]
+        image = postForm.data["image"]
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
 
         #  if "url" not in upload:
             # return render_template("post_form.html", form=form, type="post", errors=[upload])
-        
+
         new_image = PostImage(
-            post_id = post.id,
+            post_id = post["id"],
             image_url = upload["url"]
         )
+        print("🚀 ~ file: post_routes.py:101 ~ new_image:", new_image)
         db.session.add(new_image)
         db.session.commit()
+
+        image_dict = new_image.to_dict()
+        post["postImage"] = image_dict
+        print("🚀 ~ file: post_routes.py:107 ~ post:", post)
+    # if postImageForm.validate_on_submit():
+    #     print("🚀 ~ file: post_routes.py:91 ~ postImageForm:", postImageForm)
+    #     print("🚀 ~ file: post_routes.py:92 ~ postImageForm.data:", postImageForm.data)
 
     return post
 
