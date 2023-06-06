@@ -55,10 +55,12 @@ export const createPostThunk = (post) => async dispatch => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(post)
   })
+  console.log('-----------res------------', res)
   if (res.ok) {
-    const response = await res.json()
-    dispatch(createPostAction(post))
-    return response
+    const newPost = await res.json()
+    console.log('-----------thunk res-------', newPost)
+    dispatch(createPostAction(newPost))
+    return newPost
   } else {
     const errors = await res.json();
     return errors;
@@ -86,13 +88,14 @@ const postReducer = (state = initialState, action) => {
   let newState = {}
   switch (action.type) {
     case ALL_POSTS:
-      newState = {...state, allPosts: {}, singlePost: {}}
+      newState = { ...state, allPosts: {}, singlePost: {} }
       action.payload.forEach(post => {
         newState.allPosts[post.id] = post
       })
       return newState
     case CREATE_POST:
-      newState = {...state, allPosts: {}, singlePost: {}}
+      newState = { ...state, allPosts: {}, singlePost: {} }
+      console.log('-----------action . payload--------', action.payload)
       newState.allPosts[action.payload.id] = action.payload
       return newState
     case DELETE_POST:

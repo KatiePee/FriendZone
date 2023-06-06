@@ -70,7 +70,7 @@ def create_post():
         )
         db.session.add(new_post)
         db.session.commit()
-        return {'res': new_post.to_dict()}
+        return new_post.to_dict()
 
 
 ## Delete A Post - NEEDS TESTING

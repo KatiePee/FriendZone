@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useHistory } from 'react-router-dom'
 
-import { createPostThunk } from "../../store/posts";
+import { createPostThunk, allPostsThunk } from "../../store/posts";
 
 function PostFormModal() {
   const dispatch = useDispatch();
@@ -32,6 +32,7 @@ function PostFormModal() {
       }
       console.log('------post form handle submit----------', post)
       dispatch(createPostThunk(post))
+      dispatch(allPostsThunk())
       history.push('/home')
 
     } else {

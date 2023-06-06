@@ -24,7 +24,7 @@ function HomePage() {
         <img src={user.profilePicURL} className="post-card__profile-pic" />
         <input placeholder={`What's on your mind, Bob?`} />
       </div>
-      {posts.map(post => (
+      {posts.length && posts.map(post => (
         <PostCard post={post} key={post.id} />
       ))}
     </div>

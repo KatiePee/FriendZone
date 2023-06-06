@@ -69,7 +69,7 @@ function PostCard({ post }) {
         })}
       </div>
       <div className="post-card__details">
-        <div className="post-card__engagement">{numLikes <= 0 ? "" : `❤ ${numLikes}` }</div>
+        <div className="post-card__engagement">{numLikes <= 0 ? "" : `❤ ${numLikes}`}</div>
         <div className="post-card__buttons">
           <span>LIKE</span>
           <span>COMMENT</span>
