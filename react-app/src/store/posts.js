@@ -26,6 +26,7 @@ const editPostAction = (post) => ({
 
 
 export const allPostsThunk = () => async dispatch => {
+  console.log("all post thunk called")
   const res = await fetch("/api/posts/", {
     headers: {
       "Content-Type": "application/json",
@@ -85,7 +86,7 @@ export const currentUserPostsThunk = (userId) => async (dispatch) => {
   try {
     const res = await fetch(`/api/posts/users/${userId}`);
     const posts = await res.json()
-    dispatch(allPostsAction(posts))
+    await dispatch(allPostsAction(posts))
     return res
   } catch (e) {
     return e
@@ -124,9 +125,11 @@ const postReducer = (state = initialState, action) => {
       return newState
     case EDIT_POST:
       //Check if this the correct state!
-      newState = {...state};
-      newState.allPosts = action.post;
-      return newState
+      let aState = { ...state }
+      aState.allPosts[action.payload.id].content = action.payload.content;
+      // TODO: work on ability to edit pictures
+      // aState.allPosts[action.payload.id].postImages = [...action.payload.postImages];
+      return aState
     default:
       return state;
   }
