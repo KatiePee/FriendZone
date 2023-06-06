@@ -3,6 +3,13 @@ const SINGLE_POST = 'posts/singlePosts'
 const DELETE_POST = 'posts/deletePost'
 const EDIT_POST = 'posts/editPost'
 
+const ADD_COMMENT = 'comments/addComment'
+
+const addCommentAction = (comment) => ({
+  type: ADD_COMMENT,
+  payload: comment
+})
+
 
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
@@ -23,6 +30,18 @@ const editPostAction = (post) => ({
   type: EDIT_POST,
   payload: post
 })
+
+export const addCommentThunk = () => async (dispatch) => {
+  const res = await fetch("/api/comments/", {
+      headers: {"Content-Type": "application/json"},
+  })
+
+  if (res.ok) {
+      const comment = await res.json()
+      dispatch(addCommentAction(comment))
+      return res
+  }
+}
 
 
 export const allPostsThunk = () => async dispatch => {
