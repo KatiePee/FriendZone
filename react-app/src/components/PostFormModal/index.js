@@ -11,6 +11,8 @@ function PostFormModal({ user }) {
   const { closeModal } = useModal();
   const { firstName, lastName, profilePicURL } = user;
 
+
+  // TODO: allow for post with just images and no content?
   const handleSubmit = async (e) => {
     e.preventDefault();
 
