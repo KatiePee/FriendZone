@@ -7,7 +7,7 @@ import PostDetailModal from "../PostDetailModal";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import "./PostCard.css"
-import { createLikeThunk, removeLikeThunk } from "../../store/likes";
+import { createLikeThunk, removeLikeThunk } from "../../store/posts";
 import { allPostsThunk } from "../../store/posts";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -18,38 +18,33 @@ function PostCard({ post }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch()
   const [text, setText] = useState("")
+  const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
   const history = useHistory()
 
-  const { content, numLikes, author, postImages, likedBy, createdAt } = post
+  const { content, numLikes, author, postImages, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
-  const likeByNames = likedBy.map(obj => {
-    return <span>{obj.firstName} {obj.lastName}</span>
-  })
-
+  const likedUser = likedPeeps.find(liker => liker.id === user.id)
   let userLiked = false
-  for (let i = 0; i < likedBy.length; i++) {
-    let liker = likedBy[i]
-    if (liker.id === user.id) userLiked = true
-  }
-
   const [liked, setLiked] = useState(userLiked)
 
   const handleLike = async (e) => {
-    if (!userLiked) {
-      await dispatch(createLikeThunk(post.id))
-      await dispatch(allPostsThunk())
-      userLiked = !userLiked
-      setLiked(!liked)
+    if (!likedUser) {
+      await dispatch(createLikeThunk(post.id, user))
     } else {
-      await dispatch(removeLikeThunk(post.id))
-      await dispatch(allPostsThunk())
-      userLiked = !userLiked
-      setLiked(!liked)
+      await dispatch(removeLikeThunk(post.id, user))
     }
   }
 
   const handleInputChange = (e) => {
     setText(e.target.value);
+  }
+  let likeByNames;
+
+  if (likedPeeps) {
+    likeByNames = likedPeeps.map(obj => {
+      return <span>{obj.firstName} {obj.lastName}</span>
+    })
+
   }
 
   const redirectUserProfile = (e) => {
@@ -121,11 +116,11 @@ function PostCard({ post }) {
       </div>
       <div className="post-card__details">
           <div className="post-card__engagement">
-        <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
-            <div className="post-card__likes">
-              {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
-            </div>
-        </Tippy>
+            <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
+                <div className="post-card__likes">
+                  {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
+                </div>
+            </Tippy>
           </div>
         <div className="post-card__buttons">
           <button onClick={handleLike}>LIKE</button>
