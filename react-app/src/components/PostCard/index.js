@@ -20,12 +20,12 @@ function PostCard({ post }) {
   const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
   const { content, numLikes, author, postImages, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
-  const test = likedPeeps.find(liker => liker.id === user.id)
+  const likedUser = likedPeeps.find(liker => liker.id === user.id)
   let userLiked = false
   const [liked, setLiked] = useState(userLiked)
 
   const handleLike = async (e) => {
-    if (!test) {
+    if (!likedUser) {
       await dispatch(createLikeThunk(post.id, user))
     } else {
       await dispatch(removeLikeThunk(post.id, user))
