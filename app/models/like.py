@@ -14,7 +14,7 @@ likes = db.Table(
         db.ForeignKey(add_prefix_for_prod("posts.id")),
         primary_key=True
     ),
-    db.UniqueConstraint('user_id', 'post_id')
+    # db.UniqueConstraint('user_id', 'post_id')
 )
 
 if environment == "production":

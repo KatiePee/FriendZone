@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, FileField
-from wtforms.validators import DataRequired, Email, ValidationError
-from flask_wtf.file import FileAllowed
-from app.models import Post
+from wtforms import StringField, MultipleFileField
+from wtforms.validators import DataRequired, ValidationError
+from flask_wtf.file import FileAllowed, FileField, FileRequired
+from ..api.AWS_helpers import ALLOWED_EXTENSIONS
 
-class CreatePost(FlaskForm):
+class PostForm(FlaskForm):
     content = StringField('Content')
-    # images = FileField('Upload Images', validators=[FileAllowed(['jpg', 'jpeg', 'png'])], render_kw={'multiple': True})
-    image = StringField('Upload Image')
+    images = MultipleFileField('Upload Images', validators=[FileAllowed(list(ALLOWED_EXTENSIONS))], render_kw={'multiple': True})
+    # image = FileField('Upload Images', validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    # image = StringField('Upload Image')
