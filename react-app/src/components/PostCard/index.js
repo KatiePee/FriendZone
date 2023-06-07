@@ -12,17 +12,12 @@ function PostCard({ post }) {
   const [text, setText] = useState("")
   const { closeModal } = useModal();
 
-  const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
+  const { content, numLikes, author, postImages, likedBy, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   }
-
-  const textareaStyle = {
-    resize: 'none',
-    overflow: 'hidden'
-  };
 
   const timeAgo = (dateObj) => {
     const date = new Date(dateObj);
@@ -33,8 +28,8 @@ function PostCard({ post }) {
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
-    const months = Math.floor(days / 30);
-    const years = Math.floor(months / 12);
+    // const months = Math.floor(days / 30);
+    // const years = Math.floor(months / 12);
 
     const month = date.toLocaleString('default', { month: 'long' });
     const year = date.toLocaleString('default', { year: 'numeric' });
@@ -84,7 +79,7 @@ function PostCard({ post }) {
       </div>
       <div className="post-card__images">
         {postImages.map(image => {
-          return <img src={image.imageUrl} />
+          return <img src={image.imageUrl} key={image.id} alt="post" />
         })}
       </div>
       <div className="post-card__details">

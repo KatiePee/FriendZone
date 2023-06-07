@@ -37,12 +37,8 @@ function PostFormModal({ user }) {
 
     dispatch(createPostThunk(postFormData));
 
-    // dispatch(createPostThunk(post));
     history.push("/home");
     closeModal();
-    // else {
-    //   setErrors(["Post Cannot Be Blank!"]);
-    // }
   };
 
   const handleImageChange = (e) => {

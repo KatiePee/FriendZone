@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
-import { addCommentThunk, allPostsThunk } from "../../store/posts";
+import { addCommentThunk } from "../../store/posts";
 import Comment from "../Comment";
 // import "./postcard.css"
 import "./postdetailmodal.css"
@@ -15,13 +15,12 @@ function PostDetailModal({ post }) {
     author,
     postImages,
     likedBy,
-    comments,
     createdAt,
   } = post;
   const { firstName, lastName, profilePicURL } = author;
   const dispatch = useDispatch()
   const user = useSelector((state) => state.session.user);
-  const commentList = useSelector((state) => state.posts.allPosts)
+  const stateComments = useSelector((state) => state.posts.allPosts[id].comments)
   const [text, setText] = useState("");
   const { closeModal } = useModal()
   const handleInputChange = (e) => {
@@ -42,15 +41,6 @@ function PostDetailModal({ post }) {
     }
   }
 
-  useEffect(() => {
-    return
-  }, [commentList])
-
-  const textareaStyle = {
-    resize: "none",
-    overflow: "hidden",
-  };
-
   const timeAgo = (dateObj) => {
     const date = new Date(dateObj);
     const currentDate = new Date();
@@ -60,8 +50,8 @@ function PostDetailModal({ post }) {
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
-    const months = Math.floor(days / 30);
-    const years = Math.floor(months / 12);
+    // const months = Math.floor(days / 30);
+    // const years = Math.floor(months / 12);
 
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.toLocaleString("default", { year: "numeric" });
@@ -104,7 +94,7 @@ function PostDetailModal({ post }) {
       </div>
       <div className="post-card__images">
         {postImages.map((image) => {
-          return <img src={image.imageUrl} />;
+          return <img src={image.imageUrl} alt="postimage" />;
         })}
       </div>
       <div className="post-card__details">
@@ -115,7 +105,7 @@ function PostDetailModal({ post }) {
           <span>LIKE</span>
         </div>
         <div>
-          {comments.map((comment) => (
+          {stateComments.map((comment) => (
             <Comment comment={comment} post={post}/>
           ))}
         </div>

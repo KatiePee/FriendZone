@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 import { useModal } from "../../context/Modal"
-import { allPostsThunk, editCommentThunk } from '../../store/posts';
+import { editCommentThunk } from '../../store/posts';
 
 
 
 const Comment = ({ comment }) => {
-  const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === comment.id).content)
+  const { id } = comment
+  const user = useSelector(state => state.session.user)
+  const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === id).content)
 
   const dispatch = useDispatch()
   const { closeModal } = useModal()
@@ -66,14 +68,16 @@ const Comment = ({ comment }) => {
             {comment.commentAuthor.lastName}
           </p>
         </div>
-        <div className="profile-info__right-side">
-        <button onClick={handleEditClick}>Edit</button>
-          <OpenModalButton
-            buttonText="Delete"
-            onItemClick={closeModal}
-            modalComponent={<DeleteCommentModal comment={comment} />}
-          />
-        </div>
+        {user.id === comment.userId && (
+          <div className="profile-info__right-side">
+            <button onClick={handleEditClick}>Edit</button>
+              <OpenModalButton
+                buttonText="Delete"
+                onItemClick={closeModal}
+                modalComponent={<DeleteCommentModal comment={comment} />}
+              />
+          </div>
+        )}
       </div>
       <div className="post-card__comment-content">
         {" "}

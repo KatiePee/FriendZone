@@ -205,16 +205,17 @@ const postReducer = (state = initialState, action) => {
       // aState.allPosts[action.payload.id].postImages = [...action.payload.postImages];
       return aState
     case ADD_COMMENT:
-      let newCommentsInState = { ...state }
-      newCommentsInState.allPosts[action.payload.postId].comments.push(action.payload)
-      return newCommentsInState;
+      const someState =  { ...state, allPosts: {
+        ...state.allPosts,
+        [action.payload.postId]: {
+          ...state.allPosts[action.payload.postId],
+          comments: [...state.allPosts[action.payload.postId].comments, action.payload]
+        }
+      }}
+
+      console.log("ADD COMMENT STATE", someState)
+      return someState;
     case EDIT_COMMENT:
-      // let eCommentState = {...state}
-      // let editPostComments = eCommentState.allPosts[action.payload.postId].comments
-      // let editComment = editPostComments.filter(comment => comment.id === action.payload.commentId)
-      // console.log("THIS IS THE EDIT COMMENT.content INSIDE REDUCER", editComment)
-      // editComment[0].content = action.payload.updatedComment.content
-      // return { ...state, allPosts: eCommentState.allPosts}
 
       return { ...state, allPosts: {
         ...state.allPosts,
