@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 import { useModal } from "../../context/Modal"
-import { allPostsThunk, editCommentThunk } from '../../store/posts';
+import { editCommentThunk } from '../../store/posts';
 
 
 
 const Comment = ({ comment }) => {
-  // console.log("THIS IS THE COMMENT", comment)
-  // const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === comment.id).content)
-  const stateComment = useSelector(state => state.posts.allPosts)
-  // const [newComment, setNewComment] = useState("")
-
-  const comments = useSelector(state => {
-    const allPosts = Object.values(state.posts.allPosts);
-    return allPosts.map(post => post.comments);
-  });
-  
-  console.log("THIS IS THE COMMENT", comments)
+  const { id } = comment
+  const user = useSelector(state => state.session.user)
+  const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === id).content)
 
   const dispatch = useDispatch()
   const { closeModal } = useModal()
   const [isEditing, setIsEditing] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment.content);
-  // console.log("THIS IS THE STATE COMMENT", stateComment)
+  const [editedComment, setEditedComment] = useState(stateComment);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -35,7 +26,6 @@ const Comment = ({ comment }) => {
     const updated_comment = {
       content: editedComment
     }
-    // setEditedComment(newComment)
     await dispatch(editCommentThunk(updated_comment, comment))
     setIsEditing(false);
   };
@@ -47,7 +37,6 @@ const Comment = ({ comment }) => {
 
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
-    // setNewComment(e.target.value);
   };
 
   if (isEditing) {
@@ -79,18 +68,20 @@ const Comment = ({ comment }) => {
             {comment.commentAuthor.lastName}
           </p>
         </div>
-        <div className="profile-info__right-side">
-        <button onClick={handleEditClick}>Edit</button>
-          <OpenModalButton
-            buttonText="Delete"
-            onItemClick={closeModal}
-            modalComponent={<DeleteCommentModal comment={comment} />}
-          />
-        </div>
+        {user.id === comment.userId && (
+          <div className="profile-info__right-side">
+            <button onClick={handleEditClick}>Edit</button>
+              <OpenModalButton
+                buttonText="Delete"
+                onItemClick={closeModal}
+                modalComponent={<DeleteCommentModal comment={comment} />}
+              />
+          </div>
+        )}
       </div>
       <div className="post-card__comment-content">
         {" "}
-        {comment.content}{" "}
+        {editedComment}{" "}
       </div>
     </>
   );

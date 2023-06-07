@@ -23,7 +23,7 @@ function UserProfile() {
   return (
     <div className="home-page-wrapper">
       {currentUser.id === +userId && (<div className="home-page__write-post">
-        <img src={profilePicURL} className="post-card__profile-pic" />
+        <img src={profilePicURL} className="post-card__profile-pic" alt="profile pic" />
         <OpenModalButton
           buttonText={`What's on your mind, ${firstName}?`}
           modalComponent={<PostFormModal user={currentUser} />}

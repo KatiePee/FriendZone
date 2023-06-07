@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { useHistory } from 'react-router-dom'
-import { allPostsThunk, editPostThunk, singlePostThunk} from "../../store/posts";
+import { editPostThunk} from "../../store/posts";
 // import "../DeleteReviewModal/DeleteModal.css";
 
 function EditPostModal({user, post}) {
     const dispatch = useDispatch();
-    const [content, setContent] = useState("");
+    const editPost = useSelector(state => state.posts.allPosts[post.id])
+    const [content, setContent] = useState(editPost.content);
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
-    const history = useHistory()
-    const editPost = useSelector(state => state.posts.allPosts)
     const {firstName, lastName, profilePicURL} = user
     const {id} = post
-
-    //Bring in the old content but how??
-    // useEffect(() => {
-    //     dispatch(singlePostThunk(id))
-    //     .then(data => {
-    //         setContent(data.content)
-    //     })
-    // })
 
     const handleSubmit = async (e) => {
         e.preventDefault();
