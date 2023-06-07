@@ -1,6 +1,6 @@
 const ALL_LIKES_USER = "likes/allLikesUser";
 const ALL_POST_LIKES = "likes/allPostLikes";
-const LIKE_POST = "likes/likePost";
+const CREATE_LIKE = "likes/likePost";
 const REMOVE_LIKE = "likes/removeLike";
 
 // don't know if what we're passing into these are right???
@@ -14,8 +14,8 @@ const getPostLikesAction = (postLikes) => ({
   payload: postLikes,
 });
 
-const likePostAction = (postId) => ({
-  type: LIKE_POST,
+const createLikeAction = (postId) => ({
+  type: CREATE_LIKE,
   payload: postId,
 });
 
@@ -37,7 +37,7 @@ export const getUserLikeThunk = (userId) => async (dispatch) => {
   }
 };
 
-export const getPostLikeThunk = (postId) => async (dispatch) => {
+export const getPostLikesThunk = (postId) => async (dispatch) => {
   const res = await fetch(`/api/likes/posts/${postId}`);
   if (res.ok) {
     const postLikes = await res.json();
@@ -49,7 +49,7 @@ export const getPostLikeThunk = (postId) => async (dispatch) => {
   }
 };
 
-export const likePostThunk = (postId) => async (dispatch) => {
+export const createLikeThunk = (postId) => async (dispatch) => {
   const res = await fetch(`/api/likes/posts/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ export const likePostThunk = (postId) => async (dispatch) => {
   });
   if (res.ok) {
     const likePost = await res.json();
-    dispatch(likePostAction(likePost));
+    dispatch(createLikeAction(likePost));
     return res;
   } else {
     const errors = res.json();
@@ -83,18 +83,18 @@ export const removeLikeThunk = (postId) => async (dispatch) => {
 //What is the state suppose to be??? LETS DISCUSS!
 const initialState = {};
 const likeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ALL_LIKES_USER:
-      null;
-    case ALL_LIKES_USER:
-      null;
-    case LIKE_POST:
-      null;
-    case REMOVE_LIKE:
-      null;
-    default:
-      return state;
-  }
+  // switch (action.type) {
+  //   case ALL_LIKES_USER:
+  //     null;
+  //   case ALL_LIKES_USER:
+  //     null;
+  //   case CREATE_LIKE:
+  //     null;
+  //   case REMOVE_LIKE:
+  //     null;
+  //   default:
+  //     return state;
+  // }
 };
 
 export default likeReducer;

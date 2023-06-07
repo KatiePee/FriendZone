@@ -7,7 +7,7 @@ like_routes = Blueprint('likes', __name__)
 
 #Get all likes by User Id - NEED TESTING
 @like_routes.route('/users/<int:id>')
-# @login_required
+@login_required
 def likes_by_user(id):
     """
     Get all the likes by a User Id
@@ -23,7 +23,7 @@ def likes_by_user(id):
 
 #Get all likes by Post Id - NEED TESTING
 @like_routes.route('/posts/<int:id>')
-# @login_required
+@login_required
 def likes_by_post(id):
     """
     Get all likes by Post Id
@@ -43,7 +43,7 @@ def likes_by_post(id):
 
 #like a post by post ID - NEED TESTING
 @like_routes.route('/posts/<int:id>', methods=["POST"])
-# @login_required
+@login_required
 def like_a_post(id):
     """
     like a post by post ID
@@ -60,7 +60,7 @@ def like_a_post(id):
 
 #Remove a like - NEED TESTING
 @like_routes.route('/posts/<int:id>', methods=["DELETE"])
-# @login_required
+@login_required
 def remove_a_like_post(id):
     """
     remove a like on a post by post ID

@@ -1,19 +1,44 @@
 import React, { useState } from "react"
 import { useModal } from "../../context/Modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import PostDetailModal from "../PostDetailModal";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import "./PostCard.css"
+import { createLikeThunk, removeLikeThunk } from "../../store/likes";
+import { allPostsThunk } from "../../store/posts";
 
 function PostCard({ post }) {
   const user = useSelector(state => state.session.user)
-  const [text, setText] = useState("")
   const { closeModal } = useModal();
+  const dispatch = useDispatch()
+  const [text, setText] = useState("")
 
   const { content, numLikes, author, postImages, likedBy, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
+
+  let userLiked = false
+  for (let i = 0; i < likedBy.length; i++) {
+    let liker = likedBy[i]
+    if (liker.id === user.id) userLiked = true
+  }
+
+  const [liked, setLiked] = useState(userLiked)
+
+  const handleLike = async (e) => {
+    if (!userLiked) {
+      await dispatch(createLikeThunk(post.id))
+      await dispatch(allPostsThunk())
+      userLiked = !userLiked
+      setLiked(!liked)
+    } else {
+      await dispatch(removeLikeThunk(post.id))
+      await dispatch(allPostsThunk())
+      userLiked = !userLiked
+      setLiked(!liked)
+    }
+  }
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -85,7 +110,7 @@ function PostCard({ post }) {
       <div className="post-card__details">
         <div className="post-card__engagement">{numLikes <= 0 ? "" : `❤ ${numLikes}`}</div>
         <div className="post-card__buttons">
-          <span>LIKE</span>
+          <span onClick={handleLike}>LIKE</span>
           <OpenModalButton
             buttonText="Comment"
             onItemClick={closeModal}

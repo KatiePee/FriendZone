@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   session,
   posts: postReducer,
   // comments: commentReducer
-  likes: likeReducer
+  // likes: likeReducer
 });
 
 let enhancer;
