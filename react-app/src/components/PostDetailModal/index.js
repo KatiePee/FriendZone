@@ -27,7 +27,8 @@ function PostDetailModal({ post }) {
   const stateComments = useSelector((state) => state.posts.allPosts[id].comments)
   const likes = useSelector(state => state.posts.allPosts[post.id].numLikes)
   const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
-  const test = likedPeeps.find(liker => liker.id === user.id)
+  const likedUser = likedPeeps.find(liker => liker.id === user.id)
+  const [liked, setLiked] = useState(likedUser !== undefined);
   const [text, setText] = useState("");
   const { closeModal } = useModal()
 
@@ -52,19 +53,14 @@ function PostDetailModal({ post }) {
     }
   }
 
-  let userLiked = false
-  for (let i = 0; i < likedBy.length; i++) {
-    let liker = likedBy[i]
-    if (liker.id === user.id) userLiked = true
-  }
-
-  const [liked, setLiked] = useState(userLiked)
 
   const handleLike = async (e) => {
-    if (!test) {
+    if (!likedUser) {
       await dispatch(createLikeThunk(post.id, user))
+      setLiked(true)
     } else {
       await dispatch(removeLikeThunk(post.id, user))
+      setLiked(false);
     }
   }
 
@@ -133,7 +129,10 @@ function PostDetailModal({ post }) {
             </Tippy>
           </div>
         <div className="post-card__buttons">
-        <button onClick={handleLike}>LIKE</button>
+          {liked ?
+          <button style={{color: 'blue'}} className={liked} onClick={handleLike}>❤️ LIKE</button> :
+          <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+          }
         </div>
         <div>
           {stateComments.map((comment) => (
