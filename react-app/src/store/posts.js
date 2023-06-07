@@ -53,14 +53,18 @@ export const singlePostThunk = (postId) => async dispatch => {
 }
 
 export const createPostThunk = (post) => async dispatch => {
+  console.log("🚀 ~ file: posts.js:56 ~ createPostThunk ~ post):", post)
   const res = await fetch(`/api/posts/new`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(post)
+    // headers: { 'Content-Type': 'application/json' },
+    // body: JSON.stringify(post)
+    body: post
   })
+  console.log("🚀 ~ file: posts.js:59 ~ createPostThunk ~ res:", res)
   if (res.ok) {
     const newPost = await res.json()
     dispatch(allPostsThunk())
+    console.log("🚀 ~ file: posts.js:65 ~ createPostThunk ~ newPost:", newPost)
     return newPost
   } else {
     const errors = await res.json();
