@@ -1,0 +1,22 @@
+.landing-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-signup {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.submit-button {
+    width: 60%;
+}
