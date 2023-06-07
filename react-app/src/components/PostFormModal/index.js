@@ -8,7 +8,8 @@ import { createPostThunk } from "../../store/posts";
 function PostFormModal({ user }) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  const [image, setImage] = useState('');
+  // const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory();
@@ -23,21 +24,16 @@ function PostFormModal({ user }) {
 
     const postFormData = new FormData();
     postFormData.append('content', content);
-    postFormData.append('image', image);
-    console.log("🚀 ~ file: index.js:26 ~ handleSubmit ~ postFormData:", postFormData)
 
+    for (let i = 0; i < images.length; i++) {
+      postFormData.append('images', images[i]);
+    }
 
-    // const imageFormData = new FormData();
-    // imageFormData.append('images', image);
-    // console.log("🚀 ~ file: index.js:30 ~ handleSubmit ~ imageFormData:", imageFormData)
-
-
-    // const formData = new FormData()
-
-    // formData.append("content", content)
-    // // formData.append("author", currentUser.id)
-    // formData.append("image", image)
-    // console.log("🚀 ~ file: index.js:29 ~ handleSubmit ~ formData:", formData)
+    // postFormData.append('image', images);
+    console.log("🚀 ~~~~~~~~~~~~~ file: index.js:26 ~ handleSubmit ~ postFormData:", postFormData)
+    for (const pair of postFormData.entries()) {
+      console.log('❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️', pair[0], pair[1]);
+    }
 
     dispatch(createPostThunk(postFormData));
 
@@ -47,6 +43,11 @@ function PostFormModal({ user }) {
     // else {
     //   setErrors(["Post Cannot Be Blank!"]);
     // }
+  };
+
+  const handleImageChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setImages(selectedFiles);
   };
 
   return (
@@ -87,7 +88,8 @@ function PostFormModal({ user }) {
             id="image"
             type="file"
             accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
+            multiple
+            onChange={handleImageChange}
           ></input>
         </div>
         <button type="submit">Post</button>
