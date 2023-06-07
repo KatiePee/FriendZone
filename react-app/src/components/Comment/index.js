@@ -9,21 +9,19 @@ import { allPostsThunk, editCommentThunk } from '../../store/posts';
 
 const Comment = ({ comment }) => {
   // console.log("THIS IS THE COMMENT", comment)
-  // const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === comment.id).content)
-  const stateComment = useSelector(state => state.posts.allPosts)
+  const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === comment.id).content)
+  // const stateComment = useSelector(state => state.posts.allPosts)
   // const [newComment, setNewComment] = useState("")
 
   const comments = useSelector(state => {
     const allPosts = Object.values(state.posts.allPosts);
     return allPosts.map(post => post.comments);
   });
-  
-  console.log("THIS IS THE COMMENT", comments)
 
   const dispatch = useDispatch()
   const { closeModal } = useModal()
   const [isEditing, setIsEditing] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment.content);
+  const [editedComment, setEditedComment] = useState(stateComment);
   // console.log("THIS IS THE STATE COMMENT", stateComment)
 
   const handleEditClick = () => {
@@ -90,7 +88,7 @@ const Comment = ({ comment }) => {
       </div>
       <div className="post-card__comment-content">
         {" "}
-        {comment.content}{" "}
+        {editedComment}{" "}
       </div>
     </>
   );
