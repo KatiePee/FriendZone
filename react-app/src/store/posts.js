@@ -7,6 +7,25 @@ const ADD_COMMENT = 'comments/addComment'
 const EDIT_COMMENT = 'comments/editComment'
 const DELETE_COMMENT = 'comments/deleteComment'
 
+const CREATE_LIKE = "likes/likePost";
+const REMOVE_LIKE = "likes/removeLike";
+
+const createLikeAction = (postId, user) => ({
+  type: CREATE_LIKE,
+  payload: {
+    postId,
+    user
+  }
+});
+
+const removeLikeAction = (postId, user) => ({
+  type: REMOVE_LIKE,
+  payload: {
+    postId,
+    user
+  }
+});
+
 const addCommentAction = (comment) => ({
   type: ADD_COMMENT,
   payload: comment
@@ -48,6 +67,35 @@ const editPostAction = (post) => ({
   type: EDIT_POST,
   payload: post
 })
+
+
+export const createLikeThunk = (postId, user) => async (dispatch) => {
+  const res = await fetch(`/api/likes/posts/${postId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(postId),
+  });
+  if (res.ok) {
+    dispatch(createLikeAction(postId, user));
+    return res;
+  } else {
+    const errors = res.json();
+    return errors;
+  }
+};
+
+export const removeLikeThunk = (postId, user) => async (dispatch) => {
+  const res = await fetch(`/api/likes/posts/${postId}`, {
+    method: "DELETE",
+  });
+
+  if (res.ok) {
+    dispatch(removeLikeAction(postId, user));
+  } else {
+    const errors = res.json();
+    return errors;
+  }
+};
 
 export const addCommentThunk = (content) => async (dispatch) => {
   const res = await fetch("/api/comments/new", {
@@ -240,6 +288,32 @@ const postReducer = (state = initialState, action) => {
       newCommentsState.allPosts[postId].comments = newCommentsList
 
       return { ...state, allPosts: newCommentsState.allPosts }
+
+    case CREATE_LIKE:
+      const { user } = action.payload
+      const { firstName, id, lastName, profilePicURL } = user;
+      return { ...state, allPosts: {
+        ...state.allPosts,
+        [action.payload.postId]: {
+          ...state.allPosts[action.payload.postId],
+          numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes + 1,
+          likedBy: [
+            ...state.allPosts[action.payload.postId].likedBy,
+            {firstName, id, lastName, profilePicURL}
+          ]
+        }
+      }}
+
+    case REMOVE_LIKE:
+      return { ...state, allPosts: {
+        ...state.allPosts,
+        [action.payload.postId]: {
+          ...state.allPosts[action.payload.postId],
+          numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes - 1,
+          likedBy: [...state.allPosts[action.payload.postId].likedBy.filter(liker => liker.id !== action.payload.user.id)]
+        }
+      }}
+
     default:
       return state;
   }

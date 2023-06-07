@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import { addCommentThunk } from "../../store/posts";
+import { createLikeThunk, removeLikeThunk } from "../../store/posts";
+import { allPostsThunk } from "../../store/posts";
 import Comment from "../Comment";
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 // import "./postcard.css"
 import "./postdetailmodal.css"
 
@@ -21,8 +25,15 @@ function PostDetailModal({ post }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.session.user);
   const stateComments = useSelector((state) => state.posts.allPosts[id].comments)
+  const likes = useSelector(state => state.posts.allPosts[post.id].numLikes)
+  const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
+  const test = likedPeeps.find(liker => liker.id === user.id)
   const [text, setText] = useState("");
   const { closeModal } = useModal()
+
+  const likeByNames = likedBy.map(obj => {
+    return <span>{obj.firstName} {obj.lastName}</span>
+  })
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -38,6 +49,22 @@ function PostDetailModal({ post }) {
       await dispatch(addCommentThunk(comment))
 
       setText("")
+    }
+  }
+
+  let userLiked = false
+  for (let i = 0; i < likedBy.length; i++) {
+    let liker = likedBy[i]
+    if (liker.id === user.id) userLiked = true
+  }
+
+  const [liked, setLiked] = useState(userLiked)
+
+  const handleLike = async (e) => {
+    if (!test) {
+      await dispatch(createLikeThunk(post.id, user))
+    } else {
+      await dispatch(removeLikeThunk(post.id, user))
     }
   }
 
@@ -98,11 +125,15 @@ function PostDetailModal({ post }) {
         })}
       </div>
       <div className="post-card__details">
-        <div className="post-card__engagement">
-          {numLikes <= 0 ? "" : `❤ ${numLikes}`}
-        </div>
+      <div className="post-card__engagement">
+            <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
+                <div className="post-card__likes">
+                  {likes <= 0 ? "" : `❤️ ${likes}`}
+                </div>
+            </Tippy>
+          </div>
         <div className="post-card__buttons">
-          <span>LIKE</span>
+        <button onClick={handleLike}>LIKE</button>
         </div>
         <div>
           {stateComments.map((comment) => (
