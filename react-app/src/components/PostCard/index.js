@@ -8,6 +8,9 @@ import EditPostModal from "../EditPostModal";
 import "./PostCard.css"
 import { createLikeThunk, removeLikeThunk } from "../../store/likes";
 import { allPostsThunk } from "../../store/posts";
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+
 
 function PostCard({ post }) {
   const user = useSelector(state => state.session.user)
@@ -17,6 +20,11 @@ function PostCard({ post }) {
 
   const { content, numLikes, author, postImages, likedBy, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
+  const likeByNames = likedBy.map(obj => {
+    return <span>{obj.firstName} {obj.lastName}</span>
+  })
+
+  console.log(likeByNames)
 
   let userLiked = false
   for (let i = 0; i < likedBy.length; i++) {
@@ -108,9 +116,15 @@ function PostCard({ post }) {
         })}
       </div>
       <div className="post-card__details">
-        <div className="post-card__engagement">{numLikes <= 0 ? "" : `❤ ${numLikes}`}</div>
+          <div className="post-card__engagement">
+        <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
+            <div className="post-card__likes">
+              {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
+            </div>
+        </Tippy>
+          </div>
         <div className="post-card__buttons">
-          <span onClick={handleLike}>LIKE</span>
+          <button onClick={handleLike}>LIKE</button>
           <OpenModalButton
             buttonText="Comment"
             onItemClick={closeModal}
