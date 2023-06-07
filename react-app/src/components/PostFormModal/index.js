@@ -1,49 +1,45 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { useHistory } from "react-router-dom";
-
 import { createPostThunk } from "../../store/posts";
 
 function PostFormModal({ user }) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  // const [image, setImage] = useState('');
   const [images, setImages] = useState([]);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-  const history = useHistory();
   const { firstName, lastName, profilePicURL } = user;
 
+
+  // TODO: allow for post with just images and no content?
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const post = {};
 
-    post.content = content.length && content
+    post.content = content.length && content;
 
     const postFormData = new FormData();
-    postFormData.append('content', content);
+    postFormData.append("content", content);
 
-    for (let i = 0; i < images.length; i++) {
-      postFormData.append('images', images[i]);
-    }
-
-    // postFormData.append('image', images);
-    console.log("🚀 ~~~~~~~~~~~~~ file: index.js:26 ~ handleSubmit ~ postFormData:", postFormData)
-    for (const pair of postFormData.entries()) {
-      console.log('❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️', pair[0], pair[1]);
+    for (let image of images) {
+      postFormData.append("images", image);
     }
 
     dispatch(createPostThunk(postFormData));
-
-    history.push("/home");
+    // TODO: implement a loading spinner while post is being created before closing the modal?
     closeModal();
   };
 
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    setImages(selectedFiles);
+    if (selectedFiles.length <= 4) {
+      setImages(selectedFiles);
+    } else {
+      alert(`Maximum 4 images allowed on a post.`)
+      e.target.value = null
+    }
   };
 
   return (
