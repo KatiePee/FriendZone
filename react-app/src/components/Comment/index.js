@@ -8,21 +8,12 @@ import { allPostsThunk, editCommentThunk } from '../../store/posts';
 
 
 const Comment = ({ comment }) => {
-  // console.log("THIS IS THE COMMENT", comment)
   const stateComment = useSelector(state => state.posts.allPosts[comment.postId].comments.find(comment => comment.id === comment.id).content)
-  // const stateComment = useSelector(state => state.posts.allPosts)
-  // const [newComment, setNewComment] = useState("")
-
-  const comments = useSelector(state => {
-    const allPosts = Object.values(state.posts.allPosts);
-    return allPosts.map(post => post.comments);
-  });
 
   const dispatch = useDispatch()
   const { closeModal } = useModal()
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(stateComment);
-  // console.log("THIS IS THE STATE COMMENT", stateComment)
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -33,7 +24,6 @@ const Comment = ({ comment }) => {
     const updated_comment = {
       content: editedComment
     }
-    // setEditedComment(newComment)
     await dispatch(editCommentThunk(updated_comment, comment))
     setIsEditing(false);
   };
@@ -45,7 +35,6 @@ const Comment = ({ comment }) => {
 
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
-    // setNewComment(e.target.value);
   };
 
   if (isEditing) {
