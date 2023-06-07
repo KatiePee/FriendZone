@@ -12,7 +12,7 @@ const addCommentAction = (comment) => ({
   payload: comment
 })
 
-const editCommentAction = (updatedComment ,postId, commentId) => ({
+const editCommentAction = (updatedComment, postId, commentId) => ({
   type: EDIT_COMMENT,
   payload: {
     updatedComment,
@@ -52,48 +52,48 @@ const editPostAction = (post) => ({
 
 export const addCommentThunk = (content) => async (dispatch) => {
   const res = await fetch("/api/comments/new", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(content)
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(content)
   })
 
   if (res.ok) {
-      const comment = await res.json()
-      dispatch(addCommentAction(comment))
-      return res
+    const comment = await res.json()
+    dispatch(addCommentAction(comment))
+    return res
   } else {
     console.log(res.errors)
   }
 }
 
 export const editCommentThunk = (content, comment) => async (dispatch) => {
-  const {postId, id} = comment
+  const { postId, id } = comment
   const res = await fetch(`/api/comments/${id}/edit`, {
-      method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(content)
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(content)
   });
 
-  if(res.ok) {
-      const updatedComment = await res.json();
-      dispatch(editCommentAction(updatedComment, postId, id))
-      return updatedComment
+  if (res.ok) {
+    const updatedComment = await res.json();
+    dispatch(editCommentAction(updatedComment, postId, id))
+    return updatedComment
   }
 }
 
 export const deleteCommentThunk = (comment) => async (dispatch) => {
   const { postId, id } = comment
   const res = await fetch(`/api/comments/${id}/delete`, {
-      method: "DELETE"
+    method: "DELETE"
   })
 
-  if(res.ok) {
+  if (res.ok) {
     const response = await res.json()
     dispatch(deleteCommentAction(postId, id))
-      return response
+    return response
   } else {
-      const errors = await res.json();
-      return errors;
+    const errors = await res.json();
+    return errors;
   }
 }
 
@@ -172,11 +172,11 @@ export const currentUserPostsThunk = (userId) => async (dispatch) => {
 export const editPostThunk = (post, postId) => async (dispatch) => {
   const res = await fetch(`/api/posts/${postId}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(post)
   });
 
-  if(res.ok) {
+  if (res.ok) {
     const updatedPost = await res.json();
     dispatch(editPostAction(updatedPost))
     return updatedPost;
@@ -216,21 +216,23 @@ const postReducer = (state = initialState, action) => {
       // editComment[0].content = action.payload.updatedComment.content
       // return { ...state, allPosts: eCommentState.allPosts}
 
-      return { ...state, allPosts: {
-        ...state.allPosts,
-        [action.payload.postId]: {
-          ...state.allPosts[action.payload.postId],
-          comments: state.allPosts[action.payload.postId].comments.map(comment => {
-            if (comment.id === action.payload.commentId) {
-              return {
-                ...comment,
-                content: action.payload.updatedComment.content
-              };
-            }
-            return comment
-          })
+      return {
+        ...state, allPosts: {
+          ...state.allPosts,
+          [action.payload.postId]: {
+            ...state.allPosts[action.payload.postId],
+            comments: state.allPosts[action.payload.postId].comments.map(comment => {
+              if (comment.id === action.payload.commentId) {
+                return {
+                  ...comment,
+                  content: action.payload.updatedComment.content
+                };
+              }
+              return comment
+            })
+          }
         }
-      }};
+      };
 
     case DELETE_COMMENT:
       const { postId, commentId } = action.payload

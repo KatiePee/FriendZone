@@ -61,7 +61,8 @@ def posts():
             del post_dict['userId']
 
             posts_list.append(post_dict)
-    return posts_list
+            sorted_posts = sorted(posts_list, key=lambda x: x['createdAt'], reverse=True)
+    return sorted_posts
 
 
 ## Create New Post - FINISHED

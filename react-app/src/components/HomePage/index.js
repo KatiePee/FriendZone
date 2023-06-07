@@ -10,9 +10,8 @@ function HomePage() {
   const dispatch = useDispatch();
   const postsState = useSelector(state => state.posts.allPosts)
   const user = useSelector(state => state.session.user)
-  const posts = postsState ? Object.values(postsState) : [];
+  const posts = postsState ? Object.values(postsState).reverse() : [];
   const { firstName, profilePicURL } = user
-
 
   useEffect(() => {
     dispatch(allPostsThunk());
@@ -26,7 +25,7 @@ function HomePage() {
         <img src={profilePicURL} className="post-card__profile-pic" />
         <OpenModalButton
           buttonText={`What's on your mind, ${firstName}?`}
-          modalComponent={<PostFormModal user={user}/>}
+          modalComponent={<PostFormModal user={user} />}
         />
       </div>
       {posts.map(post => (
