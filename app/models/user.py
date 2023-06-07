@@ -28,19 +28,20 @@ class User(db.Model, UserMixin):
     date_of_birth = db.Column(db.Date, nullable = False)
     gender = db.Column(db.String, nullable = False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
-    # should created at be string formate and we can do all the date manipulation on the font end?
-    # we need to be consistent with what were putting into the db
-    posts = db.relationship('Post', back_populates='user')
-    likes = db.relationship('Post', secondary="likes",  back_populates="likes")
-    comments = db.relationship('Comment', back_populates='user')
 
-    # friendships = db.relationship('Friendship', back_populates='user')
+    posts = db.relationship('Post', back_populates='user', cascade="all, delete-orphan")
+    # likes = db.relationship('User', secondary="likes", back_populates="likes", passive_deletes=True, cascade="all, delete")
+    # not sure about cascade="all, delete" vs. passive_deletes=True
+    likes = db.relationship('Post', secondary="likes",  back_populates="likes", cascade="all, delete")
+    comments = db.relationship('Comment', back_populates='user', cascade="all, delete-orphan")
+
     friendships = db.relationship(
         "User",
         secondary="friendships",
         primaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
         secondaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
-        backref="friends"
+        backref="friends",
+        cascade="all, delete"
         )
 
     @property
