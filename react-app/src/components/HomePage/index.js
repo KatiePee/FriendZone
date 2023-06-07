@@ -5,6 +5,7 @@ import PostCard from "../PostCard";
 import OpenModalButton from '../OpenModalButton'
 import "./homepage.css"
 import PostFormModal from "../PostFormModal";
+import CreatePost from "../CreatePost/CreatePost";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -21,13 +22,7 @@ function HomePage() {
   // return (<h1>HomePage!</h1>)
   return (
     <div className="home-page-wrapper">
-      <div className='home-page__write-post'>
-        <img src={profilePicURL} className="post-card__profile-pic" />
-        <OpenModalButton
-          buttonText={`What's on your mind, ${firstName}?`}
-          modalComponent={<PostFormModal user={user} />}
-        />
-      </div>
+      <CreatePost />
       {posts.map(post => (
         <PostCard post={post} key={post.id} />
       ))}
