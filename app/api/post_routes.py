@@ -1,7 +1,7 @@
 from flask import Blueprint, session, request
 from flask_login import login_required, current_user
 from app.models import Post, User, PostImage, db, friendships, likes, Comment
-from app.forms import PostForm, PostImageForm
+from app.forms import PostForm
 from .auth_routes import validation_errors_to_error_messages
 from .AWS_helpers import upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
@@ -74,30 +74,12 @@ def create_post():
     print("🚀 ~ file: post_routes.py:73 ~ HITTTING THE BACKEND__________________________")
     postForm = PostForm()
     print("🚀 ~ file: post_routes.py:76 ~ postForm:", postForm)
-    postImageForm = PostImageForm()
-    # print(current_user)
     postForm['csrf_token'].data = request.cookies['csrf_token']
     post = {}
-
-
-
-    # if postForm.validate_on_submit() or 'images' in request.files:
-    #     # ...
-    #     images = postForm.images.data
-
-    #     if not images and 'images' in request.files:
-    #         # Handle the case when there are selected files but the field fails validation
-    #         images = request.files.getlist('images')
-
-    #     for image in images:
-    #         image.filename = get_unique_filename(image.filename)
-    #         upload = upload_file_to_s3(image)
-
 
     print("🚀 ~ file: post_routes.py:85 ~ request.files:", request.files)
 
     if postForm.validate_on_submit():
-        # print("🚀 ~ file: post_routes.py:80 ~ postForm:", postForm)
         print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:81 ~ postForm.data:", postForm.data)
         print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:81 ~ postForm.errors:", postForm.errors)
         new_post = Post(
@@ -111,7 +93,6 @@ def create_post():
 
         post["postImages"] = []
 
-        # images = postForm.images.data
         images = postForm.data["images"]
         for image in images:
             image.filename = get_unique_filename(image.filename)
@@ -131,16 +112,12 @@ def create_post():
             post["postImages"].append(image_dict)
 
         print("🚀 ~ file: post_routes.py:107 ~ post:", post)
-    # if postImageForm.validate_on_submit():
-    #     print("🚀 ~ file: post_routes.py:91 ~ postImageForm:", postImageForm)
-    #     print("🚀 ~ file: post_routes.py:92 ~ postImageForm.data:", postImageForm.data)
+
     if postForm.errors:
         print("🚀 ~ file: post_routes.py:116 ~ postForm IN ERRORS:", postForm.data)
         print("🚀 ~ file: post_routes.py:117 ~ postForm.errors:", postForm.errors)
+
     return post
-
-
-
 
 
 ## Delete A Post - FINISHED
@@ -151,6 +128,10 @@ def remove_post(id):
     Delete a post
     """
     post = Post.query.get(id)
+
+    post_images_list = [post.post_image.to_dict() for post.post_image in post.post_images]
+
+    [remove_file_from_s3(post_image["imageUrl"]) for post_image in post_images_list]
 
     db.session.delete(post)
     db.session.commit()
