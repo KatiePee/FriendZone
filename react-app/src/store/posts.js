@@ -205,7 +205,7 @@ export const deletePostThunk = (postId) => async (dispatch) => {
   }
 }
 
-export const currentUserPostsThunk = (userId) => async (dispatch) => {
+export const userPostsThunk = (userId) => async (dispatch) => {
   try {
     const res = await fetch(`/api/posts/users/${userId}`);
     const posts = await res.json()

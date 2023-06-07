@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { currentUserPostsThunk } from "../../store/posts";
+import { userPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
@@ -20,7 +20,7 @@ function UserProfile() {
   const { firstName, lastName, profilePicURL } = currentUser;
 
   useEffect(() => {
-    dispatch(currentUserPostsThunk(userId));
+    dispatch(userPostsThunk(userId));
     dispatch(myFriendsThunk())
   }, [dispatch]);
   let isFriend = Object.keys(friendsObj).includes(userId)

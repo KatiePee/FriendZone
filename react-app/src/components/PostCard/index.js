@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom"
 import OpenModalButton from "../OpenModalButton";
 import PostDetailModal from "../PostDetailModal";
 import DeletePostModal from "../DeletePostModal";
@@ -18,6 +19,8 @@ function PostCard({ post }) {
   const dispatch = useDispatch()
   const [text, setText] = useState("")
   const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
+  const history = useHistory()
+
   const { content, numLikes, author, postImages, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
   const likedUser = likedPeeps.find(liker => liker.id === user.id)
@@ -43,6 +46,10 @@ function PostCard({ post }) {
       return <span>{obj.firstName} {obj.lastName}</span>
     })
 
+  }
+
+  const redirectUserProfile = (e) => {
+    history.push(`/${author.id}`)
   }
 
   const timeAgo = (dateObj) => {
@@ -74,9 +81,9 @@ function PostCard({ post }) {
       <div className="post-card__info-content">
         <div className="post-card__user-info">
           <div className="post-card__profile-info">
-            <img className="post-card__profile-pic" src={profilePicURL} alt="profile" />
+            <img className="post-card__profile-pic" src={profilePicURL} alt="profile" onClick={redirectUserProfile}/>
             <div className="profile-info__left-side">
-              <p>{firstName} {lastName}</p>
+              <p onClick={redirectUserProfile}>{firstName} {lastName}</p>
               <div className="profile-info__post-date">
                 <span>{timeAgo(createdAt)}</span>
               </div>
