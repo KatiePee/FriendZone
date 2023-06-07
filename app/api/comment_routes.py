@@ -56,6 +56,7 @@ def update_comment(id):
     """
     form = CommentForm()
     comment_post = Comment.query.get(id)
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
         comment_post.content = form.data['content']
@@ -63,8 +64,10 @@ def update_comment(id):
         db.session.commit()
         return comment_post.to_dict()
 
+    if form.errors:
+         return jsonify({"errors": form.errors})
 
-#Delete - NEED TESTING
+#Delete - DELETING WORKS!!
 @comment_routes.route('/<int:id>/delete', methods=['DELETE'])
 def delete_comment(id):
     comment_to_delete = Comment.query.get(id)

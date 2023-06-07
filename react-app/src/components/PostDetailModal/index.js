@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
-import { addCommentThunk } from "../../store/posts";
+import { addCommentThunk, allPostsThunk } from "../../store/posts";
 import Comment from "../Comment";
 // import "./postcard.css"
 import "./postdetailmodal.css"
@@ -21,6 +21,7 @@ function PostDetailModal({ post }) {
   const { firstName, lastName, profilePicURL } = author;
   const dispatch = useDispatch()
   const user = useSelector((state) => state.session.user);
+  const commentList = useSelector((state) => state.posts.allPosts)
   const [text, setText] = useState("");
   const { closeModal } = useModal()
   const handleInputChange = (e) => {
@@ -40,6 +41,10 @@ function PostDetailModal({ post }) {
       setText("")
     }
   }
+
+  useEffect(() => {
+    return
+  }, [commentList])
 
   const textareaStyle = {
     resize: "none",
@@ -111,7 +116,7 @@ function PostDetailModal({ post }) {
         </div>
         <div>
           {comments.map((comment) => (
-            <Comment comment={comment}/>
+            <Comment comment={comment} post={post}/>
           ))}
         </div>
         <div className="post-card__comment-bar">

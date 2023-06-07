@@ -12,9 +12,10 @@ const addCommentAction = (comment) => ({
   payload: comment
 })
 
-const editCommentAction = (postId, commentId) => ({
+const editCommentAction = (updatedComment ,postId, commentId) => ({
   type: EDIT_COMMENT,
   payload: {
+    updatedComment,
     postId,
     commentId
   }
@@ -65,16 +66,17 @@ export const addCommentThunk = (content) => async (dispatch) => {
   }
 }
 
-export const editCommentThunk = (comment, commentId) => async (dispatch) => {
-  const res = await fetch(`/api/comments/${commentId}`, {
+export const editCommentThunk = (content, comment) => async (dispatch) => {
+  const {postId, id} = comment
+  const res = await fetch(`/api/comments/${id}/edit`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(comment)
+      body: JSON.stringify(content)
   });
 
   if(res.ok) {
       const updatedComment = await res.json();
-      dispatch(editCommentAction(updatedComment))
+      dispatch(editCommentAction(updatedComment, postId, id))
       return updatedComment
   }
 }
@@ -173,7 +175,6 @@ export const editPostThunk = (post, postId) => async (dispatch) => {
   if(res.ok) {
     const updatedPost = await res.json();
     dispatch(editPostAction(updatedPost))
-    //was thinking about dispatching in here too.
     return updatedPost;
   }
 }
@@ -194,7 +195,6 @@ const postReducer = (state = initialState, action) => {
       delete newState.allPosts[action.payload]
       return newState
     case EDIT_POST:
-      //Check if this the correct state!
       let aState = { ...state }
       aState.allPosts[action.payload.id].content = action.payload.content;
       // TODO: work on ability to edit pictures
@@ -203,8 +203,30 @@ const postReducer = (state = initialState, action) => {
     case ADD_COMMENT:
       let newCommentsInState = { ...state }
       newCommentsInState.allPosts[action.payload.postId].comments.push(action.payload)
-
       return newCommentsInState;
+    case EDIT_COMMENT:
+      // let eCommentState = {...state}
+      // let editPostComments = eCommentState.allPosts[action.payload.postId].comments
+      // let editComment = editPostComments.filter(comment => comment.id === action.payload.commentId)
+      // console.log("THIS IS THE EDIT COMMENT.content INSIDE REDUCER", editComment)
+      // editComment[0].content = action.payload.updatedComment.content
+      // return { ...state, allPosts: eCommentState.allPosts}
+
+      return { ...state, allPosts: {
+        ...state.allPosts,
+        [action.payload.postId]: {
+          ...state.allPosts[action.payload.postId],
+          comments: state.allPosts[action.payload.postId].comments.map(comment => {
+            if (comment.id === action.payload.commentId) {
+              return {
+                ...comment,
+                content: action.payload.updatedComment.content
+              };
+            }
+            return comment
+          })
+        }
+      }};
 
     case DELETE_COMMENT:
       const { postId, commentId } = action.payload
