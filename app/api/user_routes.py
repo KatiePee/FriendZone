@@ -65,38 +65,23 @@ def add_friend(id):
 
     return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
  
-@user_routes.route('/<int:id>/delete')
+@user_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def unfriend(id):
     """
     Delete a friendship
     """
-    print('~~~~~~~~~~~hits backend route~~~~~~~~~~~~')
+   
     friend = User.query.get(id)
     current_user_friends = current_user.friendships
-    the_friendship = [user for user in current_user_friends if user == friend]
     print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend current user?~~~~woooo~~', current_user )
     print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend?~~~~woooo~~', friend )
     print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend id?~~~~woooo~~', id)
-    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend the friendship~~~~woooo~~', the_friendship )
-    # print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firendship?~~~~woooo~~', friend )
-    # current_user.friendships.remove(friend)
-    # current_user.friendships.remove(or_(friendships.c.userA_id == id, friendships.c.userB_id == id))
-    # db.session.delete(the_friendship[0])
-
+  
     delete_query = delete(friendships).where(
     ((friendships.c.userA_id == current_user.id) & (friendships.c.userB_id == id)) |
     ((friendships.c.userA_id == id) & (friendships.c.userB_id == current_user.id)))
 
     db.session.execute(delete_query)
     db.session.commit()
-    # friend = User.query.get(id)
-    
-    # if friend in current_user.friendships:
-    #     current_user.friendships.delete(friend)
-    #     db.session.commit()
-    #     return {"message": f"Successfully unfriended {friend.first_name}"}
-    # else:
-    #     return {"message": "Friendship not found"}
-
     return {"message": f"Successfully unfriended 😈"}
