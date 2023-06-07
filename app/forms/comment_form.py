@@ -6,3 +6,4 @@ from flask_wtf.file import FileAllowed
 
 class CommentForm(FlaskForm):
     content = StringField('Content')
+    post_id = IntegerField("post_id")

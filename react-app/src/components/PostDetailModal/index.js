@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
+import { addCommentThunk, allPostsThunk } from "../../store/posts";
+import Comment from "../Comment";
 // import "./postcard.css"
 import "./postdetailmodal.css"
 
@@ -17,10 +19,11 @@ function PostDetailModal({ post }) {
     createdAt,
   } = post;
   const { firstName, lastName, profilePicURL } = author;
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.session.user);
+  const commentList = useSelector((state) => state.posts.allPosts)
   const [text, setText] = useState("");
   const { closeModal } = useModal()
-
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -29,11 +32,19 @@ function PostDetailModal({ post }) {
     e.preventDefault()
     if (content.length > 1) {
       const comment = {
-        content
+        "post_id": id,
+        "user_id": user.id,
+        "content": text
       }
-      dispatchEvent()
+      await dispatch(addCommentThunk(comment))
+
+      setText("")
     }
   }
+
+  useEffect(() => {
+    return
+  }, [commentList])
 
   const textareaStyle = {
     resize: "none",
@@ -105,25 +116,7 @@ function PostDetailModal({ post }) {
         </div>
         <div>
           {comments.map((comment) => (
-            <>
-              <div className="post-card__profile-info">
-                <img
-                  className="post-card__profile-pic"
-                  src={comment.commentAuthor.profilePicURL}
-                  alt="profile pic"
-                />
-                <div className="profile-info__left-side">
-                  <p>
-                    {comment.commentAuthor.firstName}{" "}
-                    {comment.commentAuthor.lastName}
-                  </p>
-                </div>
-              </div>
-              <div className="post-card__comment-content">
-                {" "}
-                {comment.content}{" "}
-              </div>
-            </>
+            <Comment comment={comment} post={post}/>
           ))}
         </div>
         <div className="post-card__comment-bar">
@@ -133,14 +126,15 @@ function PostDetailModal({ post }) {
             alt="profile"
           />
           <div>
-            <textarea
-              className="add-comment"
-              value={text}
-              onSubmit={handleSubmit}
-              onChange={handleInputChange}
-              rows={5}
-            ></textarea>
-            <span>➡</span>
+            <form onSubmit={handleSubmit}>
+              <textarea
+                className="add-comment"
+                value={text}
+                onChange={handleInputChange}
+                rows={5}
+              ></textarea>
+              <button>➡</button>
+            </form>
           </div>
         </div>
       </div>

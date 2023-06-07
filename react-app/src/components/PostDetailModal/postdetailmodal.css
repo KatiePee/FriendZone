@@ -1,3 +1,13 @@
 .close-div:hover {
     cursor: pointer;
 }
+
+.post-card__profile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-info__left-side {
+  display: flex;
+  align-items: center;
+}

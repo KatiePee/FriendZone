@@ -8,11 +8,12 @@ import EditPostModal from "../EditPostModal";
 import "./PostCard.css"
 
 function PostCard({ post }) {
-  const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
-  const { firstName, lastName, profilePicURL } = author
   const user = useSelector(state => state.session.user)
   const [text, setText] = useState("")
   const { closeModal } = useModal();
+
+  const { id, content, numLikes, author, postImages, likedBy, comments, createdAt } = post
+  const { firstName, lastName, profilePicURL } = author
 
   const handleInputChange = (e) => {
     setText(e.target.value);
