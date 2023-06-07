@@ -13,7 +13,7 @@ def seed_likes():
     users = User.query.all()
     posts = Post.query.all()
 
-    users[0].likes.append(posts[0])
+    # users[0].likes.append(posts[0])
 
     entries = []
 

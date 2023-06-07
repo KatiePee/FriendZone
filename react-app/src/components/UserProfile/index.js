@@ -5,7 +5,7 @@ import { userPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
-import { addFriendThunk, myFriendsThunk } from "../../store/friends";
+import { addFriendThunk, myFriendsThunk, unFriendThunk } from "../../store/friends";
 import './UserProfile.css'
 
 function UserProfile() {
@@ -30,13 +30,17 @@ function UserProfile() {
   const addFriend = () => {
     dispatch(addFriendThunk(userId))
   }
+  const unFriend = () => {
+    dispatch(unFriendThunk(userId))
+  }
+
   return (
 
     <div className="home-page-wrapper">
       <div className="user__info">
         <img className="post-card__profile-pic" src={profilePicURL} />
         <p>{firstName} {lastName}</p>
-        {isFriend && (<button>Friend</button>)}
+        {isFriend && (<button onClick={unFriend}>Unfriend</button>)}
         {isFriend || (<button onClick={addFriend}>Add Friend</button>)}
 
       </div>

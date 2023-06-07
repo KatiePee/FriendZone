@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from app.models import User, friendships, db
 from sqlalchemy import insert
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import or_
+from sqlalchemy import or_, delete
 
 user_routes = Blueprint('users', __name__)
 
@@ -65,19 +65,23 @@ def add_friend(id):
 
     return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
  
-# @user_routes.route('/<int:id>/delete')
-# @login_required
-# def unfriend(id):
-#     """
-#     Delete a friendship
-#     """
-#     print('~~~~~~~~~~~hits backend route~~~~~~~~~~~~')
-#     friend = User.query.get(id)
-#     current_user_friends = current_user.friendships
-#     the_friendship = [user for user in current_user_friends if user == friend]
+@user_routes.route('/<int:id>/delete', methods=['DELETE'])
+@login_required
+def unfriend(id):
+    """
+    Delete a friendship
+    """
+   
+    friend = User.query.get(id)
+    current_user_friends = current_user.friendships
+    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend current user?~~~~woooo~~', current_user )
+    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend?~~~~woooo~~', friend )
+    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend id?~~~~woooo~~', id)
+  
+    delete_query = delete(friendships).where(
+    ((friendships.c.userA_id == current_user.id) & (friendships.c.userB_id == id)) |
+    ((friendships.c.userA_id == id) & (friendships.c.userB_id == current_user.id)))
 
-#     print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firendship?~~~~~~', the_friendship   )
-#     db.session.delete(the_friendship[0])
-#     db.session.commit()
-
-#     return {"message": f"Successfully unfriended {friend.first_name} 😈"}
+    db.session.execute(delete_query)
+    db.session.commit()
+    return {"message": f"Successfully unfriended 😈"}
