@@ -25,7 +25,7 @@ def seed_likes():
               entries.append((user.id, rand_post.id))
               rand_post.likes.append(user)
 
-    # [[post(posts).likes.append(user) for user in users] for n in range(3)]
+    [[post(posts).likes.append(user) for user in users] for n in range(3)]
 
     db.session.commit()
 

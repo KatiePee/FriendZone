@@ -29,7 +29,6 @@ const deleteCommentAction = (postId, commentId) => ({
   }
 })
 
-
 const allPostsAction = (posts) => ({
   type: ALL_POSTS,
   payload: posts
@@ -213,7 +212,6 @@ const postReducer = (state = initialState, action) => {
         }
       }}
 
-      console.log("ADD COMMENT STATE", someState)
       return someState;
     case EDIT_COMMENT:
 

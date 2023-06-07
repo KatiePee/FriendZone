@@ -4,6 +4,7 @@ import session from "./session";
 import postReducer from "./posts";
 import friendsReducer from "./friends";
 // import commentReducer from "./comments";
+import likeReducer from "./likes";
 
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   posts: postReducer,
   friends: friendsReducer
   // comments: commentReducer
+  // likes: likeReducer
 });
 
 let enhancer;
