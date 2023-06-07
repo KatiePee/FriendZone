@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom"
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 import { useModal } from "../../context/Modal"
-import { editCommentThunk } from '../../store/posts';
+import { allPostsThunk, editCommentThunk } from '../../store/posts';
 
 
 
@@ -16,6 +17,7 @@ const Comment = ({ comment }) => {
   const { closeModal } = useModal()
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(stateComment);
+  const history = useHistory()
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -38,6 +40,12 @@ const Comment = ({ comment }) => {
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
   };
+
+  const redirectUserProfile = async (e) => {
+    closeModal()
+    history.push(`/${comment.commentAuthor.id}`)
+    // await dispatch(allPostsThunk())
+  }
 
   if (isEditing) {
     return (
@@ -62,8 +70,9 @@ const Comment = ({ comment }) => {
             className="post-card__profile-pic"
             src={comment.commentAuthor.profilePicURL}
             alt="profile pic"
+            onClick={redirectUserProfile}
           />
-          <p>
+          <p onClick={redirectUserProfile}>
             {comment.commentAuthor.firstName}{" "}
             {comment.commentAuthor.lastName}
           </p>
