@@ -5,7 +5,7 @@ import { currentUserPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
-import { myFriendsThunk } from "../../store/friends";
+import { addFriendThunk, myFriendsThunk } from "../../store/friends";
 import './UserProfile.css'
 
 function UserProfile() {
@@ -28,7 +28,7 @@ function UserProfile() {
   if (!posts.length) return null;
 
   const addFriend = () => {
-    dispatch()
+    dispatch(addFriendThunk(userId))
   }
   return (
 

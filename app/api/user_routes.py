@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import User, friendships, db
 from sqlalchemy import insert
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import or_
 
 user_routes = Blueprint('users', __name__)
 
@@ -47,22 +48,36 @@ def friends(id):
 
     return [friend.to_dict() for friend in friends]
 
-# @user_routes.route('/<int:id>/add', method=['POST'])
-# @login_required
-# def add_friend(id):
-#     """
-#     Query for a user by id and returns that user in a dictionary
-#     """
-#     current_user = current_user.id
-#     new_friend = User.query.get(id)
+@user_routes.route('/<int:id>/add', methods=['POST'])
+@login_required
+def add_friend(id):
+    """
+    Post new friendship current user is adding new user based on userid
+    """
+    # current_user = User.query.get(current_user.id)
+    new_friend = User.query.get(id)
     
-#     friendship = insert(friendships).values(userA_id=current_user, userB_id=id)
+    # current_user.freindships.append(new_friend)
+    friendship = insert(friendships).values(userA_id=current_user.id, userB_id=id)
 
-#     try:
-#         db.session.execute(friendship)
-#         db.session.commit()
-#         return {"message": f"current user successfully added {new_friend.firstName} as a friend, yay!"}
-#     except IntegrityError as e:
-#         db.session.rollback()
-#         print(f"Error inserting friendship: {e}")
-#         return {"error": f"Error inserting friendship: {e}"}
+    db.session.execute(friendship)
+    db.session.commit()
+
+    return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
+ 
+# @user_routes.route('/<int:id>/delete')
+# @login_required
+# def unfriend(id):
+#     """
+#     Delete a friendship
+#     """
+#     print('~~~~~~~~~~~hits backend route~~~~~~~~~~~~')
+#     friend = User.query.get(id)
+#     current_user_friends = current_user.friendships
+#     the_friendship = [user for user in current_user_friends if user == friend]
+
+#     print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firendship?~~~~~~', the_friendship   )
+#     db.session.delete(the_friendship[0])
+#     db.session.commit()
+
+#     return {"message": f"Successfully unfriended {friend.first_name} 😈"}

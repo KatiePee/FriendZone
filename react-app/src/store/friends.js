@@ -42,12 +42,13 @@ export const othersFriendsThunk = (userId) => async dispatch => {
 }
 
 export const addFriendThunk = (friendId) => async dispatch => {
+  console.log('~~~~~~~~~~~~ hits thunk! friend id ~~~~~', friendId)
   const res = await fetch(`/api/users/${friendId}/add`, {
     method: 'POST'
   })
   if (res.ok) {
     const friends = await res.json()
-    await dispatch(myFriends(friends))
+    await dispatch(myFriendsThunk())
     return res
   } else return null
 }
