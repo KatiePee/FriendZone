@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 import { useModal } from "../../context/Modal"
-import { allPostsThunk, editCommentThunk } from '../../store/posts';
+import { allPostsThunk, editCommentThunk, userPostsThunk } from '../../store/posts';
 
 
 
@@ -43,8 +43,8 @@ const Comment = ({ comment }) => {
 
   const redirectUserProfile = async (e) => {
     closeModal()
+    await dispatch(userPostsThunk(comment.commentAuthor.id))
     history.push(`/${comment.commentAuthor.id}`)
-    // await dispatch(allPostsThunk())
   }
 
   if (isEditing) {
