@@ -24,7 +24,7 @@ function PostCard({ post }) {
     return <span>{obj.firstName} {obj.lastName}</span>
   })
 
-  console.log(likeByNames)
+  // console.log(likeByNames)
 
   let userLiked = false
   for (let i = 0; i < likedBy.length; i++) {
