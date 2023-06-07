@@ -70,10 +70,11 @@ function PostCard({ post }) {
     const time = date.toLocaleString('en-US', options);
     const dateString = `${month} ${year} at ${time}`
 
-    if (days >= 7) return dateString
-    else if (days >= 1) return `${days}d`
-    else if (hours >= 1) return `${hours}d`
-    else return minutes ? `${minutes}m` : '1m'
+    if (days >= 7) return dateString;
+    else if (days >= 1) return `${days}d`;
+    else if (hours >= 1) return `${hours}h`;
+    else if (minutes >= 1) return `${minutes}m`
+    else return 'Just now';
   }
 
   return (
@@ -81,7 +82,7 @@ function PostCard({ post }) {
       <div className="post-card__info-content">
         <div className="post-card__user-info">
           <div className="post-card__profile-info">
-            <img className="post-card__profile-pic" src={profilePicURL} alt="profile" onClick={redirectUserProfile}/>
+            <img className="post-card__profile-pic" src={profilePicURL} alt="profile" onClick={redirectUserProfile} />
             <div className="profile-info__left-side">
               <p onClick={redirectUserProfile}>{firstName} {lastName}</p>
               <div className="profile-info__post-date">
@@ -93,9 +94,9 @@ function PostCard({ post }) {
             {user.id === post.author.id && (
               <>
                 <OpenModalButton
-                buttonText="Edit"
-                onItemClick={closeModal}
-                modalComponent={<EditPostModal user={user} post={post} />}
+                  buttonText="Edit"
+                  onItemClick={closeModal}
+                  modalComponent={<EditPostModal user={user} post={post} />}
                 />
                 <OpenModalButton
                   buttonText="Delete"
@@ -116,17 +117,17 @@ function PostCard({ post }) {
         })}
       </div>
       <div className="post-card__details">
-          <div className="post-card__engagement">
-            <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
-                <div className="post-card__likes">
-                  {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
-                </div>
-            </Tippy>
-          </div>
+        <div className="post-card__engagement">
+          <Tippy content={<span style={{ display: 'flex', flexDirection: 'column' }}>{likeByNames}</span>} placement="bottom" arrow={false}>
+            <div className="post-card__likes">
+              {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
+            </div>
+          </Tippy>
+        </div>
         <div className="post-card__buttons">
-        {liked ?
-          <button style={{color: 'blue'}} className={liked} onClick={handleLike}>❤️ LIKE</button> :
-          <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+          {liked ?
+            <button style={{ color: 'blue' }} className={liked} onClick={handleLike}>❤️ LIKE</button> :
+            <button className={liked} onClick={handleLike}>🖤 LIKE</button>
           }
           <OpenModalButton
             buttonText="Comment"

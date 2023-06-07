@@ -84,8 +84,9 @@ function PostDetailModal({ post }) {
 
     if (days >= 7) return dateString;
     else if (days >= 1) return `${days}d`;
-    else if (hours >= 1) return `${hours}d`;
-    else return minutes ? `${minutes}m` : "1m";
+    else if (hours >= 1) return `${hours}h`;
+    else if (minutes >= 1) return `${minutes}m`
+    else return 'Just now';
   };
 
   return (
@@ -121,22 +122,22 @@ function PostDetailModal({ post }) {
         })}
       </div>
       <div className="post-card__details">
-      <div className="post-card__engagement">
-            <Tippy content={<span style={{display: 'flex', flexDirection: 'column'}}>{likeByNames}</span>} placement="bottom" arrow={false}>
-                <div className="post-card__likes">
-                  {likes <= 0 ? "" : `❤️ ${likes}`}
-                </div>
-            </Tippy>
-          </div>
+        <div className="post-card__engagement">
+          <Tippy content={<span style={{ display: 'flex', flexDirection: 'column' }}>{likeByNames}</span>} placement="bottom" arrow={false}>
+            <div className="post-card__likes">
+              {likes <= 0 ? "" : `❤️ ${likes}`}
+            </div>
+          </Tippy>
+        </div>
         <div className="post-card__buttons">
           {liked ?
-          <button style={{color: 'blue'}} className={liked} onClick={handleLike}>❤️ LIKE</button> :
-          <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+            <button style={{ color: 'blue' }} className={liked} onClick={handleLike}>❤️ LIKE</button> :
+            <button className={liked} onClick={handleLike}>🖤 LIKE</button>
           }
         </div>
         <div>
           {stateComments.map((comment) => (
-            <Comment comment={comment} post={post}/>
+            <Comment comment={comment} post={post} />
           ))}
         </div>
         <div className="post-card__comment-bar">
