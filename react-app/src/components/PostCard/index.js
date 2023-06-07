@@ -21,21 +21,22 @@ function PostCard({ post }) {
   const { content, numLikes, author, postImages, createdAt } = post
   const { firstName, lastName, profilePicURL } = author
   const likedUser = likedPeeps.find(liker => liker.id === user.id)
-  let userLiked = false
-  const [liked, setLiked] = useState(userLiked)
+  const [liked, setLiked] = useState(likedUser !== undefined);
 
   const handleLike = async (e) => {
     if (!likedUser) {
       await dispatch(createLikeThunk(post.id, user))
+      setLiked(true)
     } else {
       await dispatch(removeLikeThunk(post.id, user))
+      setLiked(false)
     }
   }
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   }
-  let likeByNames;
+  let likeByNames; // dont touch this
 
   if (likedPeeps) {
     likeByNames = likedPeeps.map(obj => {
@@ -116,7 +117,10 @@ function PostCard({ post }) {
             </Tippy>
           </div>
         <div className="post-card__buttons">
-          <button onClick={handleLike}>LIKE</button>
+        {liked ?
+          <button style={{color: 'blue'}} className={liked} onClick={handleLike}>❤️ LIKE</button> :
+          <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+          }
           <OpenModalButton
             buttonText="Comment"
             onItemClick={closeModal}
