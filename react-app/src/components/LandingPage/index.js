@@ -17,10 +17,11 @@ function LandingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    history.push(`/home`);
     if (data) {
       setErrors(data);
+      return
     }
+    history.push(`/home`);
   };
 
   const demoUser = async (e) => {

@@ -18,28 +18,25 @@ function App() {
 
   return (
     <>
-    {!user ? (
-      <div>
+    {user ? (
+      <div style={{ backgroundColor: "#F0F2F5" }}>
+      <Navigation isLoaded={isLoaded} />
+      {(isLoaded && user) && (
+        <Switch>
+          <Route path="/home">
+            <HomePage />
+          </Route>
+          <Route path="/:userId">
+            <UserProfile />
+          </Route>
+        </Switch>
+      )}
+  </div>
+      ) : (
+        <div>
         <Route exact path="/">
           <LandingPage />
         </Route>
-      </div>
-      ) : (
-      <div style={{ backgroundColor: "#F0F2F5" }}>
-          <Navigation isLoaded={isLoaded} />
-          {isLoaded && (
-            <Switch>
-              <Route path="/signup">
-                <SignupFormPage />
-              </Route>
-              <Route path="/home">
-                <HomePage />
-              </Route>
-              <Route path="/:userId">
-                <UserProfile />
-              </Route>
-            </Switch>
-          )}
       </div>
       )}
     </>
