@@ -22,7 +22,6 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      console.log("🚀 ~ file: ProfileButton.js:26 ~ closeMenu ~ e.target:", e.target)
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
