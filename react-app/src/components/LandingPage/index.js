@@ -4,6 +4,7 @@ import { useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
+import title from '../../assets/friendzone-title.png'
 import "./landingPage.css";
 
 function LandingPage() {
@@ -45,7 +46,9 @@ function LandingPage() {
       <body>
         <div className="landing-container">
           <div className="left-side">
-            <h1 className="logo">FriendZone</h1>
+            <div className="logo">
+              <img src={title} className="friendzone"/>
+            </div>
             <h3 className="slogan">A place where you can force a friendship</h3>
             <p>Click a demo user or create an account</p>
             <div className="demo-user-stuff">

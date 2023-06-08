@@ -55,6 +55,10 @@ input {
     padding-bottom: .5rem;
 }
 
+.friendzone {
+    height: 50px;
+}
+
 .submit-button {
     margin-bottom: 2.5rem;
     padding: .5rem 1rem;
