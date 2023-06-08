@@ -29,7 +29,7 @@ function UserProfile() {
     dispatch(othersFriendsThunk(userId))
   }, [dispatch]);
   let isFriend = Object.keys(friendsObj).includes(userId)
-
+  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~is friend~~~~~~', isFriend)
   if (!posts.length) return null;
 
   const addFriend = () => {
@@ -51,11 +51,12 @@ function UserProfile() {
           <img className="post-card__profile-pic" src={profilePicURL} />
           <p>{firstName} {lastName}</p>
           <p>{`${friends.length} friends`}</p>
-
+          {/* having a lot of bugs when trying to hid the button from the user.... moving on... */}
         </div>
-        {!isUser && !isFriend && (<button onClick={unFriend}>Unfriend</button>)}
-        {!isUser && isFriend && (<button onClick={addFriend}>Add Friend</button>)}
+        {isFriend && (<button onClick={unFriend}>Unfriend</button>)}
+        {!isFriend && (<button onClick={addFriend}>Add Friend</button>)}
       </div>
+
       <div className='friends-thing'>
         {friends.map(friend => (
           <div onClick={e => redirectUserProfile(friend.id)}>
