@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { userPostsThunk } from "../../store/posts";
+import { singlePostThunk, userPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
@@ -28,6 +28,7 @@ function UserProfile() {
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
   }, [dispatch]);
+
   let isFriend = Object.keys(friendsObj).includes(userId)
   console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~is friend~~~~~~', isFriend)
   if (!posts.length) return null;
@@ -39,9 +40,12 @@ function UserProfile() {
     dispatch(unFriendThunk(userId))
   }
   const redirectUserProfile = (userId) => {
+    console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user before~~~~~~', user)
+    dispatch(singleUserThunk(userId))
     history.push(`/${userId}`)
+    console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user before~~~~~~', user)
   }
-  console.log('~~~~~~~~~~is friend~~~~~~~~~~~', isFriend)
+
   return (
 
     <div className="home-page-wrapper">

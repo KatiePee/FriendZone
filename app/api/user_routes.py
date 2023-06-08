@@ -63,7 +63,9 @@ def add_friend(id):
     db.session.execute(friendship)
     db.session.commit()
 
-    return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
+    # return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
+    print('😈~😈~😈~😈~😈~😈~😈~~~~~~~~ new friend', new_friend)
+    return new_friend.to_dict()
 
 @user_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required

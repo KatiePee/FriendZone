@@ -32,6 +32,7 @@ export const myFriendsThunk = () => async dispatch => {
   } else return null
 }
 
+
 export const othersFriendsThunk = (userId) => async dispatch => {
   const res = await fetch(`/api//users/${userId}/friends`)
   console.log('~~~~~~~~~~~other friends thunk~~~~~~~~~~~~~ res~~~~~~~~', res)
@@ -47,8 +48,8 @@ export const addFriendThunk = (friendId) => async dispatch => {
     method: 'POST'
   })
   if (res.ok) {
-    const friends = await res.json()
-    await dispatch(myFriendsThunk())
+    const friend = await res.json()
+    await dispatch(addFriend(friend))
     return res
   } else return null
 }
@@ -72,6 +73,10 @@ const friendsReducer = (state = initialState, action) => {
     case MY_FRIENDS:
       newState = { ...state, friends: {} }
       action.payload.forEach(friend => newState.friends[friend.id] = friend)
+      return newState
+    case ADD_FRIEND:
+      newState = { ...state, friends: { ...state.friends } }
+      newState.friends[action.payload.id] = action.payload
       return newState
     default:
       return state;
