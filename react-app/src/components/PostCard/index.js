@@ -19,6 +19,7 @@ function PostCard({ post }) {
   const dispatch = useDispatch()
   const [text, setText] = useState("")
   const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
+  const postCommentLength = useSelector(state => state.posts.allPosts[post.id].comments).length
   const history = useHistory()
 
   const { content, numLikes, author, postImages, createdAt } = post
@@ -77,6 +78,19 @@ function PostCard({ post }) {
     else return 'Just now';
   }
 
+  const columns = () => {
+    if (postImages.length === 1) return "1fr"
+    if (postImages.length === 3) return "1fr 1fr";
+    if (postImages.length > 1) return '1fr 1fr'
+  }
+
+
+  const cardLayout = {
+    display: 'grid',
+    gridTemplateAreas: "pic1 pic2",
+    gridTemplateColumns: columns(),
+  }
+
   return (
     <div className="post-card__container">
       <div className="post-card__info-content">
@@ -115,14 +129,15 @@ function PostCard({ post }) {
           <p>{content}</p>
         </div>
       </div>
-      <div className="post-card__images">
+      <div style={cardLayout}>
         {postImages.map(image => {
            const imageStyle = {
             backgroundImage: `url(${image.imageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             width: '100%',
-            height: '300px', // Adjust the height as per your requirement
+            height: '300px',
+            borderRadius: '10px'
           };
 
           return (
@@ -139,11 +154,12 @@ function PostCard({ post }) {
               {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
             </div>
           </Tippy>
+          {postCommentLength > 0 ? <div>{postCommentLength} Comments</div> : null}
         </div>
         <div className="post-card__buttons">
           {liked ?
-            <button className={liked} onClick={handleLike}>❤️ Like</button> :
-            <button className={liked} onClick={handleLike}>🖤 Like</button>
+            <button className="like-btn"  onClick={handleLike}>❤️ Like</button> :
+            <button className="like-btn"  onClick={handleLike}>🖤 Like</button>
           }
           <OpenModalButton
             buttonText="Comment"
