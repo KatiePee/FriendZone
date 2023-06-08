@@ -113,7 +113,19 @@ function PostCard({ post }) {
       </div>
       <div className="post-card__images">
         {postImages.map(image => {
-          return <img src={image.imageUrl} key={image.id} alt="post" />
+           const imageStyle = {
+            backgroundImage: `url(${image.imageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '100%',
+            height: '300px', // Adjust the height as per your requirement
+          };
+
+          return (
+            <div className="post-card__image" style={imageStyle}>
+              {/* You can add any additional content or elements here */}
+            </div>
+          );
         })}
       </div>
       <div className="post-card__details">
@@ -137,10 +149,10 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__comment-bar">
           <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />
-          <div>
-            <textarea className="add-comment" value={text} onChange={handleInputChange} rows={1}></textarea>
-            <span>➡</span>
-          </div>
+          {/* <div className="post-card__input-field"> */}
+            <input className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input>
+
+          {/* </div> */}
         </div>
       </div>
     </div>
