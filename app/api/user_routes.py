@@ -34,8 +34,8 @@ def my_friends():
     Query for current users friends
     """
     friends = current_user.friendships
-
-    return [friend.to_dict() for friend in friends]
+    friends_list = [friend.to_dict() for friend in friends if current_user.id != friend.id]
+    return friends_list
 
 @user_routes.route('/<int:id>/friends')
 @login_required
@@ -45,8 +45,9 @@ def friends(id):
     """
     user = User.query.get(id)
     friends = user.friendships
-
-    return [friend.to_dict() for friend in friends]
+    friends_list = [friend.to_dict() for friend in friends if current_user.id != friend.id]
+    print('~~😈😈😈~~~~~~~~~~~~~~~~friends list~~~~~~', friends_list)
+    return friends_list
 
 @user_routes.route('/<int:id>/add', methods=['POST'])
 @login_required
@@ -64,7 +65,7 @@ def add_friend(id):
     db.session.commit()
 
     # return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
-    print('😈~😈~😈~😈~😈~😈~😈~~~~~~~~ new friend', new_friend)
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~ new friend', new_friend)
     return new_friend.to_dict()
 
 @user_routes.route('/<int:id>/delete', methods=['DELETE'])

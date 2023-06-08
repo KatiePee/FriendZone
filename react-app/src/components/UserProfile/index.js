@@ -22,7 +22,8 @@ function UserProfile() {
   const posts = postsState ? Object.values(postsState).reverse() : [];
   const { firstName, lastName, profilePicURL, coverPhotoURL } = user;
   const isUser = userId == currentUser.id
-
+  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user~~~~~', user)
+  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~users friends~~~~~', friends)
   useEffect(() => {
     dispatch(singleUserThunk(userId))
     dispatch(userPostsThunk(userId));

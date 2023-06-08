@@ -27,7 +27,7 @@ export const myFriendsThunk = () => async dispatch => {
   const res = await fetch("/api/users/friends")
   if (res.ok) {
     const friends = await res.json()
-    dispatch(myFriends(friends))
+    await dispatch(myFriends(friends))
     return res
   } else return null
 }
@@ -55,6 +55,7 @@ export const addFriendThunk = (friendId) => async dispatch => {
 }
 
 export const unFriendThunk = (friendId) => async dispatch => {
+  console.log('😈~~~~~~~~~~~~~~~friend id', friendId)
   const res = await fetch(`/api/users/${friendId}/delete`, {
     method: 'DELETE'
   })
