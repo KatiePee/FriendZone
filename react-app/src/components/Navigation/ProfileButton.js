@@ -22,6 +22,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
+      console.log("🚀 ~ file: ProfileButton.js:26 ~ closeMenu ~ e.target:", e.target)
       if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
@@ -38,8 +39,8 @@ function ProfileButton({ user }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    history.push("/");
     dispatch(logout());
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
