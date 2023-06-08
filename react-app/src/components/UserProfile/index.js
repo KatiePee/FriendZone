@@ -60,8 +60,8 @@ function UserProfile() {
           <p>{`${friends.length} friends`}</p>
           {/* having a lot of bugs when trying to hid the button from the user.... moving on... */}
         </div>
-        {isFriend && (<button onClick={unFriend}>Unfriend</button>)}
-        {!isFriend && (<button onClick={addFriend}>Add Friend</button>)}
+        {!isUser && isFriend && (<button onClick={unFriend}>Unfriend</button>)}
+        {!isUser && !isFriend && (<button onClick={addFriend}>Add Friend</button>)}
       </div>
       <div className='user-profile-page'>
         <div className='friends-thing'>
