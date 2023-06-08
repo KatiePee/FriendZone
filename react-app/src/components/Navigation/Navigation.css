@@ -77,6 +77,10 @@
   padding: 0.5rem 1rem;
 }
 
+.nav-title {
+  width: 12rem;
+}
+
 #logo {
   color: #1877f2;
   font-size: xx-large;
