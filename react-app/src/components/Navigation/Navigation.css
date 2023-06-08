@@ -65,7 +65,6 @@
 }
 
 .nav {
-  z-index: 1;
   display: flex;
   position: fixed;
   justify-content: space-between;
@@ -90,7 +89,7 @@
 
 .nav__left-side {
   position: fixed;
-  z-index: 2;
+  /* z-index: 2; */
   margin-top: 90px;
   /* width: 20%; */
   border: 2px solid black;
