@@ -36,10 +36,9 @@ def seed_friendships():
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        print(f"Error inserting friendship: {e}")
 
 def undo_friendships():
-  if environment == "production":                  
+  if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.friendships RESTART IDENTITY CASCADE;")
   else:
         db.session.execute(text("DELETE FROM friendships"))
