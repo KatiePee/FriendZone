@@ -45,8 +45,7 @@ def friends(id):
     """
     user = User.query.get(id)
     friends = user.friendships
-    friends_list = [friend.to_dict() for friend in friends if current_user.id != friend.id]
-    print('~~😈😈😈~~~~~~~~~~~~~~~~friends list~~~~~~', friends_list)
+    friends_list = [friend.to_dict() for friend in friends if user.id != friend.id]
     return friends_list
 
 @user_routes.route('/<int:id>/add', methods=['POST'])

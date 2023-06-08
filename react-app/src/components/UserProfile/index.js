@@ -22,29 +22,31 @@ function UserProfile() {
   const posts = postsState ? Object.values(postsState).reverse() : [];
   const { firstName, lastName, profilePicURL, coverPhotoURL } = user;
   const isUser = userId == currentUser.id
-  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user~~~~~', user)
-  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~users friends~~~~~', friends)
   useEffect(() => {
     dispatch(singleUserThunk(userId))
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
   }, [dispatch]);
 
-  let isFriend = Object.keys(friendsObj).includes(userId)
-  console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~is friend~~~~~~', isFriend)
+  let isFriend = Object.keys(friendsObj).includes(`${currentUser.id}`)
+
+
+
   if (!posts.length) return null;
 
   const addFriend = () => {
     dispatch(addFriendThunk(userId))
+    dispatch(othersFriendsThunk(userId))
   }
   const unFriend = () => {
     dispatch(unFriendThunk(userId))
+    dispatch(othersFriendsThunk(userId))
   }
   const redirectUserProfile = (userId) => {
-    console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user before~~~~~~', user)
     dispatch(singleUserThunk(userId))
+    dispatch(userPostsThunk(userId));
+    dispatch(othersFriendsThunk(userId))
     history.push(`/${userId}`)
-    console.log('😈~😈~😈~😈~😈~😈~😈~😈~~~~~~~user before~~~~~~', user)
   }
 
   return (
