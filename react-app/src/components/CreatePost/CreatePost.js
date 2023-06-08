@@ -4,8 +4,8 @@ import { allPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import OpenModalButton from '../OpenModalButton'
 import PostFormModal from "../PostFormModal";
+import "./CreatePost.css"
 
-import "./createpost.css"
 function CreatePost() {
   const user = useSelector(state => state.session.user)
   const { firstName, profilePicURL } = user
