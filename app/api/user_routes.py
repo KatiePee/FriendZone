@@ -83,4 +83,5 @@ def unfriend(id):
 
     db.session.execute(delete_query)
     db.session.commit()
-    return {"message": f"Successfully unfriended 😈"}
+    # return {"message": f"Successfully unfriended 😈"}
+    return friend.to_dict()

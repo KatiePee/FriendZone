@@ -59,8 +59,8 @@ export const unFriendThunk = (friendId) => async dispatch => {
     method: 'DELETE'
   })
   if (res.ok) {
-    const friends = await res.json()
-    await dispatch(myFriendsThunk())
+    const friend = await res.json()
+    await dispatch(unFriend(friend))
     return res
   } else return null
 }
@@ -77,6 +77,10 @@ const friendsReducer = (state = initialState, action) => {
     case ADD_FRIEND:
       newState = { ...state, friends: { ...state.friends } }
       newState.friends[action.payload.id] = action.payload
+      return newState
+    case UNFRIEND:
+      newState = { ...state, friends: { ...state.friends } }
+      delete newState.friends[action.payload.id]
       return newState
     default:
       return state;
