@@ -12,3 +12,47 @@
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
 }
+
+
+button {
+  position: relative;
+  padding: 10px 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  border-radius: 10px;
+
+  transition: background-color 0.3s ease;
+}
+
+button::before {
+  content: "";
+  background-color: #f0d5d5;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+button:hover {
+  background-color: #f0d5d5;
+}
+
+button:hover::before {
+  opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+.edit:hover {
+  opacity: .5;
+  z-index: -1;
+  background-color: grey;
+  padding: 5px;
+  border-radius: 50%;
+}
