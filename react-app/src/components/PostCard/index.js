@@ -80,13 +80,14 @@ function PostCard({ post }) {
 
   const columns = () => {
     if (postImages.length === 1) return "1fr"
-    if (postImages.length === 3) return "1fr 1fr";
-    if (postImages.length > 1) return '1fr 1fr'
+    if (postImages.length === 3) return "1fr 1fr 1fr";
+    return '1fr 1fr'
   }
 
 
   const cardLayout = {
     display: 'grid',
+    gap: '5px',
     gridTemplateAreas: "pic1 pic2",
     gridTemplateColumns: columns(),
   }
