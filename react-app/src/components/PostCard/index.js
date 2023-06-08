@@ -114,7 +114,6 @@ function PostCard({ post }) {
                   onItemClick={closeModal}
                   modalComponent={<EditPostModal user={user} post={post} />}
                 />
-              {/* </i> */}
                 <OpenModalButton
                   className="post-btn"
                   buttonText={<i className="fas fa-times fa-lg"></i>}
@@ -141,9 +140,7 @@ function PostCard({ post }) {
           };
 
           return (
-            <div className="post-card__image" style={imageStyle}>
-              {/* You can add any additional content or elements here */}
-            </div>
+            <div className="post-card__image" style={imageStyle}></div>
           );
         })}
       </div>
@@ -169,10 +166,7 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__comment-bar">
           <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />
-          {/* <div className="post-card__input-field"> */}
             <input className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input>
-
-          {/* </div> */}
         </div>
       </div>
     </div>
