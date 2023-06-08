@@ -34,7 +34,7 @@ export const myFriendsThunk = () => async dispatch => {
 
 
 export const othersFriendsThunk = (userId) => async dispatch => {
-  const res = await fetch(`/api//users/${userId}/friends`)
+  const res = await fetch(`/api/users/${userId}/friends`)
   if (res.ok) {
     const friends = await res.json()
     await dispatch(othersFriends(friends))
