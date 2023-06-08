@@ -34,8 +34,8 @@ def my_friends():
     Query for current users friends
     """
     friends = current_user.friendships
-
-    return [friend.to_dict() for friend in friends]
+    friends_list = [friend.to_dict() for friend in friends if current_user.id != friend.id]
+    return friends_list
 
 @user_routes.route('/<int:id>/friends')
 @login_required
@@ -45,8 +45,8 @@ def friends(id):
     """
     user = User.query.get(id)
     friends = user.friendships
-
-    return [friend.to_dict() for friend in friends]
+    friends_list = [friend.to_dict() for friend in friends if user.id != friend.id]
+    return friends_list
 
 @user_routes.route('/<int:id>/add', methods=['POST'])
 @login_required
@@ -63,7 +63,14 @@ def add_friend(id):
     db.session.execute(friendship)
     db.session.commit()
 
-    return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
+    # return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~ new friend', new_friend)
+    if new_friend != current_user:
+        return new_friend.to_dict()
+    else: 
+        return {'errors': ['User cannot be their own friend']}, 404
+    # return new_friend.to_dict()
+
 
 @user_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
@@ -81,4 +88,5 @@ def unfriend(id):
 
     db.session.execute(delete_query)
     db.session.commit()
-    return {"message": f"Successfully unfriended 😈"}
+    # return {"message": f"Successfully unfriended 😈"}
+    return friend.to_dict()
