@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -8,8 +8,9 @@ import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  // const user = useSelector(state => state.session.user)
   const [showMenu, setShowMenu] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -31,44 +32,44 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+  const redirectUserProfile = (e) => {
+    history.push(`/${user.id}`)
+  }
+
   const handleLogout = (e) => {
     e.preventDefault();
-    history.push('/')
     dispatch(logout());
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
+  if (!user) return null;
+
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button onClick={openMenu} className="profile-button">
+        <img
+          src={user.profilePicURL}
+          className="post-card__profile-pic"
+          alt={user.firstName}
+        ></img>
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+            <div className="profile-dropdown-link" onClick={redirectUserProfile}>
+              <img
+                src={user.profilePicURL}
+                className="profile-dropdown-pic"
+                alt={user.firstName}
+              ></img>
+              <li>
+                {user.firstName} {user.lastName}
+              </li>
+            </div>
+            <li className="profile-dropdown-logout">
               <button onClick={handleLogout}>Log Out</button>
             </li>
-          </>
-        ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
       </ul>
     </>
   );

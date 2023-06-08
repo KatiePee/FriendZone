@@ -1,0 +1,64 @@
+.sign-up-logo {
+    color: black;
+    padding-left: 1rem;
+}
+
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.first-last {
+    display: flex;
+    gap: .5rem;
+}
+
+.form-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+    /* width: fit-content; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.gender-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.gender-field-area {
+    display: flex;
+    gap: .5rem;
+    width: 100%;
+    /* justify-content: center; */
+}
+
+.male-section, .female-section, .custom-section {
+    display: flex;
+    align-items: center;
+    border: 1px solid gray;
+    padding: .5rem;
+    gap: 2rem;
+    padding: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #dcdfe2;
+}
+
+.submit-button-2 {
+    padding: .5rem 1rem;
+    background-color: #42b72a;
+    border: 1px solid #42b72a;
+    color: white;
+    font-weight: bolder;
+    border-radius: 8px;
+    width: 50%;
+    margin-left: 5rem;
+}
+
+.disclosure {
+    font-size: 12px;
+}
