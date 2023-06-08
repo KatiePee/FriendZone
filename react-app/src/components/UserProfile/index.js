@@ -14,12 +14,13 @@ function UserProfile() {
   const postsState = useSelector((state) => state.posts.allPosts);
   const currentUser = useSelector((state) => state.session.user);
   const friendsObj = useSelector((state) => state.friends.friends);
+  const user = useSelector((state) => state.users.singleUser);
   const friends = Object.values(friendsObj)
   // const [isFriend, setIsFriend] = useState(false)
-  const userId = useParams().userId;
+  const { userId } = useParams();
   const posts = postsState ? Object.values(postsState).reverse() : [];
-  const user = useSelector((state) => state.users.singleUser);
   const { firstName, lastName, profilePicURL } = user;
+  const isUser = userId == currentUser.id
 
   useEffect(() => {
     dispatch(singleUserThunk(userId))
@@ -43,8 +44,8 @@ function UserProfile() {
       <div className="user__info">
         <img className="post-card__profile-pic" src={profilePicURL} />
         <p>{firstName} {lastName}</p>
-        {isFriend && (<button onClick={unFriend}>Unfriend</button>)}
-        {isFriend || (<button onClick={addFriend}>Add Friend</button>)}
+        {!isUser && isFriend && (<button onClick={unFriend}>Unfriend</button>)}
+        {!isUser && (isFriend || (<button onClick={addFriend}>Add Friend</button>))}
 
       </div>
       <div className="feed">
