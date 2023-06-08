@@ -167,7 +167,11 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__comment-bar">
           <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />
-            <input className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input>
+            {/* <input className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input> */}
+            <OpenModalButton
+          buttonText={<input disabled className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input>}
+          modalComponent={<PostDetailModal post={post} />}
+        />
         </div>
       </div>
     </div>

@@ -88,20 +88,13 @@
   width: 100%;
 }
 
-.add-comment {
-  height: fit-content;
-  resize: none;
-  overflow: hidden;
-  max-width: 100%;
-}
-
 .post-card__likes {
   width: fit-content;
 }
 
 .post-card__comment-bar {
-  display: flex;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: auto 1fr;
 }
 
 .add-comment {
