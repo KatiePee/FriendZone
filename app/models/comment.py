@@ -13,6 +13,7 @@ class Comment(db.Model):
   content = db.Column(db.String(255))
   created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
+  post = db.relationship('Post', back_populates = 'comments')
   user = db.relationship('User', back_populates='comments')
 
   def to_dict(self):

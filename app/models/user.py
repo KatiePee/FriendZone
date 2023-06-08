@@ -3,6 +3,7 @@ from .friendship import friendships
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from sqlalchemy import or_
 
 
 class User(db.Model, UserMixin):
@@ -27,20 +28,21 @@ class User(db.Model, UserMixin):
     date_of_birth = db.Column(db.Date, nullable = False)
     gender = db.Column(db.String, nullable = False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
-    # should created at be string formate and we can do all the date manipulation on the font end?
-    # we need to be consistent with what were putting into the db
-    posts = db.relationship('Post', back_populates='user')
-    likes = db.relationship('Post', secondary="likes",  back_populates="likes")
 
-    # friendships = db.relationship('Friendship', back_populates='user')
+    posts = db.relationship('Post', back_populates='user', cascade="all, delete-orphan")
+    # likes = db.relationship('User', secondary="likes", back_populates="likes", passive_deletes=True, cascade="all, delete")
+    # not sure about cascade="all, delete" vs. passive_deletes=True
+    likes = db.relationship('Post', secondary="likes",  back_populates="likes", cascade="all, delete")
+    comments = db.relationship('Comment', back_populates='user', cascade="all, delete-orphan")
+
     friendships = db.relationship(
         "User",
         secondary="friendships",
-        primaryjoin=friendships.c.userA_id == id,
-        secondaryjoin=friendships.c.userB_id == id,
-        backref="friends" #barely know what this means, I think it creates another association for the other end of the friendship?
+        primaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
+        secondaryjoin=or_(friendships.c.userA_id == id, friendships.c.userB_id == id),
+        back_populates='friendships',
+        cascade="all, delete"
         )
-    comments = db.relationship('Comment', back_populates='user')
 
     @property
     def password(self):
@@ -56,13 +58,11 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "username": self.username,
             "email": self.email,
             "firstName": self.first_name,
             "lastName": self.last_name,
             "profilePicURL": self.profile_picture_url,
             "coverPhotoURL": self.cover_photo_url,
             "gender": self.gender,
-            "age": self.age,
             "createdAt": self.created_at # TODO: maybe convert to string here?
        }

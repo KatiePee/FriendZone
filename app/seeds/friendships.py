@@ -22,6 +22,7 @@ def seed_friendships():
     {'userA_id': 5, 'userB_id': 6},
     {'userA_id': 6, 'userB_id': 7},
     {'userA_id': 7, 'userB_id': 8},
+    {'userA_id': 2, 'userB_id': 8},
   ]
 
   for friendship_data in friendships_to_seed:
@@ -35,10 +36,9 @@ def seed_friendships():
         db.session.commit()
     except IntegrityError as e:
         db.session.rollback()
-        print(f"Error inserting friendship: {e}")
 
 def undo_friendships():
-  if environment == "production":                  
+  if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.friendships RESTART IDENTITY CASCADE;")
   else:
         db.session.execute(text("DELETE FROM friendships"))

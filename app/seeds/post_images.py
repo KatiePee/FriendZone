@@ -79,8 +79,8 @@ def seed_post_images():
 
 def undo_post_images():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.likes RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.post_images RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM likes"))
+        db.session.execute(text("DELETE FROM post_images"))
 
     db.session.commit()

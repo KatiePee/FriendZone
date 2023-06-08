@@ -14,8 +14,13 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
     user = db.relationship('User', back_populates='posts')
-    likes = db.relationship('User', secondary="likes", back_populates="likes")
-    post_images = db.relationship('PostImage', back_populates='post')
+    # likes = db.relationship('User', secondary="likes", back_populates="likes", passive_deletes=True, cascade="all, delete")
+    # not sure about cascade="all, delete" vs. passive_deletes=True
+    likes = db.relationship('User', secondary="likes", back_populates="likes" )
+    post_images = db.relationship('PostImage', back_populates='post', cascade="all, delete-orphan")
+
+    comments = db.relationship('Comment', back_populates='post', cascade="all, delete-orphan")
+
 
     def to_dict(self):
         return {
