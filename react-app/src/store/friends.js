@@ -42,7 +42,6 @@ export const othersFriendsThunk = (userId) => async dispatch => {
 }
 
 export const addFriendThunk = (friendId) => async dispatch => {
-  console.log('~~~~~~~~~~~~ hits thunk! friend id ~~~~~', friendId)
   const res = await fetch(`/api/users/${friendId}/add`, {
     method: 'POST'
   })
@@ -54,7 +53,6 @@ export const addFriendThunk = (friendId) => async dispatch => {
 }
 
 export const unFriendThunk = (friendId) => async dispatch => {
-  console.log('~~~~~~~~~~~~ hits thunk! friend id ~~~~~', friendId)
   const res = await fetch(`/api/users/${friendId}/delete`, {
     method: 'DELETE'
   })

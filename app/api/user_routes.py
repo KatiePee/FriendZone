@@ -56,7 +56,7 @@ def add_friend(id):
     """
     # current_user = User.query.get(current_user.id)
     new_friend = User.query.get(id)
-    
+
     # current_user.freindships.append(new_friend)
     friendship = insert(friendships).values(userA_id=current_user.id, userB_id=id)
 
@@ -64,20 +64,17 @@ def add_friend(id):
     db.session.commit()
 
     return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
- 
+
 @user_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def unfriend(id):
     """
     Delete a friendship
     """
-   
+
     friend = User.query.get(id)
     current_user_friends = current_user.friendships
-    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend current user?~~~~woooo~~', current_user )
-    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend?~~~~woooo~~', friend )
-    print('😈😈😈😈😈😈~~~~~~~~~ delete friend backend firend id?~~~~woooo~~', id)
-  
+
     delete_query = delete(friendships).where(
     ((friendships.c.userA_id == current_user.id) & (friendships.c.userB_id == id)) |
     ((friendships.c.userA_id == id) & (friendships.c.userB_id == current_user.id)))

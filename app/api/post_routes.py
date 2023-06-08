@@ -71,17 +71,12 @@ def create_post():
     """
     Create a post
     """
-    print("🚀 ~ file: post_routes.py:73 ~ HITTTING THE BACKEND__________________________")
     postForm = PostForm()
-    print("🚀 ~ file: post_routes.py:76 ~ postForm:", postForm)
     postForm['csrf_token'].data = request.cookies['csrf_token']
     post = {}
 
-    print("🚀 ~ file: post_routes.py:85 ~ request.files:", request.files)
 
     if postForm.validate_on_submit():
-        print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:81 ~ postForm.data:", postForm.data)
-        print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:81 ~ postForm.errors:", postForm.errors)
         new_post = Post(
             content = postForm.data['content'],
             user_id = current_user.id
@@ -89,7 +84,6 @@ def create_post():
         db.session.add(new_post)
         db.session.commit()
         post = new_post.to_dict()
-        print("🚀 ~ file: post_routes.py:89 ~ post:", post)
 
         post["postImages"] = []
 
@@ -98,24 +92,20 @@ def create_post():
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
 
-            print("🚀 ~~~~~~~~~~~~~~~~~ file: post_routes.py:89 ~ image:", image)
             new_image = PostImage(
                 post_id = post["id"],
                 image_url = upload["url"]
             )
 
-            print("🚀 ~ file: post_routes.py:101 ~ new_image:", new_image)
             db.session.add(new_image)
             db.session.commit()
 
             image_dict = new_image.to_dict()
             post["postImages"].append(image_dict)
 
-        print("🚀 ~ file: post_routes.py:107 ~ post:", post)
 
     if postForm.errors:
-        print("🚀 ~ file: post_routes.py:116 ~ postForm IN ERRORS:", postForm.data)
-        print("🚀 ~ file: post_routes.py:117 ~ postForm.errors:", postForm.errors)
+        return postForm.errors
 
     return post
 
