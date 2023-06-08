@@ -19,6 +19,7 @@ function PostCard({ post }) {
   const dispatch = useDispatch()
   const [text, setText] = useState("")
   const likedPeeps = useSelector(state => state.posts.allPosts[post.id].likedBy)
+  const postCommentLength = useSelector(state => state.posts.allPosts[post.id].comments).length
   const history = useHistory()
 
   const { content, numLikes, author, postImages, createdAt } = post
@@ -77,6 +78,20 @@ function PostCard({ post }) {
     else return 'Just now';
   }
 
+  const columns = () => {
+    if (postImages.length === 1) return "1fr"
+    if (postImages.length === 3) return "1fr 1fr 1fr";
+    return '1fr 1fr'
+  }
+
+
+  const cardLayout = {
+    display: 'grid',
+    gap: '5px',
+    gridTemplateAreas: "pic1 pic2",
+    gridTemplateColumns: columns(),
+  }
+
   return (
     <div className="post-card__container">
       <div className="post-card__info-content">
@@ -92,18 +107,21 @@ function PostCard({ post }) {
           </div>
           <div className="post-card__edit-delete">
             {user.id === post.author.id && (
-              <>
+              <div className="edit-delete__container">
+
                 <OpenModalButton
-                  buttonText="Edit"
+                  className="post-btn"
+                  buttonText={<i className="fas fa-edit fa-lg"><div className="edit"></div></i>}
                   onItemClick={closeModal}
                   modalComponent={<EditPostModal user={user} post={post} />}
                 />
                 <OpenModalButton
-                  buttonText="Delete"
+                  className="post-btn"
+                  buttonText={<i className="fas fa-times fa-lg"></i>}
                   onItemClick={closeModal}
                   modalComponent={<DeletePostModal post={post} />}
                 />
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -111,9 +129,20 @@ function PostCard({ post }) {
           <p>{content}</p>
         </div>
       </div>
-      <div className="post-card__images">
+      <div style={cardLayout}>
         {postImages.map(image => {
-          return <img src={image.imageUrl} key={image.id} alt="post" />
+           const imageStyle = {
+            backgroundImage: `url(${image.imageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '100%',
+            height: '300px',
+            borderRadius: '10px'
+          };
+
+          return (
+            <div className="post-card__image" style={imageStyle}></div>
+          );
         })}
       </div>
       <div className="post-card__details">
@@ -123,11 +152,12 @@ function PostCard({ post }) {
               {numLikes <= 0 ? "" : `❤️ ${numLikes}`}
             </div>
           </Tippy>
+          {postCommentLength > 0 ? <div>{postCommentLength} Comments</div> : null}
         </div>
         <div className="post-card__buttons">
           {liked ?
-            <button style={{ color: 'blue' }} className={liked} onClick={handleLike}>❤️ LIKE</button> :
-            <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+            <button className="like-btn"  onClick={handleLike}>❤️ Like</button> :
+            <button className="like-btn"  onClick={handleLike}>🖤 Like</button>
           }
           <OpenModalButton
             buttonText="Comment"
@@ -137,10 +167,7 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__comment-bar">
           <img className="post-card__profile-pic" src={user.profilePicURL} alt="profile" />
-          <div>
-            <textarea className="add-comment" value={text} onChange={handleInputChange} rows={1}></textarea>
-            <span>➡</span>
-          </div>
+            <input className="add-comment" value={text} onChange={handleInputChange} rows={1} placeholder="Write a comment..."></input>
         </div>
       </div>
     </div>
