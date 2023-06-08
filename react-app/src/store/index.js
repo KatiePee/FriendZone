@@ -5,12 +5,14 @@ import postReducer from "./posts";
 import friendsReducer from "./friends";
 // import commentReducer from "./comments";
 import likeReducer from "./likes";
+import usersReducer from "./users";
 
 
 const rootReducer = combineReducers({
   session,
   posts: postReducer,
-  friends: friendsReducer
+  friends: friendsReducer,
+  users: usersReducer
   // comments: commentReducer
   // likes: likeReducer
 });

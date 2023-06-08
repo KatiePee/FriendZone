@@ -7,19 +7,22 @@ import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
 import { addFriendThunk, myFriendsThunk, unFriendThunk } from "../../store/friends";
 import './UserProfile.css'
+import { singleUserThunk } from "../../store/users";
 
 function UserProfile() {
   const dispatch = useDispatch();
   const postsState = useSelector((state) => state.posts.allPosts);
   const currentUser = useSelector((state) => state.session.user);
-  const friendsObj = useSelector((state) => state.friends.friends)
+  const friendsObj = useSelector((state) => state.friends.friends);
   const friends = Object.values(friendsObj)
   // const [isFriend, setIsFriend] = useState(false)
   const userId = useParams().userId;
   const posts = postsState ? Object.values(postsState).reverse() : [];
-  const { firstName, lastName, profilePicURL } = currentUser;
+  const user = useSelector((state) => state.users.singleUser);
+  const { firstName, lastName, profilePicURL } = user;
 
   useEffect(() => {
+    dispatch(singleUserThunk(userId))
     dispatch(userPostsThunk(userId));
     dispatch(myFriendsThunk())
   }, [dispatch]);
