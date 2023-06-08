@@ -43,14 +43,12 @@ export const othersFriendsThunk = (userId) => async dispatch => {
 }
 
 export const addFriendThunk = (friendId) => async dispatch => {
-  console.log('😈😈~~~~~~~~~~~add friends thunk~~~~~friendid~~~~~~~~', friendId)
   const res = await fetch(`/api/users/${friendId}/add`, {
     method: 'POST'
   })
 
   if (res.ok) {
     const friend = await res.json()
-    console.log('😈😈~~~~~~~~~~~~ add friendd thun res.json', friend)
     await dispatch(addFriend(friend))
     await dispatch(othersFriendsThunk(friendId))
     return res
@@ -58,13 +56,11 @@ export const addFriendThunk = (friendId) => async dispatch => {
 }
 
 export const unFriendThunk = (friendId) => async dispatch => {
-  console.log('😈~~~~~~~~~~~~~~~unfriend thunk friend id', friendId)
   const res = await fetch(`/api/users/${friendId}/delete`, {
     method: 'DELETE'
   })
   if (res.ok) {
     const friend = await res.json()
-    console.log('😈~~~~~~~~~~~~ un friendd thunk res.json', friend)
     await dispatch(unFriend(friend))
     await dispatch(othersFriendsThunk(friendId))
     return res
@@ -77,13 +73,11 @@ const friendsReducer = (state = initialState, action) => {
   let newState = {}
   switch (action.type) {
     case MY_FRIENDS: {
-      console.log('~~~~~~~~~~~~~~~hits my friends reducer')
       newState = { ...state, friends: {} }
       action.payload.forEach(friend => newState.friends[friend.id] = friend)
       return newState
     }
     case OTHERS_FRIENDS: {
-      console.log('~~~~~~~~~~~~~~~hits my friends reducer')
       newState = { ...state, friends: {} }
       action.payload.forEach(friend => newState.friends[friend.id] = friend)
       return newState
@@ -91,16 +85,11 @@ const friendsReducer = (state = initialState, action) => {
     case ADD_FRIEND: {
       newState = { ...state, friends: { ...state.friends } }
       newState.friends[action.payload.id] = action.payload
-      console.log('👹~~~~~~~~~~~~~~~newState in the add friend reducer', newState)
-
       return newState
     }
     case UNFRIEND: {
       newState = { ...state, friends: { ...state.friends } }
-      console.log('👹~~~~~~~~~~~~~~~newState in the unfriend reducer-- before delete', newState)
-
       delete newState.friends[action.payload.id]
-      console.log('👹👹~~~~~~~~~~~~~~~newState in the unfriend reducer-- after delete', newState)
       return newState
     }
     default:
