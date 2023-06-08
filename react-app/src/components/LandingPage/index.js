@@ -46,7 +46,8 @@ function LandingPage() {
         <div className="landing-container">
           <div className="left-side">
             <h1 className="logo">FriendZone</h1>
-            <p>Click demo user or create an account</p>
+            <h3 className="slogan">A place where you can force a friendship</h3>
+            <p>Click a demo user or create an account</p>
             <div className="demo-user-stuff">
               <div onClick={demoUser} className="demo-card">
                 <img
@@ -111,7 +112,7 @@ function LandingPage() {
             </form>
             <div className="sign-up">
               <OpenModalButton
-                buttonText={`Create New Account`}
+                buttonText="Create New Account"
                 modalComponent={<SignupFormModal />}
               />
             </div>

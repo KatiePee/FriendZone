@@ -2,6 +2,9 @@ h1 {
     color: #1877f2;
 }
 
+.slogan {
+    padding-bottom: .7rem;
+}
 
 .whole-page {
     display: flex;
@@ -23,8 +26,6 @@ h1 {
     gap: .5rem;
     width: 95%;
     border-bottom: 1px solid lightgray;
-    /* border: 1px solid green */
-
 }
 
 input {
@@ -43,7 +44,6 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* gap: 1rem; */
     width: 30%;
     height: 18rem;
     background-color: white;
