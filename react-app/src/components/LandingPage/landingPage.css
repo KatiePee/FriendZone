@@ -1,22 +1,107 @@
+h1 {
+    color: #1877f2;
+}
+
+
+.whole-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #F0F2F5;
+    height: 100vh;
+}
+
 .landing-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
+.form-info {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 95%;
+    border-bottom: 1px solid lightgray;
+    /* border: 1px solid green */
+
+}
+
+input {
+    width: 100%;
+}
+
+.input-info {
+    padding: .7rem;
+    border-radius: 8px;
+    border: 1px solid #dcdfe2
+}
+
+
 .login-signup {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 1rem; */
+    width: 30%;
+    height: 18rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px grey;
 }
 
-.login-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
+.logo {
+    padding-bottom: .5rem;
 }
 
 .submit-button {
-    width: 60%;
+    margin-bottom: 2.5rem;
+    padding: .5rem 1rem;
+    background-color: #1877f2;
+    border: 1px solid #1877f2;
+    color: white;
+    font-weight: bolder;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.sign-up {
+    margin-top: 1.5rem;
+}
+
+.demo-user-stuff {
+    display: flex;
+    gap: .5rem;
+    padding-top: 1rem;
+}
+
+.sign-up > button {
+    padding: .5rem 1rem;
+    width: 100%;
+    background-color: #42b72a;
+    border-radius: 8px;
+    border: 1px solid #42b72a;
+    color: white;
+}
+
+
+.demo-card:hover {
+    cursor:pointer;
+    box-shadow: 3px 3px 10px gray;
+}
+
+.demo-name {
+    text-align: center;
+}
+
+.demo-card {
+    height: fit-content;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+.demo-face {
+    height: 100%;
+    width: 100px;
 }

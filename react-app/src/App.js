@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import { authenticate } from "./store/session";
@@ -10,31 +10,39 @@ import LandingPage from "./components/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
-    <div style={{ backgroundColor: "#F0F2F5" }}>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route exact path='/'>
-            <LandingPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path='/home'>
-            <HomePage />
-          </Route>
-          <Route path='/:userId'>
-            <UserProfile />
-          </Route>
-        </Switch>
+    <>
+    {!user ? (
+      <div>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+      </div>
+      ) : (
+      <div style={{ backgroundColor: "#F0F2F5" }}>
+          <Navigation isLoaded={isLoaded} />
+          {isLoaded && (
+            <Switch>
+              <Route path="/signup">
+                <SignupFormPage />
+              </Route>
+              <Route path="/home">
+                <HomePage />
+              </Route>
+              <Route path="/:userId">
+                <UserProfile />
+              </Route>
+            </Switch>
+          )}
+      </div>
       )}
-    </div>
+    </>
   );
 }
 
