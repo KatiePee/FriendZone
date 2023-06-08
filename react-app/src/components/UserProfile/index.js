@@ -36,11 +36,11 @@ function UserProfile() {
 
   const addFriend = () => {
     dispatch(addFriendThunk(userId))
-    dispatch(othersFriendsThunk(userId))
+    // dispatch(othersFriendsThunk(userId))
   }
   const unFriend = () => {
     dispatch(unFriendThunk(userId))
-    dispatch(othersFriendsThunk(userId))
+    // dispatch(othersFriendsThunk(userId))
   }
   const redirectUserProfile = (userId) => {
     dispatch(singleUserThunk(userId))
@@ -63,24 +63,25 @@ function UserProfile() {
         {isFriend && (<button onClick={unFriend}>Unfriend</button>)}
         {!isFriend && (<button onClick={addFriend}>Add Friend</button>)}
       </div>
+      <div className='user-profile-page'>
+        <div className='friends-thing'>
+          {friends.map(friend => (
+            <div onClick={e => redirectUserProfile(friend.id)}>
 
-      <div className='friends-thing'>
-        {friends.map(friend => (
-          <div onClick={e => redirectUserProfile(friend.id)}>
+              <img className="post-card__profile-pic" src={friend.profilePicURL} />
+              <p>{friend.firstName}</p>
+            </div>
 
-            <img className="post-card__profile-pic" src={friend.profilePicURL} />
-            <p>{friend.firstName}</p>
-          </div>
+          ))}
+        </div>
+        <div className="feed">
+          { }
+          {currentUser.id === +userId && <CreatePost />}
+          {posts.map((post) => (
+            <PostCard post={post} key={post.id} />
+          ))}
 
-        ))}
-      </div>
-      <div className="feed">
-        { }
-        {currentUser.id === +userId && <CreatePost />}
-        {posts.map((post) => (
-          <PostCard post={post} key={post.id} />
-        ))}
-
+        </div>
       </div>
     </div>
   );

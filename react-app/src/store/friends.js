@@ -52,6 +52,7 @@ export const addFriendThunk = (friendId) => async dispatch => {
     const friend = await res.json()
     console.log('😈😈~~~~~~~~~~~~ add friendd thun res.json', friend)
     await dispatch(addFriend(friend))
+    await dispatch(othersFriendsThunk(friendId))
     return res
   } else return null
 }
@@ -65,6 +66,7 @@ export const unFriendThunk = (friendId) => async dispatch => {
     const friend = await res.json()
     console.log('😈~~~~~~~~~~~~ un friendd thunk res.json', friend)
     await dispatch(unFriend(friend))
+    await dispatch(othersFriendsThunk(friendId))
     return res
   } else return null
 }
