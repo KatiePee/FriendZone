@@ -102,7 +102,7 @@
   height: fit-content;
   resize: none;
   overflow: hidden;
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .post-card__likes {
@@ -111,14 +111,9 @@
 
 .post-card__comment-bar {
   display: flex;
+  gap: 5px;
   /* justify-content: space-eve; */
 }
-
-/* .post-card__input-field {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-} */
 
 .add-comment {
   margin: 0 auto;
@@ -127,4 +122,10 @@
   background-color: #F0F2F5 ;
   padding: 10px 15px;
   width: stretch;
+}
+
+.edit-delete__container {
+  display: flex;
+  gap: 10px;
+  margin-right: 5px;
 }

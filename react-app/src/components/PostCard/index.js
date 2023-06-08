@@ -92,18 +92,22 @@ function PostCard({ post }) {
           </div>
           <div className="post-card__edit-delete">
             {user.id === post.author.id && (
-              <>
+              <div className="edit-delete__container">
+
                 <OpenModalButton
-                  buttonText="Edit"
+                  className="post-btn"
+                  buttonText={<i className="fas fa-edit fa-lg"><div className="edit"></div></i>}
                   onItemClick={closeModal}
                   modalComponent={<EditPostModal user={user} post={post} />}
                 />
+              {/* </i> */}
                 <OpenModalButton
-                  buttonText="Delete"
+                  className="post-btn"
+                  buttonText={<i className="fas fa-times fa-lg"></i>}
                   onItemClick={closeModal}
                   modalComponent={<DeletePostModal post={post} />}
                 />
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -138,8 +142,8 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__buttons">
           {liked ?
-            <button style={{ color: 'blue' }} className={liked} onClick={handleLike}>❤️ LIKE</button> :
-            <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+            <button className={liked} onClick={handleLike}>❤️ Like</button> :
+            <button className={liked} onClick={handleLike}>🖤 Like</button>
           }
           <OpenModalButton
             buttonText="Comment"
