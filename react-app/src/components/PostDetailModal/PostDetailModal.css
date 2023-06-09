@@ -1,5 +1,12 @@
-.close-div:hover {
-    cursor: pointer;
+.close-modal {
+  background-color: lightgrey;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.close-modal:hover {
+  cursor: pointer;
 }
 
 .post-card__profile-info {
@@ -10,6 +17,7 @@
 .profile-info__left-side {
   display: flex;
   align-items: center;
+  /* justify-content: flex-start; */
 }
 
 .post-modal__add-comment {
@@ -17,10 +25,14 @@
   border-radius: 15px;
   border: none;
   outline: none;
-  background-color: #F0F2F5 ;
+  background-color: #f0f2f5;
   padding: 10px 15px;
   width: 26.7rem;
   resize: none;
+}
+
+.post-modal__author {
+  font-weight: bold;
 }
 
 .post-modal__author:hover {
@@ -39,6 +51,10 @@
   position: relative;
 }
 
+.post-modal__comment-errors {
+  margin: 0.5rem;
+}
+
 .post-modal__container {
   padding: 1rem;
   border-radius: 8px;
@@ -50,13 +66,12 @@
 .post-modal__inner {
   max-height: inherit;
   overflow-y: auto;
-  padding: 1em;
+  padding: 1em 1em 0 1em;
 }
 
 .post-modal__inner::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-  /* background: grey; */
 }
 
 .post-modal__inner::-webkit-scrollbar-thumb {
@@ -71,7 +86,6 @@
   object-fit: cover;
   align-self: flex-start;
 }
-
 
 .post-modal__profile-pic {
   width: 50px;
