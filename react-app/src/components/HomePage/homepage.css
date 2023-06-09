@@ -22,8 +22,11 @@
   align-items: center;
   padding-top: 100px;
   gap: 10px;
+  width: 35rem;
+  margin: 0 auto;
   /* width: 100%; */
 }
+
 /* .home-page-wrapper {
   display: flex;
   flex: 1;
