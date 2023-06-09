@@ -1,11 +1,14 @@
 import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 import "./nonExistentPage.css"
 
+
 function NonExistent() {
-    const history = useHistory()
+  const user = useSelector(state => state.session.user)
+  const history = useHistory()
 
     const redirect = async (e) => {
-        history.push('/home')
+        history.push(user ? "/home" : "/")
         return
     }
 
