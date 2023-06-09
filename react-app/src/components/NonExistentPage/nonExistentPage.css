@@ -1,5 +1,22 @@
 .error-page {
   position: absolute;
   left: 30%;
-  top: 30%;
+  top: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-avail {
+    padding-bottom: 1rem;
+}
+
+.button-class {
+    padding-top: 1rem;
+}
+
+.go-back {
+    background-color: #227DF2;
+    color: white;
 }
