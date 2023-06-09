@@ -93,19 +93,22 @@ function PostFormModal({ user }) {
               />
             </label>
             <div className="post-form__image-upload">
-              <label className="image-upload-label" htmlFor="image">
-                Add Photos:
-                <i class="fas fa-images"></i>
-              </label>
+              <p className="image-upload-label">Add Photos:</p>
+              {/* <label htmlFor="image">
+                <i class="fas fa-images fa-lg"></i>
+              </label> */}
               <input
                 id="image"
                 type="file"
                 accept="image/*"
                 multiple
                 onChange={handleImageChange}
-              ></input>
+                className="image-upload"
+              />
             </div>
-            <button className="post-form__submit-btn" type="submit">Post</button>
+            <button className="post-form__submit-btn" type="submit">
+              Post
+            </button>
           </form>
         </div>
       </div>

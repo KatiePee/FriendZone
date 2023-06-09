@@ -60,14 +60,29 @@
 
 .image-upload-label {
     font-weight: bold;
-    width: 10rem;
+    width: 15rem;
+    margin: 0.5rem;
 }
 
 .post-form__image-upload {
-    border: 1px solid red;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
 }
 
-/* input[type="file"] {
-    display: none;
-} */
+input::file-selector-button {
+    border-radius: 30px;
+    border: none;
+    padding: 0.5rem;
+    background-color:#42b72a;
+    color: white;
+}
+
+input::file-selector-button:hover {
+    cursor: pointer;
+}
+
+.image-upload {
+    width: fit-content;
+}
