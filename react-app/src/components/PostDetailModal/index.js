@@ -171,23 +171,22 @@ function PostDetailModal({ post }) {
             <Comment comment={comment} post={post} />
           ))}
         </div>
-        <div className="post-card__comment-bar">
+        <div className="post-modal__comment-bar">
           <img
-            className="post-card__profile-pic"
+            className="post-modal__profile-pic"
             src={user.profilePicURL}
             alt="profile"
           />
-          <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="post-modal__comment-form">
               <textarea
-                className="add-comment"
+                className="post-modal__add-comment"
                 value={text}
                 onChange={handleInputChange}
+                placeholder="Write a comment..."
                 rows={5}
               ></textarea>
-              <button>➡</button>
+              <button type="submit" id="comment-submit-btn">➡️</button>
             </form>
-          </div>
         </div>
       </div>
       </div>

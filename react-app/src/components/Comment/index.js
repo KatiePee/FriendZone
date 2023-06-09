@@ -5,8 +5,7 @@ import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 import { useModal } from "../../context/Modal"
 import { allPostsThunk, editCommentThunk, userPostsThunk } from '../../store/posts';
-
-
+import './Comments.css'
 
 const Comment = ({ comment }) => {
   const { id } = comment
@@ -64,6 +63,7 @@ const Comment = ({ comment }) => {
 
   return (
     <>
+    <div className='comment__wrapper'>
       <div className="post-card__profile-info">
         <div className="profile-info__left-side">
           <img
@@ -72,10 +72,6 @@ const Comment = ({ comment }) => {
             alt="profile pic"
             onClick={redirectUserProfile}
           />
-          <p onClick={redirectUserProfile}>
-            {comment.commentAuthor.firstName}{" "}
-            {comment.commentAuthor.lastName}
-          </p>
         </div>
         {user.id === comment.userId && (
           <div className="profile-info__right-side">
@@ -90,8 +86,13 @@ const Comment = ({ comment }) => {
       </div>
       <div className="post-card__comment-content">
         {" "}
+          <p onClick={redirectUserProfile}>
+            {comment.commentAuthor.firstName}{" "}
+            {comment.commentAuthor.lastName}
+          </p>
         {editedComment}{" "}
       </div>
+    </div>
     </>
   );
 };
