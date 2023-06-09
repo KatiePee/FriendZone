@@ -54,7 +54,7 @@ function PostDetailModal({ post }) {
     e.preventDefault();
     setHasSubmitted(true);
 
-    if (content.length > 1 && !Object.values(errors).length) {
+    if (content.length && !Object.values(errors).length) {
       const comment = {
         post_id: id,
         user_id: user.id,
@@ -63,6 +63,7 @@ function PostDetailModal({ post }) {
       await dispatch(addCommentThunk(comment));
 
       setText("");
+      setHasSubmitted(false);
       setErrors({});
     }
   };
