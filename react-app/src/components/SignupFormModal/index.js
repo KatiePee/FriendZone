@@ -48,7 +48,7 @@ function SignupFormModal() {
       const data = await dispatch(signUp(firstName, lastName, email, password, dateOfBirth, gender));
       if (data) {
         formErrors.validationErrors = data
-        setErrors(formErrors)
+        setErrors({ ...formErrors })
       } else {
         history.push('/home')
         closeModal();
