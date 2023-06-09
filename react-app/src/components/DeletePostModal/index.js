@@ -15,7 +15,7 @@ const DeletePostModal = ({ post }) => {
   return (
     <div className="post-form__wrapper">
       <h3 className="post-form__title">
-        Delete post{" "}
+        Delete post?{" "}
         <button
           className="close-modal post-form__close-modal"
           onClick={closeModal}

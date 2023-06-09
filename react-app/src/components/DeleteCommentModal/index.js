@@ -15,11 +15,29 @@ const DeleteCommentModal = ({comment}) => {
   };
 
   return (
-    <div className="modal__wrapper">
-        <h2>Delete Comment?</h2>
-        <p>Are you sure you want to delete this comment?</p>
-        <button onClick={closeModal} className="delete-modal__yes-btn">No</button>
-        <button onClick={handleDelete} className="delete-modal__no-btn">Delete</button>
+    <div className="post-form__wrapper">
+      <h3 className="post-form__title">
+        Delete comment?{" "}
+        <button
+          className="close-modal post-form__close-modal"
+          onClick={closeModal}
+        >
+          <i class="fas fa-times fa-lg" />
+        </button>
+      </h3>
+      <div className="modal__wrapper">
+        <div className="post-form__body">
+          <p className="delete-modal__text">Are you sure you want to delete this comment?</p>
+          <div className="delete-modal__buttons">
+            <button onClick={closeModal} className="delete-modal__no-btn">
+              Cancel
+            </button>
+            <button onClick={handleDelete} className="delete-modal__yes-btn">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 };
