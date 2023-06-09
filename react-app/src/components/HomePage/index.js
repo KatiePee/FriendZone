@@ -7,6 +7,7 @@ import OpenModalButton from '../OpenModalButton'
 import "./homepage.css"
 import PostFormModal from "../PostFormModal";
 import CreatePost from "../CreatePost/CreatePost";
+import SideNav from "../SideNav";
 
 
 
@@ -28,10 +29,15 @@ function HomePage() {
   // return (<h1>HomePage!</h1>)
   return (
     <div className="home-page-wrapper">
-      <CreatePost />
-      {posts.map(post => (
-        <PostCard post={post} key={post.id} />
-      ))}
+      <div className="home-page__side-nav">
+        <SideNav />
+      </div>
+      <div className="home-page__post-feed">
+        <CreatePost />
+        {posts.map(post => (
+          <PostCard post={post} key={post.id} />
+        ))}
+      </div>
     </div>
   )
 }
