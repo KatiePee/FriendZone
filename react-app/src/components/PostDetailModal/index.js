@@ -47,7 +47,7 @@ function PostDetailModal({ post }) {
         "content": text
       }
       await dispatch(addCommentThunk(comment))
-
+      // TODO: fix this shit
       setText("")
     }
   }

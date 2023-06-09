@@ -50,7 +50,7 @@ function PostCard({ post }) {
   }
 
   const redirectUserProfile = (e) => {
-    history.push(`/${author.id}`)
+    history.push(`/users/${author.id}`)
   }
 
   const timeAgo = (dateObj) => {

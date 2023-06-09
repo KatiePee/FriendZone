@@ -33,7 +33,6 @@ function UserProfile() {
 
 
 
-  if (!posts.length) return null;
 
   const addFriend = () => {
     dispatch(addFriendThunk(userId))
@@ -47,9 +46,44 @@ function UserProfile() {
     dispatch(singleUserThunk(userId))
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
-    history.push(`/${userId}`)
+    history.push(`/users/${userId}`)
   }
 
+  if (!posts.length) return (
+    <div className="home-page-wrapper">
+      <div className="user__info">
+        <img className="cover-photo" src={coverPhotoURL} />
+        <div>
+          <img className="post-card__profile-pic" src={profilePicURL} />
+          <p>{firstName} {lastName}</p>
+          <p>{`${friends.length} friends`}</p>
+          {/* having a lot of bugs when trying to hid the button from the user.... moving on... */}
+        </div>
+        {!isUser && isFriend && (<button onClick={unFriend}>Unfriend</button>)}
+        {!isUser && !isFriend && (<button onClick={addFriend}>Add Friend</button>)}
+      </div>
+      <div className='user-profile-page'>
+        <div className='friends-thing'>
+          {friends.map(friend => (
+            <div onClick={e => redirectUserProfile(friend.id)}>
+
+              <img className="post-card__profile-pic" src={friend.profilePicURL} />
+              <p>{friend.firstName}</p>
+            </div>
+
+          ))}
+        </div>
+        <div className="feed">
+          { }
+          {currentUser.id === +userId && <CreatePost />}
+          {posts.map((post) => (
+            <PostCard post={post} key={post.id} />
+          ))}
+
+        </div>
+      </div>
+    </div>
+  );
   return (
 
     <div className="home-page-wrapper">

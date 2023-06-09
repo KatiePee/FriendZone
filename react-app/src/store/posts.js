@@ -173,7 +173,6 @@ export const singlePostThunk = (postId) => async dispatch => {
 }
 
 export const createPostThunk = (post) => async dispatch => {
-  console.log("POST", post)
   const res = await fetch(`/api/posts/new`, {
     method: 'POST',
     // headers: { 'Content-Type': 'application/json' },
@@ -185,9 +184,7 @@ export const createPostThunk = (post) => async dispatch => {
     dispatch(allPostsThunk())
     return newPost
   } else {
-    console.log(res);
     const errors = await res.json();
-    console.log(errors)
     return errors;
   }
 }

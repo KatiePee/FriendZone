@@ -33,7 +33,7 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const redirectUserProfile = (e) => {
-    history.push(`/${user.id}`)
+    history.push(`/users/${user.id}`)
   }
 
   const handleLogout = (e) => {
