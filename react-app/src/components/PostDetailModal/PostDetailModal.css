@@ -62,6 +62,7 @@
   max-height: 50rem;
   width: 35rem;
   overflow: hidden;
+  margin-bottom: 1rem;
 }
 
 .post-modal__inner {
