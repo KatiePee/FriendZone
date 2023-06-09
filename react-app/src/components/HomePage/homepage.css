@@ -1,12 +1,7 @@
 .home-page-wrapper {
-  display: grid;
-  /* grid-template-columns: 1fr 2fr; */
-  /* grid-template-columns: auto, 1fr; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* gap: 20%; */
-  /* padding-top: 100px; */
-  /* height: 2000px; */
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;;
 }
 
 .home-page__side-nav {
@@ -24,6 +19,14 @@
   width: 35rem;
   margin: 0 auto;
   /* width: 100%; */
+}
+
+.home-page__right-nav {
+  position: relative;
+  right: 30px;
+  width: fit-content;
+  margin-top: 100px;
+  /* padding-right: 20px; */
 }
 
 /* .home-page-wrapper {

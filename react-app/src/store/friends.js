@@ -2,8 +2,15 @@ const MY_FRIENDS = 'users/myFriends'
 const OTHERS_FRIENDS = 'users/othersFriends'
 const ADD_FRIEND = 'users/addFriend'
 const UNFRIEND = 'users/unFriend'
+// const LOAD_FRIENDS = 'users/loadFriends'
+// TODO: make a route to get the current users friends and populate them in their own obj?
 
 const CLEAN_UP = 'users/cleanup'
+
+// loads current users friends only where the other one loads visited users
+// const loadFriends = () => ({
+
+// })
 
 const cleanUpFriends = () => ({
   type: CLEAN_UP

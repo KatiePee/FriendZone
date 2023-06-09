@@ -8,7 +8,8 @@ import "./homepage.css"
 import PostFormModal from "../PostFormModal";
 import CreatePost from "../CreatePost/CreatePost";
 import SideNav from "../SideNav";
-
+import FriendsBar from "../FriendsSideBar";
+import { othersFriendsThunk } from "../../store/friends";
 
 
 function HomePage() {
@@ -19,6 +20,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(allPostsThunk());
+    dispatch(othersFriendsThunk(user.id))
   }, [dispatch])
 
   if (!user) {
@@ -37,6 +39,9 @@ function HomePage() {
         {posts.map(post => (
           <PostCard post={post} key={post.id} />
         ))}
+      </div>
+      <div className="home-page__right-nav">
+        <FriendsBar />
       </div>
     </div>
   )
