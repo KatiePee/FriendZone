@@ -13,7 +13,7 @@ function NonExistent() {
 
     return (
         <div>
-            <h1>INSERT A LOCK IMAGE HERE</h1>
+            <img src={"https://i.imgur.com/T9Pd7dE.jpg"} />
             <h2>This content isn't available right now</h2>
             <br><h3>When this happens, it's usually because you tried to manually input,</h3></br>
             <br><h3>A route that doesn't exist. Don't try that again, you SMUCK!</h3></br>
