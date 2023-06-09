@@ -91,9 +91,7 @@ def create_post():
         for image in images:
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
-            print('😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~😈~~~~~~~~~~~~~~~~~~~upload from post image route', upload)
-            if not upload:
-                err_obj['upload'] = 'file not uploaded'
+
             new_image = PostImage(
                 post_id = post["id"],
                 image_url = upload["url"]
@@ -104,9 +102,6 @@ def create_post():
 
             image_dict = new_image.to_dict()
             post["postImages"].append(image_dict)
-        
-        if err_obj['upload']:
-            return err_obj
 
 
     if postForm.errors:
