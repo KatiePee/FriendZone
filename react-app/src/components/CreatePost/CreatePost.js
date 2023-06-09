@@ -4,8 +4,8 @@ import { allPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import OpenModalButton from '../OpenModalButton'
 import PostFormModal from "../PostFormModal";
+import "./CreatePost.css"
 
-import "./createpost.css"
 function CreatePost() {
   const user = useSelector(state => state.session.user)
   const { firstName, profilePicURL } = user
@@ -15,7 +15,7 @@ function CreatePost() {
       <div className="write-post__upper-half">
         <img src={profilePicURL} className="post-card__profile-pic" alt="profilepic" />
         <OpenModalButton
-          buttonText={<input className="home-page__comment-bar add-comment"  rows={1} placeholder={`What's on your mind, ${firstName}?`}></input>}
+          buttonText={<input disabled className="home-page__comment-bar add-comment"  rows={1} placeholder={`What's on your mind, ${firstName}?`}></input>}
           modalComponent={<PostFormModal user={user} />}
         />
       </div>
@@ -23,7 +23,7 @@ function CreatePost() {
       <div>
         <OpenModalButton
           buttonText={<div>
-            <i className="fab fa-usps fa-lg" style={{color: "#f02849"}}></i>
+            <i className="fas fa-paint-brush" style={{color: "#f02849"}}></i>
             <span> Post</span>
               </div>}
           modalComponent={<PostFormModal user={user} />}

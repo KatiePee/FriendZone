@@ -65,7 +65,6 @@
 }
 
 .nav {
-  z-index: 1;
   display: flex;
   position: fixed;
   justify-content: space-between;
@@ -77,6 +76,10 @@
   padding: 0.5rem 1rem;
 }
 
+.nav-title {
+  width: 12rem;
+}
+
 #logo {
   color: #1877f2;
   font-size: xx-large;
@@ -86,7 +89,7 @@
 
 .nav__left-side {
   position: fixed;
-  z-index: 2;
+  /* z-index: 2; */
   margin-top: 90px;
   /* width: 20%; */
   border: 2px solid black;

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../../store/session";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
@@ -17,10 +17,11 @@ function LandingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
-    history.push(`/home`);
     if (data) {
       setErrors(data);
+      return
     }
+    history.push(`/home`);
   };
 
   const demoUser = async (e) => {

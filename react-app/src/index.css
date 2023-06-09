@@ -15,7 +15,7 @@
 
 
 button {
-  position: relative;
+  /* position: relative; */
   padding: 10px 10px;
   background-color: transparent;
   border: none;
@@ -35,6 +35,7 @@ button::before {
 
 button:hover {
   background-color: #f0d5d5;
+  cursor: pointer;
 }
 
 button:hover::before {

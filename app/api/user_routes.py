@@ -55,6 +55,7 @@ def add_friend(id):
     Post new friendship current user is adding new user based on userid
     """
     # current_user = User.query.get(current_user.id)
+    
     new_friend = User.query.get(id)
 
     # current_user.freindships.append(new_friend)
@@ -64,10 +65,9 @@ def add_friend(id):
     db.session.commit()
 
     # return {"message": f"Successfully added {new_friend.first_name} as a friend, yay!"}
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~ new friend', new_friend)
     if new_friend != current_user:
         return new_friend.to_dict()
-    else: 
+    else:
         return {'errors': ['User cannot be their own friend']}, 404
     # return new_friend.to_dict()
 

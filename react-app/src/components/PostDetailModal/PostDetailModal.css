@@ -1,0 +1,95 @@
+.close-div:hover {
+    cursor: pointer;
+}
+
+.post-card__profile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-info__left-side {
+  display: flex;
+  align-items: center;
+}
+
+.post-modal__add-comment {
+  margin-left: 0.5rem;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  background-color: #F0F2F5 ;
+  padding: 10px 15px;
+  width: 26.7rem;
+  resize: none;
+}
+
+.post-modal__author:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.post-modal__comment-bar {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.post-modal__comment-form {
+  display: flex;
+  position: relative;
+}
+
+.post-modal__container {
+  padding: 1rem;
+  border-radius: 8px;
+  max-height: 50rem;
+  width: 35rem;
+  overflow: hidden;
+}
+
+.post-modal__inner {
+  max-height: inherit;
+  overflow-y: auto;
+  padding: 1em;
+}
+
+.post-modal__inner::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  /* background: grey; */
+}
+
+.post-modal__inner::-webkit-scrollbar-thumb {
+  background-color: lightgrey;
+  border-radius: 5px;
+}
+
+.post-modal__comment-profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: flex-start;
+}
+
+
+.post-modal__profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: flex-start;
+}
+
+.post-modal__profile-pic:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 5px grey;
+}
+
+#comment-submit-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 7px;
+  align-self: flex-end;
+  border-radius: 50%;
+}
