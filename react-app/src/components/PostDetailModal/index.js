@@ -162,8 +162,8 @@ function PostDetailModal({ post }) {
         </div>
         <div className="post-card__buttons">
           {liked ?
-            <button style={{ color: 'blue' }} className={liked} onClick={handleLike}>❤️ LIKE</button> :
-            <button className={liked} onClick={handleLike}>🖤 LIKE</button>
+            <button className="like-btn" onClick={handleLike}>❤️ Like</button> :
+            <button className="like-btn" onClick={handleLike}>🖤 Like</button>
           }
         </div>
         <div>
