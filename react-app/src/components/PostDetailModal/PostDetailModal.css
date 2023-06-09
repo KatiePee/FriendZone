@@ -29,6 +29,7 @@
   padding: 10px 15px;
   width: 26.7rem;
   resize: none;
+  font-size: medium;
 }
 
 .post-modal__author {
@@ -52,7 +53,7 @@
 }
 
 .post-modal__comment-errors {
-  margin: 0.5rem;
+  margin-left: 1rem
 }
 
 .post-modal__container {

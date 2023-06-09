@@ -212,7 +212,10 @@ function PostDetailModal({ post }) {
             />
             <form onSubmit={handleSubmit}>
               <div>
-                <div  className="post-modal__comment-form">
+                  <div className="errors post-modal__comment-errors">
+                    {hasSubmitted && errors?.comment}
+                  </div>
+                <div className="post-modal__comment-form">
                   <textarea
                     className="post-modal__add-comment"
                     value={text}
@@ -223,9 +226,6 @@ function PostDetailModal({ post }) {
                   <button type="submit" id="comment-submit-btn">
                     <i class="fas fa-paper-plane"></i>
                   </button>
-                </div>
-                <div className="errors post-modal__comment-errors">
-                  {hasSubmitted && errors?.comment}
                 </div>
               </div>
             </form>
