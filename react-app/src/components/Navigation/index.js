@@ -5,6 +5,7 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import title from "../../assets/friendzone-title.png";
 import { useModal } from "../../context/Modal";
+import SideNav from "../SideNav";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -23,7 +24,7 @@ function Navigation({ isLoaded }) {
           </li>
         )}
       </ul>
-      <div className="nav__left-side">Content</div>
+
     </div>
   );
 }
