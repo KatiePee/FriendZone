@@ -41,31 +41,43 @@ function EditPostModal({ user, post }) {
 
   return (
     <>
-      <h3>Edit post</h3>
-      <div className="post-card__profile-info">
-        <img
-          className="post-card__profile-pic"
-          src={profilePicURL}
-          alt="profile"
-        />
-        <div className="profile-info__left-side">
-          <p>
-            {firstName} {lastName}
-          </p>
+      <div className="post-form__wrapper">
+        <h3 className="post-form__title">
+          Edit post
+          <button
+            className="close-modal post-form__close-modal"
+            onClick={closeModal}
+          >
+            <i class="fas fa-times fa-lg" />
+          </button>
+        </h3>
+        <div className="post-form__body">
+          <div className="post-form__profile-info">
+            <img
+              className="post-form__profile-pic"
+              src={profilePicURL}
+              alt="profile"
+            />
+            <div className="profile-info__left-side">
+              <p>
+                {firstName} {lastName}
+              </p>
+            </div>
+          </div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            <div className="errors">{hasSubmitted && errors?.content}</div>
+            <textarea
+                placeholder="What's on your mind?"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="post-form__content-input"
+              />
+          </label>
+          <button className="post-form__submit-btn" type="submit">Save</button>
+        </form>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <div className="errors">{hasSubmitted && errors?.content}</div>
-          <input
-            type="text"
-            placeholder={`What's on your mind, ${firstName}?`}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </label>
-        <button type="submit">Save</button>
-      </form>
     </>
   );
 }
