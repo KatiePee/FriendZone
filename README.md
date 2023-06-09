@@ -1,4 +1,45 @@
-# Flask React Project
+# Friendzone
+
+<img src="https://i.imgur.com/pJqEsIj.png">
+
+Welcome to Friendzone!
+Friendzone is a fullstack application clone, inspired by Facebook. Create a user, create a post, like some posts, add some comments,
+and force someone to be your friend or ... friendzone someone!
+
+Live site: https://friendzone-0ev3.onrender.com/
+
+## Overview
+
+App Academy January 2023 Cohort
+
+This was our first group project together. We decided to clone Facebook as we were a group of ambitious individuals.
+
+Throughout this process, we learned many new skills and developed as software developers:
+
+-We learned to work as a group and communicate better
+
+## Wiki Links
+- [API Documentation](https://github.com/KatiePee/FriendZone/wiki/API-Documentation)
+- [Database Schema](https://github.com/KatiePee/FriendZone/wiki/Database-Schema)
+- [Feature List](https://github.com/KatiePee/FriendZone/wiki/Feature-List)
+- [User Stories](https://github.com/KatiePee/FriendZone/wiki/User-Stories)
+
+## Technologies Used
+- Python
+- PostgresSQL
+- Flask
+- React/Redux
+- AWS
+- HTML/CSS
+
+## Meet The Developers
+
+- Adanna Liu <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/adanna-liu-7505161a5/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/aliu7198)
+- Albert Kim <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/albertkim01/")<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/alberthskim)
+- Katie Piele <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/katie-piele/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/KatiePee)
+- PJ Singh <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/PjSingh22)
+
+<!-- # Flask React Project
 
 This is the starter for the Flask React project.
 
@@ -145,4 +186,4 @@ successfully deployed your Flask application to Render! You can find the URL for
 your site just below the name of the Web Service at the top of the page.
 
 [Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+[Dashboard]: https://dashboard.render.com/ -->
