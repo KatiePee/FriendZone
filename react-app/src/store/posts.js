@@ -10,6 +10,12 @@ const DELETE_COMMENT = 'comments/deleteComment'
 const CREATE_LIKE = "likes/likePost";
 const REMOVE_LIKE = "likes/removeLike";
 
+const CLEAN_UP = '/cleanup';
+
+const cleanUpAction = () => ({
+  type: CLEAN_UP
+})
+
 const createLikeAction = (postId, user) => ({
   type: CREATE_LIKE,
   payload: {
@@ -67,6 +73,11 @@ const editPostAction = (post) => ({
   type: EDIT_POST,
   payload: post
 })
+
+
+export const cleanUpStoreThunk = () => async (dispatch) => {
+  dispatch(cleanUpAction())
+}
 
 
 export const createLikeThunk = (postId, user) => async (dispatch) => {
@@ -311,6 +322,9 @@ const postReducer = (state = initialState, action) => {
           likedBy: [...state.allPosts[action.payload.postId].likedBy.filter(liker => liker.id !== action.payload.user.id)]
         }
       }}
+
+    case CLEAN_UP:
+      return { allPosts: {}, singlePost: {} }
 
     default:
       return state;

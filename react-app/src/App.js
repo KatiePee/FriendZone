@@ -21,58 +21,92 @@ function App() {
   // if (user) history.push("/home");
 
   return (
-    <>
-    {/* {!user ? (
-      <div>
-        <div>
-          <Switch>
-            <Route exact path="/">
-              <LandingPage />
-            </Route>
-            <Route>
-              <h2>Page Could Not Be Found or Does Not EXIST!</h2>
-            </Route>
-          </Switch>
-        </div>
-      </div>
 
-      ) : (
-      <div style={{ backgroundColor: "#F0F2F5" }}>
-          <Navigation isLoaded={isLoaded} />
-          {isLoaded && (
-            <Switch>
-              <Route path="/signup">
-                <SignupFormPage />
-              </Route>
-              <Route path="/home">
-                <HomePage />
-              </Route>
-              <Route path="/:userId">
-                <UserProfile />
-              </Route>
-            </Switch>
-          )}
-      </div>
-      )} */}
-  {user ? <Navigation isLoaded={isLoaded} /> : null}
+  <>
+  {(user && isLoaded) ?(
+    <>
+      <Navigation isLoaded={isLoaded} />
       <Switch>
-  <Route exact path="/">
-    {!user ? <LandingPage /> : <Redirect to="/home" />}
-  </Route>
-  <Route path="/home">
-    {user ? <HomePage /> : <Redirect to="/" />}
-  </Route>
-  <Route path="/signup">
-    <SignupFormPage />
-  </Route>
-  <Route exact path="/users/:userId">
-    <UserProfile />
-  </Route>
-  <Route>
-    <NonExistent />
-  </Route>
-</Switch>
+        <Route exact path="/home">
+          <HomePage />
+        </Route>
+        <Route path="/users/:userId">
+          <UserProfile />
+        </Route>
+        <Route>
+          <NonExistent />
+        </Route>
+      </Switch>
     </>
+  ):(
+    <>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route>
+          <NonExistent />
+        </Route>
+      </Switch>
+    </>
+  )
+  }
+</>
+
+//     <>
+//     {/* {!user ? (
+//       <div>
+//         <div>
+//           <Switch>
+//             <Route exact path="/">
+//               <LandingPage />
+//             </Route>
+//             <Route>
+//               <h2>Page Could Not Be Found or Does Not EXIST!</h2>
+//             </Route>
+//           </Switch>
+//         </div>
+//       </div>
+
+//       ) : (
+//       <div style={{ backgroundColor: "#F0F2F5" }}>
+//           <Navigation isLoaded={isLoaded} />
+//           {isLoaded && (
+//             <Switch>
+//               <Route path="/signup">
+//                 <SignupFormPage />
+//               </Route>
+//               <Route path="/home">
+//                 <HomePage />
+//               </Route>
+//               <Route path="/:userId">
+//                 <UserProfile />
+//               </Route>
+//             </Switch>
+//           )}
+//       </div>
+//       )} */}
+//   {user ? <Navigation isLoaded={isLoaded} /> : null}
+//       <Switch>
+//   <Route exact path="/">
+//     {!user ? <LandingPage /> : <Redirect to="/home" />}
+//   </Route>
+//   <Route path="/home">
+//     {user ? <HomePage /> : <Redirect to="/" />}
+//   </Route>
+//   <Route path="/signup">
+//     <SignupFormPage />
+//   </Route>
+//   <Route exact path="/users/:userId">
+//   {user ? <UserProfile /> : <NonExistent />}
+//     <UserProfile />
+//   </Route>
+//   <Route>
+//     <NonExistent />
+//   </Route>
+// </Switch>
+//     </>
+
   );
 }
 
