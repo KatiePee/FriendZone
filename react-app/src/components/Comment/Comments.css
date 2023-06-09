@@ -1,3 +1,37 @@
 .comment__wrapper {
     display: flex;
+    margin: 1rem 0;
+}
+
+.comment__author {
+    font-weight: bold;
+}
+
+.comment__author:hover {
+    cursor: pointer;
+    width: fit-content;
+}
+
+.comment__bubble {
+    border-radius: 15px;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    background-color: #F0F2F5;
+}
+
+.comment__content {
+    word-break: break-all;
+}
+
+.comment__profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    align-self: flex-start;
+}
+
+.comment__profile-pic:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 5px grey;
 }
