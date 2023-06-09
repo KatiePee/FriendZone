@@ -18,6 +18,7 @@ function App() {
   }, [dispatch]);
 
   if (user) history.push("/home");
+
   return (
     <>
     {!user ? (
@@ -28,7 +29,7 @@ function App() {
               <LandingPage />
             </Route>
             <Route>
-              <h2>Page Could Not Be Found!</h2>
+              <h2>Page Could Not Be Found or Does Not EXIST!</h2>
             </Route>
           </Switch>
         </div>
@@ -47,9 +48,6 @@ function App() {
               </Route>
               <Route path="/:userId">
                 <UserProfile />
-              </Route>
-              <Route>
-                <h2>Page Could Not Be Found!</h2>
               </Route>
             </Switch>
           )}
