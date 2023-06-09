@@ -5,8 +5,11 @@
   align-items: center;
   gap: 10px;
   padding-top: 100px;
+  width: 40%;
+  margin: 0 auto;
   /* height: 2000px; */
 }
+
 /* .home-page-wrapper {
   display: flex;
   flex-direction: column;
