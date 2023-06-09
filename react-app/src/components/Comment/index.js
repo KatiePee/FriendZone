@@ -61,9 +61,9 @@ const Comment = ({ comment }) => {
 
   useEffect(() => {
     const formErrors = {};
-    editedComment || (formErrors.comment = "Comment text is required.");
+    editedComment.length > 1 || (formErrors.comment = "Comment text is required.");
     editedComment.length <= 255 ||
-      (formErrors.comment = "Maximum 255 characters allowed in a comment.");
+    (formErrors.comment = "Maximum 255 characters allowed in a comment.");
     setErrors(formErrors);
   }, [editedComment]);
 
