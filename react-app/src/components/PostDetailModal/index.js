@@ -44,14 +44,13 @@ function PostDetailModal({ post }) {
 
   useEffect(() => {
     const formErrors = {};
-    text || (formErrors.comment = "Comment text is required.");
+    text.length >= 1 || (formErrors.comment = "Comment text is required.");
     text.length <= 255 ||
       (formErrors.comment = "Maximum 255 characters allowed in a comment.");
     setErrors(formErrors);
   }, [text]);
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
     setHasSubmitted(true);
 
@@ -61,12 +60,12 @@ function PostDetailModal({ post }) {
         user_id: user.id,
         content: text,
       };
+
       await dispatch(addCommentThunk(comment));
 
       setText("");
       setHasSubmitted(false);
       setErrors({});
-
     }
   };
 
@@ -129,7 +128,7 @@ function PostDetailModal({ post }) {
                 src={profilePicURL}
                 alt="profile"
               />
-              <div className="profile-info__left-side">
+              <div className="post-modal__profile-info-left-side">
                 <p className="post-modal__author">
                   {firstName} {lastName}
                 </p>
@@ -139,9 +138,9 @@ function PostDetailModal({ post }) {
               </div>
             </div>
             <div className="post-card__edit-delete">
-              <div className="close-div" onClick={closeModal}>
-                Close
-              </div>
+              <button className="close-modal" onClick={closeModal}>
+                <i class="fas fa-times fa-lg" />
+              </button>
             </div>
           </div>
           <div className="post-card__content">
@@ -211,20 +210,26 @@ function PostDetailModal({ post }) {
               src={user.profilePicURL}
               alt="profile"
             />
-            <form onSubmit={handleSubmit} className="post-modal__comment-form">
-              <textarea
-                className="post-modal__add-comment"
-                value={text}
-                onChange={handleInputChange}
-                placeholder="Write a comment..."
-                rows={5}
-              ></textarea>
-              <button type="submit" id="comment-submit-btn">
-                <i class="fas fa-paper-plane"></i>
-              </button>
+            <form onSubmit={handleSubmit}>
+              <div>
+                  <div className="errors post-modal__comment-errors">
+                    {hasSubmitted && errors?.comment}
+                  </div>
+                <div className="post-modal__comment-form">
+                  <textarea
+                    className="post-modal__add-comment"
+                    value={text}
+                    onChange={handleInputChange}
+                    placeholder="Write a comment..."
+                    rows={5}
+                  ></textarea>
+                  <button type="submit" id="comment-submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
-          <div className="errors">{hasSubmitted && errors?.comment}</div>
         </div>
       </div>
     </div>

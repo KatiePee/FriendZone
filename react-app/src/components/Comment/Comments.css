@@ -20,7 +20,7 @@
 }
 
 .comment__content {
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .comment__profile-pic {
@@ -34,4 +34,20 @@
 .comment__profile-pic:hover {
     cursor: pointer;
     box-shadow: 0px 0px 5px grey;
+}
+
+.edit-comment__errors {
+    margin-left: 1rem;
+}
+
+.edit-comment__textarea {
+    height: 5rem;
+}
+
+#edit-comment__submit-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 7px;
+    align-self: flex-end;
+    border-radius: 50%;
 }
