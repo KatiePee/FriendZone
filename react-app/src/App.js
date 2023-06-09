@@ -27,10 +27,13 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
         <Route exact path="/home">
           <HomePage />
         </Route>
-        <Route path="/users/:userId">
+        <Route exact path="/users/:userId">
           <UserProfile />
         </Route>
         <Route>
