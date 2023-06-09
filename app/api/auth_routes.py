@@ -1,9 +1,10 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User, friendships, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
-
+from .user_routes import add_friend
+from sqlalchemy import insert
 auth_routes = Blueprint('auth', __name__)
 
 
@@ -74,7 +75,26 @@ def sign_up():
         )
         db.session.add(user)
         db.session.commit()
+        new_user = user.to_dict()
+        print('🤡~🤡~🤡~🤡~🤡~🤡~~~~~~~~user to dict', new_user)
+        print('🤡~🤡~🤡~🤡~🤡~🤡~~~~~~~~user to dict id', new_user["id"])
+        # friendship = insert(friendships).values(userA_id=new_user["id"], userB_id=4)
+        # db.session.execute(friendship)
+        # db.session.commit()
+        # friendship = insert(friendships).values(userA_id=new_user["id"], userB_id=5)
+        # db.session.execute(friendship)
+        # db.session.commit()
+        # friendship = insert(friendships).values(userA_id=new_user["id"], userB_id=6)
+        # db.session.execute(friendship)
+        # db.session.commit()
+        # friendship = insert(friendships).values(userA_id=new_user["id"], userB_id=7)
+        # db.session.execute(friendship)
+        # db.session.commit()
         login_user(user)
+        add_friend(4)
+        add_friend(5)
+        add_friend(6)
+        add_friend(7)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 

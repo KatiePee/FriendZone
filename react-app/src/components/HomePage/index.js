@@ -20,7 +20,7 @@ function HomePage() {
   }, [dispatch])
 
   if (!user) {
-    return <Redirect to='/'/>
+    return <Redirect to='/' />
   }
 
   if (!posts.length) return null;
