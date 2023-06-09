@@ -117,7 +117,7 @@ function UserProfile() {
             ))}
           </div>
         </div>
-        <div className="home-page-wrapper">
+        <div className="user-profile__rightside">
           {currentUser.id === +userId && <CreatePost />}
           {posts.map((post) => (
             <PostCard post={post} key={post.id} />

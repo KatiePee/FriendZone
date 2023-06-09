@@ -71,15 +71,10 @@
   background-color: #e4e6eb;
 }
 
-/* .user-profile-page {
-  display: flex;
+.user-profile-page {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   max-width: 900px;
   padding-left: 1rem;
   padding-right: 1rem;
 }
-
-.user-profile__leftside {
-  max-width: 400px;
-}
-
-.user-profile__friends {} */
