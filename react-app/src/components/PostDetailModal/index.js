@@ -123,12 +123,12 @@ function PostDetailModal({ post }) {
           <div className="post-card__user-info">
             <div className="post-card__profile-info">
               <img
-                className="post-card__profile-pic"
+                className="post-modal__profile-pic"
                 src={profilePicURL}
                 alt="profile"
               />
               <div className="profile-info__left-side">
-                <p>
+                <p className="post-modal__author">
                   {firstName} {lastName}
                 </p>
                 <div className="profile-info__post-date">
@@ -205,7 +205,7 @@ function PostDetailModal({ post }) {
           </div>
           <div className="post-modal__comment-bar">
             <img
-              className="post-modal__profile-pic"
+              className="post-modal__comment-profile-pic"
               src={user.profilePicURL}
               alt="profile"
             />
@@ -218,7 +218,7 @@ function PostDetailModal({ post }) {
                 rows={5}
               ></textarea>
               <button type="submit" id="comment-submit-btn">
-                ➡️
+                <i class="fas fa-paper-plane"></i>
               </button>
             </form>
           </div>

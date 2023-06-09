@@ -15,6 +15,10 @@
 
 }
 
+.post-card__content {
+  word-break: break-all;
+}
+
 
 .post-card__info-content {
   display: flex;

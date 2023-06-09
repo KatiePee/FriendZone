@@ -4,11 +4,7 @@ import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import DeleteCommentModal from "../DeleteCommentModal";
 import { useModal } from "../../context/Modal";
-import {
-  allPostsThunk,
-  editCommentThunk,
-  userPostsThunk,
-} from "../../store/posts";
+import { editCommentThunk, userPostsThunk } from "../../store/posts";
 import "./Comments.css";
 
 const Comment = ({ comment }) => {
@@ -84,7 +80,9 @@ const Comment = ({ comment }) => {
             <button onClick={handleCancelClick}>Cancel</button>
           </form>
         </div>
-        <div className="errors">{hasSubmitted && errors?.comment}</div>
+        <div className="errors edit-comment__errors">
+          {hasSubmitted && errors?.comment}
+        </div>
       </>
     );
   }
@@ -93,32 +91,29 @@ const Comment = ({ comment }) => {
     <>
       <div className="comment__wrapper">
         <div className="post-card__profile-info">
-          <div className="profile-info__left-side">
-            <img
-              className="post-card__profile-pic"
-              src={comment.commentAuthor.profilePicURL}
-              alt="profile pic"
-              onClick={redirectUserProfile}
-            />
-          </div>
-          {user.id === comment.userId && (
-            <div className="profile-info__right-side">
-              <button onClick={handleEditClick}>Edit</button>
-              <OpenModalButton
-                buttonText="Delete"
-                onItemClick={closeModal}
-                modalComponent={<DeleteCommentModal comment={comment} />}
-              />
-            </div>
-          )}
+          <img
+            className="comment__profile-pic"
+            src={comment.commentAuthor.profilePicURL}
+            alt="profile pic"
+            onClick={redirectUserProfile}
+          />
         </div>
-        <div className="post-card__comment-content">
-          {" "}
-          <p onClick={redirectUserProfile}>
+        <div className="comment__bubble">
+          <p onClick={redirectUserProfile} className="comment__author">
             {comment.commentAuthor.firstName} {comment.commentAuthor.lastName}
           </p>
-          {editedComment}{" "}
+          <p className="comment__content">{editedComment}</p>
         </div>
+        {user.id === comment.userId && (
+          <div className="profile-info__right-side">
+            <button onClick={handleEditClick}>Edit</button>
+            <OpenModalButton
+              buttonText="Delete"
+              onItemClick={closeModal}
+              modalComponent={<DeleteCommentModal comment={comment} />}
+            />
+          </div>
+        )}
       </div>
     </>
   );
