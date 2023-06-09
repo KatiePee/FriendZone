@@ -46,6 +46,7 @@ const Comment = ({ comment }) => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
+    setHasSubmitted(false)
     setEditedComment(comment.content);
   };
 
