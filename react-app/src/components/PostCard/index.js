@@ -134,7 +134,7 @@ function PostCard({ post }) {
                 />
                 <OpenModalButton
                   className="post-btn"
-                  buttonText={<i className="fas fa-times fa-lg"></i>}
+                  buttonText={<i class="fas fa-trash-alt fa-lg"></i>}
                   onItemClick={closeModal}
                   modalComponent={<DeletePostModal post={post} />}
                 />

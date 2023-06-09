@@ -46,6 +46,7 @@ const Comment = ({ comment }) => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
+    setHasSubmitted(false);
     setEditedComment(comment.content);
   };
 
@@ -54,7 +55,6 @@ const Comment = ({ comment }) => {
   };
 
   const redirectUserProfile = async (e) => {
-
     closeModal();
     await dispatch(userPostsThunk(comment.commentAuthor.id));
     history.push(`/${comment.commentAuthor.id}`);
@@ -62,28 +62,41 @@ const Comment = ({ comment }) => {
 
   useEffect(() => {
     const formErrors = {};
-    editedComment.length > 1 || (formErrors.comment = "Comment text is required.");
+    editedComment.length >= 1 ||
+      (formErrors.comment = "Comment text is required.");
     editedComment.length <= 255 ||
-    (formErrors.comment = "Maximum 255 characters allowed in a comment.");
+      (formErrors.comment = "Maximum 255 characters allowed in a comment.");
     setErrors(formErrors);
   }, [editedComment]);
-
 
   if (isEditing) {
     return (
       <>
-        <div>
-          <form onSubmit={handleSaveClick}>
-            <textarea
-              value={editedComment}
-              onChange={handleTextareaChange}
-            ></textarea>
-            <button>Save</button>
-            <button onClick={handleCancelClick}>Cancel</button>
-          </form>
-        </div>
-        <div className="errors edit-comment__errors">
-          {hasSubmitted && errors?.comment}
+        <div className="post-modal__comment-bar">
+            <img
+              className="comment__profile-pic"
+              src={comment.commentAuthor.profilePicURL}
+              alt="profile pic"
+              onClick={redirectUserProfile}
+            />
+          <div>
+            <form onSubmit={handleSaveClick}>
+          <div className="errors edit-comment__errors">
+            {hasSubmitted && errors?.comment}
+          </div>
+              <div className="post-modal__comment-form">
+              <textarea
+                className="post-modal__add-comment edit-comment__textarea"
+                value={editedComment}
+                onChange={handleTextareaChange}
+              ></textarea>
+              <button type="submit" id="edit-comment__submit-btn">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+              </div>
+              <button onClick={handleCancelClick}>Cancel</button>
+            </form>
+          </div>
         </div>
       </>
     );
