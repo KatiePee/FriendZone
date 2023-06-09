@@ -39,10 +39,14 @@ Throughout this process, we learned many new skills and developed as software de
 
 ## Meet The Developers
 
-- Adanna Liu <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/adanna-liu-7505161a5/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/aliu7198)
-- Albert Kim <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/albertkim01/")<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/alberthskim)
-- Katie Piele <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/katie-piele/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/KatiePee)
-- PJ Singh <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/PjSingh22)
+- Adanna Liu
+<img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/adanna-liu-7505161a5/) <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/aliu7198)
+- Albert Kim
+<img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/albertkim01/") <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/alberthskim)
+- Katie Piele
+<img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/katie-piele/) <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/KatiePee)
+- PJ Singh
+<img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/) <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/PjSingh22)
 
 <!-- # Flask React Project
 
