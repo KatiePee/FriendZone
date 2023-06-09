@@ -43,7 +43,7 @@ const Comment = ({ comment }) => {
   const redirectUserProfile = async (e) => {
     closeModal()
     await dispatch(userPostsThunk(comment.commentAuthor.id))
-    history.push(`/${comment.commentAuthor.id}`)
+    history.push(`/users/${comment.commentAuthor.id}`)
   }
 
   if (isEditing) {
