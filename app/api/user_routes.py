@@ -55,6 +55,7 @@ def add_friend(id):
     Post new friendship current user is adding new user based on userid
     """
     # current_user = User.query.get(current_user.id)
+    
     new_friend = User.query.get(id)
 
     # current_user.freindships.append(new_friend)

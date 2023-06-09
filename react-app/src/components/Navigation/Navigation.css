@@ -21,14 +21,13 @@
 
 .profile-dropdown-link {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   border-radius: 8px;
   margin-bottom: 5px;
   padding: 5px;
 }
 
-.profile-dropdown-link:hover{
+.profile-dropdown-link:hover {
   cursor: pointer;
   background-color: rgb(233, 233, 233);
 }
@@ -38,17 +37,17 @@
   margin-top: 5px;
 }
 
-.profile-dropdown-logout > button {
+.profile-dropdown-logout>button {
   width: 100%;
   background-color: transparent;
-  border:none;
+  border: none;
   border-radius: 8px;
   height: 2rem;
   margin-top: 7px;
   font-size: 15px;
 }
 
-.profile-dropdown-logout > button:hover {
+.profile-dropdown-logout>button:hover {
   cursor: pointer;
   background-color: rgb(233, 233, 233);
 }
@@ -74,6 +73,7 @@
   background-color: white;
   width: 100%;
   padding: 0.5rem 1rem;
+  z-index: 100;
 }
 
 .nav-title {

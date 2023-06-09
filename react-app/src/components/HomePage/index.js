@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
+import { Redirect } from "react-router-dom"
 import { allPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import OpenModalButton from '../OpenModalButton'
 import "./homepage.css"
 import PostFormModal from "../PostFormModal";
 import CreatePost from "../CreatePost/CreatePost";
-import { Redirect } from "react-router-dom";
+import SideNav from "../SideNav";
+
 
 
 function HomePage() {
@@ -20,17 +22,22 @@ function HomePage() {
   }, [dispatch])
 
   if (!user) {
-    return <Redirect to='/'/>
+    return <Redirect to='/' />
   }
 
   if (!posts.length) return null;
   // return (<h1>HomePage!</h1>)
   return (
     <div className="home-page-wrapper">
-      <CreatePost />
-      {posts.map(post => (
-        <PostCard post={post} key={post.id} />
-      ))}
+      <div className="home-page__side-nav">
+        <SideNav />
+      </div>
+      <div className="home-page__post-feed">
+        <CreatePost />
+        {posts.map(post => (
+          <PostCard post={post} key={post.id} />
+        ))}
+      </div>
     </div>
   )
 }

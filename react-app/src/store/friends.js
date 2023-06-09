@@ -3,6 +3,12 @@ const OTHERS_FRIENDS = 'users/othersFriends'
 const ADD_FRIEND = 'users/addFriend'
 const UNFRIEND = 'users/unFriend'
 
+const CLEAN_UP = 'users/cleanup'
+
+const cleanUpFriends = () => ({
+  type: CLEAN_UP
+})
+
 const myFriends = (friends) => ({
   type: MY_FRIENDS,
   payload: friends
@@ -23,6 +29,10 @@ const unFriend = (friend) => ({
   payload: friend
 })
 
+export const cleanUpFriendsThunk = () => async dispatch => {
+  await dispatch(cleanUpFriends());
+}
+
 export const myFriendsThunk = () => async dispatch => {
   const res = await fetch("/api/users/friends")
   if (res.ok) {
@@ -34,7 +44,7 @@ export const myFriendsThunk = () => async dispatch => {
 
 
 export const othersFriendsThunk = (userId) => async dispatch => {
-  const res = await fetch(`/api//users/${userId}/friends`)
+  const res = await fetch(`/api/users/${userId}/friends`)
   if (res.ok) {
     const friends = await res.json()
     await dispatch(othersFriends(friends))
@@ -92,6 +102,8 @@ const friendsReducer = (state = initialState, action) => {
       delete newState.friends[action.payload.id]
       return newState
     }
+    case CLEAN_UP:
+      return { friends: {} }
     default:
       return state;
   }
