@@ -37,7 +37,7 @@ const addCommentAction = (comment) => ({
   payload: comment
 })
 
-const editCommentAction = (updatedComment ,postId, commentId) => ({
+const editCommentAction = (updatedComment, postId, commentId) => ({
   type: EDIT_COMMENT,
   payload: {
     updatedComment,
@@ -76,7 +76,7 @@ const editPostAction = (post) => ({
 
 
 export const cleanUpStoreThunk = () => async (dispatch) => {
-  dispatch(cleanUpAction())
+  await dispatch(cleanUpAction())
 }
 
 
@@ -87,7 +87,7 @@ export const createLikeThunk = (postId, user) => async (dispatch) => {
     body: JSON.stringify(postId),
   });
   if (res.ok) {
-    dispatch(createLikeAction(postId, user));
+    await dispatch(createLikeAction(postId, user));
     return res;
   } else {
     const errors = res.json();
@@ -101,7 +101,7 @@ export const removeLikeThunk = (postId, user) => async (dispatch) => {
   });
 
   if (res.ok) {
-    dispatch(removeLikeAction(postId, user));
+    await dispatch(removeLikeAction(postId, user));
   } else {
     const errors = res.json();
     return errors;
@@ -110,49 +110,49 @@ export const removeLikeThunk = (postId, user) => async (dispatch) => {
 
 export const addCommentThunk = (content) => async (dispatch) => {
   const res = await fetch("/api/comments/new", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(content)
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(content)
   })
 
   if (res.ok) {
-      const comment = await res.json()
-      dispatch(addCommentAction(comment))
-      return res
+    const comment = await res.json()
+    await dispatch(addCommentAction(comment))
+    return res
   } else {
     const errors = await res.json();
     return errors;
-}
+  }
 }
 
 export const editCommentThunk = (content, comment) => async (dispatch) => {
-  const {postId, id} = comment
+  const { postId, id } = comment
   const res = await fetch(`/api/comments/${id}/edit`, {
-      method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(content)
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(content)
   });
 
-  if(res.ok) {
-      const updatedComment = await res.json();
-      dispatch(editCommentAction(updatedComment, postId, id))
-      return updatedComment
+  if (res.ok) {
+    const updatedComment = await res.json();
+    await dispatch(editCommentAction(updatedComment, postId, id))
+    return updatedComment
   }
 }
 
 export const deleteCommentThunk = (comment) => async (dispatch) => {
   const { postId, id } = comment
   const res = await fetch(`/api/comments/${id}/delete`, {
-      method: "DELETE"
+    method: "DELETE"
   })
 
-  if(res.ok) {
+  if (res.ok) {
     const response = await res.json()
-    dispatch(deleteCommentAction(postId, id))
-      return response
+    await dispatch(deleteCommentAction(postId, id))
+    return response
   } else {
-      const errors = await res.json();
-      return errors;
+    const errors = await res.json();
+    return errors;
   }
 }
 
@@ -166,7 +166,7 @@ export const allPostsThunk = () => async dispatch => {
 
   if (res.ok) {
     const posts = await res.json()
-    dispatch(allPostsAction(posts))
+    await dispatch(allPostsAction(posts))
     return res
   } else return null
 }
@@ -175,7 +175,7 @@ export const singlePostThunk = (postId) => async dispatch => {
   const res = await fetch(`/api/posts/${postId}`);
   if (res.ok) {
     const post = await res.json()
-    dispatch(singlePostAction(post))
+    await dispatch(singlePostAction(post))
     return res
   } else {
     const errors = await res.json();
@@ -192,7 +192,7 @@ export const createPostThunk = (post) => async dispatch => {
   })
   if (res.ok) {
     const newPost = await res.json()
-    dispatch(allPostsThunk())
+    await dispatch(allPostsThunk())
     return newPost
   } else {
     const errors = await res.json();
@@ -206,7 +206,7 @@ export const deletePostThunk = (postId) => async (dispatch) => {
   })
   if (res.ok) {
     const response = await res.json()
-    dispatch(deletePostAction(postId))
+    await dispatch(deletePostAction(postId))
     return response
   } else {
     const errors = await res.json();
@@ -228,13 +228,13 @@ export const userPostsThunk = (userId) => async (dispatch) => {
 export const editPostThunk = (post, postId) => async (dispatch) => {
   const res = await fetch(`/api/posts/${postId}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(post)
   });
 
-  if(res.ok) {
+  if (res.ok) {
     const updatedPost = await res.json();
-    dispatch(editPostAction(updatedPost))
+    await dispatch(editPostAction(updatedPost))
     return updatedPost;
   }
 }
@@ -261,32 +261,36 @@ const postReducer = (state = initialState, action) => {
       // aState.allPosts[action.payload.id].postImages = [...action.payload.postImages];
       return aState
     case ADD_COMMENT:
-      const someState =  { ...state, allPosts: {
-        ...state.allPosts,
-        [action.payload.postId]: {
-          ...state.allPosts[action.payload.postId],
-          comments: [...state.allPosts[action.payload.postId].comments, action.payload]
+      const someState = {
+        ...state, allPosts: {
+          ...state.allPosts,
+          [action.payload.postId]: {
+            ...state.allPosts[action.payload.postId],
+            comments: [...state.allPosts[action.payload.postId].comments, action.payload]
+          }
         }
-      }}
+      }
 
       return someState;
     case EDIT_COMMENT:
 
-      return { ...state, allPosts: {
-        ...state.allPosts,
-        [action.payload.postId]: {
-          ...state.allPosts[action.payload.postId],
-          comments: state.allPosts[action.payload.postId].comments.map(comment => {
-            if (comment.id === action.payload.commentId) {
-              return {
-                ...comment,
-                content: action.payload.updatedComment.content
-              };
-            }
-            return comment
-          })
+      return {
+        ...state, allPosts: {
+          ...state.allPosts,
+          [action.payload.postId]: {
+            ...state.allPosts[action.payload.postId],
+            comments: state.allPosts[action.payload.postId].comments.map(comment => {
+              if (comment.id === action.payload.commentId) {
+                return {
+                  ...comment,
+                  content: action.payload.updatedComment.content
+                };
+              }
+              return comment
+            })
+          }
         }
-      }};
+      };
 
     case DELETE_COMMENT:
       const { postId, commentId } = action.payload
@@ -301,27 +305,31 @@ const postReducer = (state = initialState, action) => {
     case CREATE_LIKE:
       const { user } = action.payload
       const { firstName, id, lastName, profilePicURL } = user;
-      return { ...state, allPosts: {
-        ...state.allPosts,
-        [action.payload.postId]: {
-          ...state.allPosts[action.payload.postId],
-          numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes + 1,
-          likedBy: [
-            ...state.allPosts[action.payload.postId].likedBy,
-            {firstName, id, lastName, profilePicURL}
-          ]
+      return {
+        ...state, allPosts: {
+          ...state.allPosts,
+          [action.payload.postId]: {
+            ...state.allPosts[action.payload.postId],
+            numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes + 1,
+            likedBy: [
+              ...state.allPosts[action.payload.postId].likedBy,
+              { firstName, id, lastName, profilePicURL }
+            ]
+          }
         }
-      }}
+      }
 
     case REMOVE_LIKE:
-      return { ...state, allPosts: {
-        ...state.allPosts,
-        [action.payload.postId]: {
-          ...state.allPosts[action.payload.postId],
-          numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes - 1,
-          likedBy: [...state.allPosts[action.payload.postId].likedBy.filter(liker => liker.id !== action.payload.user.id)]
+      return {
+        ...state, allPosts: {
+          ...state.allPosts,
+          [action.payload.postId]: {
+            ...state.allPosts[action.payload.postId],
+            numLikes: state.allPosts[action.payload.postId].numLikes = state.allPosts[action.payload.postId].numLikes - 1,
+            likedBy: [...state.allPosts[action.payload.postId].likedBy.filter(liker => liker.id !== action.payload.user.id)]
+          }
         }
-      }}
+      }
 
     case CLEAN_UP:
       return { allPosts: {}, singlePost: {} }
