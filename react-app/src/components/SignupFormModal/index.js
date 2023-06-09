@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import { useHistory } from "react-router-dom";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -16,16 +17,18 @@ function SignupFormModal() {
   const [gender, setGender] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const data = await dispatch(
-        signUp(firstName, lastName, email, password, dateOfBirth, gender)
-      );
+      const data = await dispatch(signUp(firstName, lastName, email, password, dateOfBirth, gender));
+
+
       if (data) {
         setErrors(data);
       } else {
+        history.push('/home')
         closeModal();
       }
     } else {
@@ -107,16 +110,16 @@ function SignupFormModal() {
         </div>
 
         <div className="confirm-password-div">
-        <label>
-          <input
-            type="password"
-            className="input-info"
-			      placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
+          <label>
+            <input
+              type="password"
+              className="input-info"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </label>
         </div>
 
 
@@ -132,11 +135,11 @@ function SignupFormModal() {
         </label>
 
 
-      <div className="gender-field">
+        <div className="gender-field">
           Gender
-        <div className="gender-field-area">
-          <div className="male-section">
-            <label htmlFor="Male">Male</label>
+          <div className="gender-field-area">
+            <div className="male-section">
+              <label htmlFor="Male">Male</label>
               <input
                 type="radio"
                 name="gender"
@@ -144,9 +147,9 @@ function SignupFormModal() {
                 onChange={(e) => setGender(e.target.value)}
                 required
               />
-          </div>
-          <div className="female-section">
-            <label htmlFor="Female">Female</label>
+            </div>
+            <div className="female-section">
+              <label htmlFor="Female">Female</label>
               <input
                 type="radio"
                 name="gender"
@@ -154,9 +157,9 @@ function SignupFormModal() {
                 onChange={(e) => setGender(e.target.value)}
                 required
               />
-          </div>
-          <div className="custom-section">
-            <label htmlFor="Custom">Custom</label>
+            </div>
+            <div className="custom-section">
+              <label htmlFor="Custom">Custom</label>
               <input
                 type="radio"
                 name="gender"
@@ -164,10 +167,10 @@ function SignupFormModal() {
                 onChange={(e) => setGender(e.target.value)}
                 required
               />
-          </div>
+            </div>
 
+          </div>
         </div>
-      </div>
         <p className="disclosure">People who use our service may have uploaded your contact information to Friendzone.</p>
         <p className="disclosure">This is a fake website, so please do not upload personal info.</p>
         <button className="submit-button-2" type="submit">Sign Up</button>
