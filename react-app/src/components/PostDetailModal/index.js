@@ -51,6 +51,7 @@ function PostDetailModal({ post }) {
   }, [text]);
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setHasSubmitted(true);
 
@@ -65,6 +66,7 @@ function PostDetailModal({ post }) {
       setText("");
       setHasSubmitted(false);
       setErrors({});
+
     }
   };
 

@@ -46,7 +46,6 @@ function SignupFormModal() {
 
     if (!Object.values(formErrors).length) {
       const data = await dispatch(signUp(firstName, lastName, email, password, dateOfBirth, gender));
-      console.log('~😈😈😈😈~~~~~~~~~~~~~~new user error', data)
       if (data) {
         formErrors.validationErrors = data
         setErrors(formErrors)
@@ -56,7 +55,6 @@ function SignupFormModal() {
       }
     }
   }
-  console.log('~😈😈😈😈~~~~~~~~~~~~~~form errors.validation', errors.validationErrors)
   return (
     <div className="sign-up-container">
       <h1 className="sign-up-logo">Sign Up</h1>

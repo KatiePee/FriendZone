@@ -54,6 +54,7 @@ const Comment = ({ comment }) => {
   };
 
   const redirectUserProfile = async (e) => {
+
     closeModal();
     await dispatch(userPostsThunk(comment.commentAuthor.id));
     history.push(`/${comment.commentAuthor.id}`);
@@ -66,6 +67,7 @@ const Comment = ({ comment }) => {
     (formErrors.comment = "Maximum 255 characters allowed in a comment.");
     setErrors(formErrors);
   }, [editedComment]);
+
 
   if (isEditing) {
     return (

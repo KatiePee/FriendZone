@@ -42,7 +42,6 @@ function SignupFormModal() {
       if (!Object.values(formErrors).length) {
       }
       const data = await dispatch(signUp(firstName, lastName, email, password, dateOfBirth, gender));
-      console.log('🤡~🤡~🤡~🤡~🤡~~~~~~~~~~~ sign up data errors obj', data)
 
 
       if (data) {
