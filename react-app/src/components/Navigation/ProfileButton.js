@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
-import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
+import { cleanUpStoreThunk } from "../../store/posts";
+import { cleanUpFriendsThunk } from "../../store/friends";
+import { singleUserThunk } from "../../store/users";
+import { userPostsThunk } from "../../store/posts";
+import { othersFriendsThunk } from "../../store/friends";
+
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,13 +37,20 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const redirectUserProfile = (e) => {
-    history.push(`/${user.id}`)
+    dispatch(singleUserThunk(user.id))
+    dispatch(userPostsThunk(user.id));
+    dispatch(othersFriendsThunk(user.id))
+    history.push(`/users/${user.id}`)
+
   }
 
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    dispatch(logout());
-    history.push("/");
+    await dispatch(logout());
+    await dispatch(cleanUpFriendsThunk());
+    await dispatch(cleanUpStoreThunk());
+    history.push("/")
+
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -56,20 +67,20 @@ function ProfileButton({ user }) {
           alt={user.firstName}
         ></img>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-            <div className="profile-dropdown-link" onClick={redirectUserProfile}>
-              <img
-                src={user.profilePicURL}
-                className="profile-dropdown-pic"
-                alt={user.firstName}
-              ></img>
-              <li>
-                {user.firstName} {user.lastName}
-              </li>
-            </div>
-            <li className="profile-dropdown-logout">
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+      <ul onClick={closeMenu} className={ulClassName} ref={ulRef}>
+        <div className="profile-dropdown-link" onClick={redirectUserProfile}>
+          <img
+            src={user.profilePicURL}
+            className="profile-dropdown-pic"
+            alt={user.firstName}
+          ></img>
+          <li>
+            {user.firstName} {user.lastName}
+          </li>
+        </div>
+        <li className="profile-dropdown-logout">
+          <button onClick={handleLogout}>Log Out</button>
+        </li>
       </ul>
     </>
   );

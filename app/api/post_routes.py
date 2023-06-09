@@ -75,7 +75,7 @@ def create_post():
     postForm['csrf_token'].data = request.cookies['csrf_token']
     post = {}
 
-
+    err_obj = {}
     if postForm.validate_on_submit():
         new_post = Post(
             content = postForm.data['content'],

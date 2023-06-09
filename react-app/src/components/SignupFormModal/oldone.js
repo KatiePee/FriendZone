@@ -21,47 +21,51 @@ function SignupFormModal() {
 
   let formErrors = {}
 
-  const _handelErrors = () => {
-
-    firstName || (formErrors.firstName = 'firstName is required.');
-    firstName.length > 1 || (formErrors.firstName = 'First name is required and must be at least 1 character.');
-    firstName.length < 30 || (formErrors.firstName = 'First name is required and must be less than 30 characters.');
-    lastName || (formErrors.lastName = 'lastName is required.');
-    lastName.length > 1 || (formErrors.lastName = 'Last name is required and must be at least 1 character.');
-    lastName.length < 30 || (formErrors.lastName = 'Last name is required and must be less than 30 characters.');
-    email || (formErrors.email = 'email is required.');
-    email.length < 30 || (formErrors.email = 'email is required and must be less than 50 characters.');
-    password || (formErrors.password = 'password is required.');
-    password.length < 225 || (formErrors.password = 'password is too long');
-    confirmPassword || (formErrors.confirmPassword = 'confirmPassword is required.');
-    password === confirmPassword || (formErrors.confirmPassword = 'passwords do not match');
-    dateOfBirth || (formErrors.dateOfBirth = 'dateOfBirth is required.');
-    gender || (formErrors.gender = 'gender is required.');
-    setErrors(formErrors)
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    _handelErrors();
+    if (password === confirmPassword) {
+      setErrors({});
+      firstName || (formErrors.firstName = 'firstName is required.');
+      firstName.length > 3 || (formErrors.firstName = 'First name is required and must be at least 1 character.');
+      firstName.length < 30 || (formErrors.firstName = 'First name is required and must be less than 30 characters.');
+      lastName || (formErrors.lastName = 'lastName is required.');
+      lastName.length > 1 || (formErrors.lastName = 'Last name is required and must be at least 1 character.');
+      lastName.length < 30 || (formErrors.lastName = 'Last name is required and must be less than 30 characters.');
+      email || (formErrors.email = 'email is required.');
+      email.length < 30 || (formErrors.email = 'email is required and must be less than 50 characters.');
+      password || (formErrors.password = 'password is required.');
+      password.length < 225 || (formErrors.password = 'password is too long');
+      confirmPassword || (formErrors.confirmPassword = 'confirmPassword is required.');
+      dateOfBirth || (formErrors.dateOfBirth = 'dateOfBirth is required.');
+      gender || (formErrors.gender = 'gender is required.');
 
-    if (!Object.values(formErrors).length) {
+      if (!Object.values(formErrors).length) {
+      }
       const data = await dispatch(signUp(firstName, lastName, email, password, dateOfBirth, gender));
+
+
       if (data) {
-        formErrors.validationErrors = data
-        setErrors({ ...formErrors })
+        setErrors(data);
       } else {
         history.push('/home')
         closeModal();
       }
+    } else {
+      setErrors([
+        "Confirm Password field must be the same as the Password field",
+      ]);
     }
-  }
+  };
+
   return (
     <div className="sign-up-container">
       <h1 className="sign-up-logo">Sign Up</h1>
-      <form className="form-info-container">
-
-        <p className='errors form__errors'>{errors.validationErrors}</p>
-
+      <form onSubmit={handleSubmit} className="form-info-container">
+        <ul>
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
         <div className="first-last">
           <label>
             <input
@@ -72,8 +76,8 @@ function SignupFormModal() {
               onChange={(e) => setFirstName(e.target.value)}
               required
             />
-            <p className='errors form__errors'>{errors.firstName}</p>
           </label>
+          <p className='errors form__errors'>{errors.firstName}</p>
 
 
           <label>
@@ -85,7 +89,6 @@ function SignupFormModal() {
               onChange={(e) => setLastName(e.target.value)}
               required
             />
-            <p className='errors form__errors'>{errors.lastName}</p>
           </label>
         </div>
 
@@ -99,7 +102,6 @@ function SignupFormModal() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <p className='errors form__errors'>{errors.email}</p>
           </label>
         </div>
 
@@ -126,7 +128,6 @@ function SignupFormModal() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <p className='errors form__errors'>{errors.password}</p>
           </label>
         </div>
 
@@ -140,7 +141,6 @@ function SignupFormModal() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <p className='errors form__errors'>{errors.confirmPassword}</p>
           </label>
         </div>
 
@@ -154,7 +154,6 @@ function SignupFormModal() {
             onChange={(e) => setDateOfBirth(e.target.value)}
             required
           />
-          <p className='errors form__errors'>{errors.dateOfBirth}</p>
         </label>
 
 
@@ -191,13 +190,12 @@ function SignupFormModal() {
                 required
               />
             </div>
-            <p className='errors form__errors'>{errors.gender}</p>
 
           </div>
         </div>
         <p className="disclosure">People who use our service may have uploaded your contact information to Friendzone.</p>
         <p className="disclosure">This is a fake website, so please do not upload personal info.</p>
-        <button className="submit-button-2" type="submit" onClick={handleSubmit}>Sign Up</button>
+        <button className="submit-button-2" type="submit">Sign Up</button>
       </form>
     </div>
   );

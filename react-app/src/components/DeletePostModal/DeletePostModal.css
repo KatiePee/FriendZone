@@ -1,0 +1,23 @@
+.delete-modal__buttons {
+  display: flex;
+  justify-content: center;
+  border-radius: 1px solid red;
+  gap: 0.5rem;
+}
+
+.delete-modal__yes-btn {
+  flex: 1;
+  background-color: #1877f2;
+  color: white;
+}
+
+.delete-modal__no-btn {
+  flex: 1;
+  background-color: lightgray;
+}
+
+.delete-modal__text {
+  text-align: center;
+  font-size: large;
+  margin-bottom: 1rem;
+}

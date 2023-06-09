@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
+import NonExistent from "./components/NonExistentPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,32 +18,96 @@ function App() {
   }, [dispatch]);
 
   return (
+
+  <>
+  {(user && isLoaded) ?(
     <>
-    {!user ? (
-      <div>
+      <Navigation isLoaded={isLoaded} />
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/home">
+          <HomePage />
+        </Route>
+        <Route exact path="/users/:userId">
+          <UserProfile />
+        </Route>
+        <Route>
+          <NonExistent />
+        </Route>
+      </Switch>
+    </>
+  ):(
+    <>
+      <Switch>
         <Route exact path="/">
           <LandingPage />
+          <Footer />
         </Route>
-      </div>
-      ) : (
-      <div style={{ backgroundColor: "#F0F2F5" }}>
-          <Navigation isLoaded={isLoaded} />
-          {isLoaded && (
-            <Switch>
-              <Route path="/signup">
-                <SignupFormPage />
-              </Route>
-              <Route path="/home">
-                <HomePage />
-              </Route>
-              <Route path="/:userId">
-                <UserProfile />
-              </Route>
-            </Switch>
-          )}
-      </div>
-      )}
+        <Route>
+          <NonExistent />
+        </Route>
+      </Switch>
     </>
+  )
+  }
+</>
+
+//     <>
+//     {/* {!user ? (
+//       <div>
+//         <div>
+//           <Switch>
+//             <Route exact path="/">
+//               <LandingPage />
+//             </Route>
+//             <Route>
+//               <h2>Page Could Not Be Found or Does Not EXIST!</h2>
+//             </Route>
+//           </Switch>
+//         </div>
+//       </div>
+
+//       ) : (
+//       <div style={{ backgroundColor: "#F0F2F5" }}>
+//           <Navigation isLoaded={isLoaded} />
+//           {isLoaded && (
+//             <Switch>
+//               <Route path="/signup">
+//                 <SignupFormPage />
+//               </Route>
+//               <Route path="/home">
+//                 <HomePage />
+//               </Route>
+//               <Route path="/:userId">
+//                 <UserProfile />
+//               </Route>
+//             </Switch>
+//           )}
+//       </div>
+//       )} */}
+//   {user ? <Navigation isLoaded={isLoaded} /> : null}
+//       <Switch>
+//   <Route exact path="/">
+//     {!user ? <LandingPage /> : <Redirect to="/home" />}
+//   </Route>
+//   <Route path="/home">
+//     {user ? <HomePage /> : <Redirect to="/" />}
+//   </Route>
+//   <Route path="/signup">
+//     <SignupFormPage />
+//   </Route>
+//   <Route exact path="/users/:userId">
+//   {user ? <UserProfile /> : <NonExistent />}
+//     <UserProfile />
+//   </Route>
+//   <Route>
+//     <NonExistent />
+//   </Route>
+// </Switch>
+//     </>
+
   );
 }
 
