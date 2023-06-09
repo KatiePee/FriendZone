@@ -1,0 +1,41 @@
+.social {
+    height: 20px;
+    width: 20px;
+}
+
+.contributors-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.contributors {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.used {
+    display: flex;
+    gap: .3rem;
+}
+
+.tech {
+    height: 25px;
+    width: 30px
+}

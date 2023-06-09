@@ -1,24 +1,21 @@
 import React, { useState, useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useHistory, Redirect } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
 import NonExistent from "./components/NonExistentPage";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const history = useHistory();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
-  // if (user) history.push("/home");
 
   return (
 
@@ -46,6 +43,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           <LandingPage />
+          <Footer />
         </Route>
         <Route>
           <NonExistent />

@@ -123,15 +123,6 @@ function LandingPage() {
           </div>
         </div>
       </body>
-      {/* <footer className="footy">
-        <div className="contributors">
-          <h3>Contributors:</h3>
-          <div>Adanna Liu</div>
-          <div>Albert Kim</div>
-          <div>Katie Piele</div>
-          <div>PJ Singh</div>
-        </div>
-      </footer> */}
     </div>
   );
 }
