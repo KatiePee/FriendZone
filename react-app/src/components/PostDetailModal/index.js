@@ -7,8 +7,7 @@ import { allPostsThunk } from "../../store/posts";
 import Comment from "../Comment";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-// import "./postcard.css"
-import "./postdetailmodal.css"
+import "./PostDetailModal.css"
 
 
 function PostDetailModal({ post }) {
@@ -89,8 +88,24 @@ function PostDetailModal({ post }) {
     else return 'Just now';
   };
 
+  const columns = () => {
+    if (postImages.length === 1) return "1fr"
+    if (postImages.length === 3) return "1fr 1fr 1fr";
+    return '1fr 1fr'
+  }
+
+
+  const cardLayout = {
+    display: 'grid',
+    gap: '5px',
+    gridTemplateAreas: "pic1 pic2",
+    gridTemplateColumns: columns(),
+  }
+
   return (
-    <div className="post-card__container">
+    <div className="post-modal__container">
+      <div className="post-modal__inner">
+
       <div className="post-card__info-content">
         <div className="post-card__user-info">
           <div className="post-card__profile-info">
@@ -116,11 +131,27 @@ function PostDetailModal({ post }) {
           <p>{content}</p>
         </div>
       </div>
-      <div className="post-card__images">
-        {postImages.map((image) => {
-          return <img src={image.imageUrl} alt="postimage" />;
+      <div style={cardLayout}>
+        {postImages.map(image => {
+           const imageStyle = {
+            backgroundImage: `url(${image.imageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '100%',
+            height: '300px',
+            borderRadius: '10px'
+          };
+
+          return (
+            <div className="post-card__image" style={imageStyle}></div>
+          );
         })}
       </div>
+      {/* <div style={cardLayout}>
+        {postImages.map((image) => {
+          return <img src={image.imageUrl} alt="postimage" style={imageStyle}/>;
+        })}
+      </div> */}
       <div className="post-card__details">
         <div className="post-card__engagement">
           <Tippy content={<span style={{ display: 'flex', flexDirection: 'column' }}>{likeByNames}</span>} placement="bottom" arrow={false}>
@@ -158,6 +189,7 @@ function PostDetailModal({ post }) {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -1,0 +1,35 @@
+.close-div:hover {
+    cursor: pointer;
+}
+
+.post-card__profile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-info__left-side {
+  display: flex;
+  align-items: center;
+}
+
+.post-modal__container {
+  padding: 1rem;
+  border-radius: 8px;
+  max-height: 50rem;
+  width: 30rem;
+  overflow: hidden;
+}
+
+.post-modal__inner {
+  max-height: inherit;
+  overflow-y: auto;
+}
+
+.post-modal__inner::-webkit-scrollbar {
+  width: 10px;
+  /* background: grey; */
+}
+
+.post-modal__inner::-webkit-scrollbar-thumb {
+  background: lightgrey
+}
