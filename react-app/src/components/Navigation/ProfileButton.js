@@ -5,6 +5,10 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
+import { singleUserThunk } from "../../store/users";
+import { userPostsThunk } from "../../store/posts";
+import { othersFriendsThunk } from "../../store/friends";
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,6 +37,9 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const redirectUserProfile = (e) => {
+    dispatch(singleUserThunk(user.id))
+    dispatch(userPostsThunk(user.id));
+    dispatch(othersFriendsThunk(user.id))
     history.push(`/users/${user.id}`)
 
   }
@@ -58,19 +65,19 @@ function ProfileButton({ user }) {
         ></img>
       </button>
       <ul onClick={closeMenu} className={ulClassName} ref={ulRef}>
-            <div className="profile-dropdown-link" onClick={redirectUserProfile}>
-              <img
-                src={user.profilePicURL}
-                className="profile-dropdown-pic"
-                alt={user.firstName}
-              ></img>
-              <li>
-                {user.firstName} {user.lastName}
-              </li>
-            </div>
-            <li className="profile-dropdown-logout">
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+        <div className="profile-dropdown-link" onClick={redirectUserProfile}>
+          <img
+            src={user.profilePicURL}
+            className="profile-dropdown-pic"
+            alt={user.firstName}
+          ></img>
+          <li>
+            {user.firstName} {user.lastName}
+          </li>
+        </div>
+        <li className="profile-dropdown-logout">
+          <button onClick={handleLogout}>Log Out</button>
+        </li>
       </ul>
     </>
   );
