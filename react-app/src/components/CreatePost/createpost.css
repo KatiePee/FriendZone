@@ -1,0 +1,22 @@
+.write-post__upper-half {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.home-page__write-post {
+  border: var(--border);
+  background-color: #FFFFFF;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  width: 40%;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.write-post__lower {
+  display: flex;
+  justify-content: space-evenly;
+}
