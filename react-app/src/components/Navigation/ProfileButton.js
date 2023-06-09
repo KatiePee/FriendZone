@@ -34,6 +34,7 @@ function ProfileButton({ user }) {
 
   const redirectUserProfile = (e) => {
     history.push(`/users/${user.id}`)
+
   }
 
   const handleLogout = (e) => {
@@ -56,7 +57,7 @@ function ProfileButton({ user }) {
           alt={user.firstName}
         ></img>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul onClick={closeMenu} className={ulClassName} ref={ulRef}>
             <div className="profile-dropdown-link" onClick={redirectUserProfile}>
               <img
                 src={user.profilePicURL}

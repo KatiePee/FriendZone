@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
+import NonExistent from "./components/NonExistentPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,15 +69,7 @@ function App() {
     <UserProfile />
   </Route>
   <Route>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
-    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
+    <NonExistent />
   </Route>
 </Switch>
     </>
