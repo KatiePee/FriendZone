@@ -21,13 +21,14 @@ function UserProfile() {
   const { userId } = useParams();
   const posts = postsState ? Object.values(postsState).reverse() : [];
   const { firstName, lastName, profilePicURL, coverPhotoURL } = user;
-  const isUser = userId == currentUser.id
   useEffect(() => {
     dispatch(singleUserThunk(userId))
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
   }, [dispatch]);
 
+  if (!currentUser) return null
+  const isUser = userId == currentUser.id
   let isFriend = Object.keys(friendsObj).includes(`${currentUser.id}`)
 
 

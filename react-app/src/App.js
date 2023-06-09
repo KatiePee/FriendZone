@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
@@ -17,11 +17,11 @@ function App() {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  if (user) history.push("/home");
+  // if (user) history.push("/home");
 
   return (
     <>
-    {!user ? (
+    {/* {!user ? (
       <div>
         <div>
           <Switch>
@@ -52,7 +52,25 @@ function App() {
             </Switch>
           )}
       </div>
-      )}
+      )} */}
+  {user ? <Navigation isLoaded={isLoaded} /> : null}
+      <Switch>
+  <Route exact path="/">
+    {!user ? <LandingPage /> : <Redirect to="/home" />}
+  </Route>
+  <Route path="/home">
+    {user ? <HomePage /> : <Redirect to="/" />}
+  </Route>
+  <Route path="/signup">
+    <SignupFormPage />
+  </Route>
+  <Route exact path="/users/:userId">
+    <UserProfile />
+  </Route>
+  <Route>
+    <h2 className="">Page Could Not Be Found or Does Not EXIST!</h2>
+  </Route>
+</Switch>
     </>
   );
 }
