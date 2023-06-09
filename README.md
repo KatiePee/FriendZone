@@ -16,7 +16,11 @@ This was our first group project together. We decided to clone Facebook as we we
 
 Throughout this process, we learned many new skills and developed as software developers:
 
--We learned to work as a group and communicate better
+- This is was our first opportunity to implement Python/Flask in a project.
+- This is our first time creating a project from scratch including creating the Database Schema, API Documentations, and creating the React app.
+- We learned to work as a group and communicate better using proper Git work flow.
+- We gained more experience in using React/Redux Store.
+- We learned that Facebook is very hard to clone.
 
 ## Wiki Links
 - [API Documentation](https://github.com/KatiePee/FriendZone/wiki/API-Documentation)
@@ -32,12 +36,13 @@ Throughout this process, we learned many new skills and developed as software de
 - AWS
 - HTML/CSS
 
+
 ## Meet The Developers
 
-- Adanna Liu <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/adanna-liu-7505161a5/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/aliu7198)
-- Albert Kim <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/albertkim01/")<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/alberthskim)
-- Katie Piele <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/katie-piele/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/KatiePee)
-- PJ Singh <img src="https://i.imgur.com/YxvVUbL.png"> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/)<img src="https://i.imgur.com/e3EquH6.png"> [GitHub](https://github.com/PjSingh22)
+- Adanna Liu <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/adanna-liu-7505161a5/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/aliu7198)
+- Albert Kim <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/albertkim01/")<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/alberthskim)
+- Katie Piele <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/katie-piele/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/KatiePee)
+- PJ Singh <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/)<img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/PjSingh22)
 
 <!-- # Flask React Project
 
