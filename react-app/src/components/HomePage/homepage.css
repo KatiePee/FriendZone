@@ -1,6 +1,6 @@
 .home-page-wrapper {
   display: grid;
-  /* grid-template-columns: auto 2fr; */
+  /* grid-template-columns: 1fr 2fr; */
   /* grid-template-columns: auto, 1fr; */
   /* flex-direction: column; */
   /* align-items: center; */
@@ -11,12 +11,11 @@
 
 .home-page__side-nav {
   position: fixed;
-  border: 1px solid red;
   height: 100%;
+  /* width: 10em; */
 }
 
 .home-page__post-feed {
-  border: 1px solid green;
   display: flex;
   flex-direction: column;
   align-items: center;
