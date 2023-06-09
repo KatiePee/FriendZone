@@ -3,6 +3,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .user-profile__header {
@@ -77,4 +78,10 @@
   max-width: 900px;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.user-profile__rightside {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -1,0 +1,23 @@
+.friends-bar {
+  text-align: center;
+  position: fixed;
+  right: 50px;
+}
+
+.friends-bar > p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.friends-bar__friends {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.friends-bar__friends > p, .friends-bar__friends > img {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bolder;
+}
