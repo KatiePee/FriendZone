@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createPostThunk } from "../../store/posts";
+import "./PostFormModal.css";
 
 function PostFormModal({ user }) {
   const dispatch = useDispatch();
@@ -15,7 +16,9 @@ function PostFormModal({ user }) {
   useEffect(() => {
     const formErrors = {};
 
-    (content.length > 1 || images.length > 1) || (formErrors.content = "Post content is required.");
+    content.length > 1 ||
+      images.length > 1 ||
+      (formErrors.content = "Post content is required.");
 
     content.length <= 2040 ||
       (formErrors.content = "Maximum 2040 characters allowed in a post.");
@@ -36,7 +39,7 @@ function PostFormModal({ user }) {
       await dispatch(createPostThunk(postFormData));
       // TODO: implement a loading spinner while post is being created before closing the modal?
       setErrors({});
-      setHasSubmitted(false)
+      setHasSubmitted(false);
       closeModal();
     }
   };
@@ -46,7 +49,7 @@ function PostFormModal({ user }) {
     if (selectedFiles.length <= 4) {
       setImages(selectedFiles);
       if (!content.length) {
-        setContent(' ')
+        setContent(" ");
       }
     } else {
       alert(`Maximum 4 images allowed on a post.`);
@@ -56,45 +59,56 @@ function PostFormModal({ user }) {
 
   return (
     <>
-      <h3>Create post</h3>
-      <div className="post-card__profile-info">
-        <img
-          className="post-card__profile-pic"
-          src={profilePicURL}
-          alt="profile"
-        />
-        <div className="profile-info__left-side">
-          <p>
-            {firstName} {lastName}
-          </p>
+      <div className="post-form__wrapper">
+        <h3 className="post-form__title">
+          Create post{" "}
+          <button
+            className="close-modal post-form__close-modal"
+            onClick={closeModal}
+          >
+            <i class="fas fa-times fa-lg" />
+          </button>
+        </h3>
+        <div className="post-form__body">
+          <div className="post-form__profile-info">
+            <img
+              className="post-form__profile-pic"
+              src={profilePicURL}
+              alt="profile"
+            />
+            <div className="profile-info__left-side">
+              <p>
+                {firstName} {lastName}
+              </p>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <label>
+              <div className="errors">{hasSubmitted && errors?.content}</div>
+              <textarea
+                placeholder="What's on your mind?"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="post-form__content-input"
+              />
+            </label>
+            <div className="post-form__image-upload">
+              <label className="image-upload-label" htmlFor="image">
+                Add Photos:
+                <i class="fas fa-images"></i>
+              </label>
+              <input
+                id="image"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+              ></input>
+            </div>
+            <button className="post-form__submit-btn" type="submit">Post</button>
+          </form>
         </div>
       </div>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <label>
-          <div className="errors">
-            {hasSubmitted && errors?.content}
-          </div>
-          <input
-            type="text"
-            placeholder={`What's on your mind, ${firstName}?`}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </label>
-        <div className="form-input-box">
-          <label className="form-label" htmlFor="image">
-            Post Image:
-          </label>
-          <input
-            id="image"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-          ></input>
-        </div>
-        <button type="submit">Post</button>
-      </form>
     </>
   );
 }

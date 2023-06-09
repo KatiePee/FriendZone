@@ -73,26 +73,26 @@ const Comment = ({ comment }) => {
     return (
       <>
         <div className="post-modal__comment-bar">
-            <img
-              className="comment__profile-pic"
-              src={comment.commentAuthor.profilePicURL}
-              alt="profile pic"
-              onClick={redirectUserProfile}
-            />
+          <img
+            className="comment__profile-pic"
+            src={comment.commentAuthor.profilePicURL}
+            alt="profile pic"
+            onClick={redirectUserProfile}
+          />
           <div>
             <form onSubmit={handleSaveClick}>
-          <div className="errors edit-comment__errors">
-            {hasSubmitted && errors?.comment}
-          </div>
+              <div className="errors edit-comment__errors">
+                {hasSubmitted && errors?.comment}
+              </div>
               <div className="post-modal__comment-form">
-              <textarea
-                className="post-modal__add-comment edit-comment__textarea"
-                value={editedComment}
-                onChange={handleTextareaChange}
-              ></textarea>
-              <button type="submit" id="edit-comment__submit-btn">
-                <i class="fas fa-paper-plane"></i>
-              </button>
+                <textarea
+                  className="post-modal__add-comment edit-comment__textarea"
+                  value={editedComment}
+                  onChange={handleTextareaChange}
+                ></textarea>
+                <button type="submit" id="edit-comment__submit-btn">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
               </div>
               <button onClick={handleCancelClick}>Cancel</button>
             </form>
