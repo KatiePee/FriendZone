@@ -55,11 +55,6 @@ function EditPostModal({ user, post }) {
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        {/* <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul> */}
         <label>
           <div className="errors">{hasSubmitted && errors?.content}</div>
           <input
