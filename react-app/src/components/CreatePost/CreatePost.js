@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"
-import { allPostsThunk } from "../../store/posts";
-import PostCard from "../PostCard";
+import React from "react";
+import { useSelector } from "react-redux"
 import OpenModalButton from '../OpenModalButton'
 import PostFormModal from "../PostFormModal";
 import "./createpost.css"

@@ -8,7 +8,6 @@ import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import "./PostCard.css";
 import { createLikeThunk, removeLikeThunk } from "../../store/posts";
-import { allPostsThunk } from "../../store/posts";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 

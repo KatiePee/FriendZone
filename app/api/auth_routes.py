@@ -75,6 +75,7 @@ def sign_up():
         )
         db.session.add(user)
         db.session.commit()
+        new_user = user.to_dict()
 
         login_user(user)
         add_friend(4)

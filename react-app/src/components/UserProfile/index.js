@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { singlePostThunk, userPostsThunk } from "../../store/posts";
+import { userPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
 import "../HomePage/homepage.css";
 import CreatePost from "../CreatePost/CreatePost";
@@ -94,11 +94,11 @@ function UserProfile() {
     <div className="user-profile__wrapper">
       <div className="user-profile__header">
         <div className="user-profile__cover-photo">
-          <img className="cover-photo" src={coverPhotoURL} />
+          <img className="cover-photo" src={coverPhotoURL} alt="user" />
         </div>
         <div className="user-profile__subheader">
           <div className="user-profile__subheader-box">
-            <img className="user-profile__profile-pic" src={profilePicURL} />
+            <img className="user-profile__profile-pic" src={profilePicURL} alt="profile" />
             <div className="user-profile__header-info">
               <p className="user-profile__name">{firstName} {lastName}</p>
               <p className="user-profile__num-friends">{`${friends.length} friends`}</p>
@@ -116,7 +116,7 @@ function UserProfile() {
             {friends.map(friend => (
               <div className="friends-bar__friends" onClick={e => redirectUserProfile(friend.id)}>
 
-                <img className="post-card__profile-pic" src={friend.profilePicURL} />
+                <img className="post-card__profile-pic" src={friend.profilePicURL} alt="friend pic" />
                 <p>{friend.firstName}</p>
               </div>
             ))}

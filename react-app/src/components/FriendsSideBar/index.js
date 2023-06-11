@@ -2,20 +2,20 @@ import "./friendsbar.css"
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { singleUserThunk } from "../../store/users";
-import { othersFriendsThunk } from "../../store/friends";
+import { myHomiesThunk, othersFriendsThunk } from "../../store/friends";
 import { userPostsThunk } from "../../store/posts";
 
 export default function FriendsBar() {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
-  const friendsObj = useSelector((state) => state.friends.friends);
+  const friendsObj = useSelector((state) => state.friends.homies);
   const friends = Object.values(friendsObj);
 
   const redirectUserProfile = (userId) => {
     dispatch(singleUserThunk(userId));
     dispatch(userPostsThunk(userId));
-    dispatch(othersFriendsThunk(userId));
+    dispatch(myHomiesThunk(userId));
     history.push(`/users/${userId}`);
   }
 

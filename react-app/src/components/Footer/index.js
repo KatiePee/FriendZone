@@ -20,10 +20,10 @@ function Footer() {
             <div className="contributor-name">Adanna Liu</div>
             <div className="social-container">
               <a href="https://github.com/aliu7198">
-                <img className="social" src="https://i.imgur.com/40XDjRy.png" />
+                <img className="social" src="https://i.imgur.com/40XDjRy.png" alt="social" />
               </a>
               <a href="https://www.linkedin.com/in/adanna-liu-7505161a5/">
-                <img className="social" src="https://i.imgur.com/LdJxIp7.png" />
+                <img className="social" src="https://i.imgur.com/LdJxIp7.png" alt="social" />
               </a>
             </div>
           </div>
@@ -32,10 +32,10 @@ function Footer() {
             <div className="contributor-name">Albert Kim</div>
             <div className="social-container">
               <a href="https://github.com/alberthskim">
-                <img className="social" src="https://i.imgur.com/40XDjRy.png" />
+                <img className="social" src="https://i.imgur.com/40XDjRy.png" alt="social" />
               </a>
               <a href="https://www.linkedin.com/in/albertkim01/">
-                <img className="social" src="https://i.imgur.com/LdJxIp7.png" />
+                <img className="social" src="https://i.imgur.com/LdJxIp7.png" alt="social" />
               </a>
             </div>
           </div>
@@ -44,10 +44,10 @@ function Footer() {
             <div className="contributor-name">Katie Piele</div>
             <div className="social-container">
               <a href="https://github.com/KatiePee">
-                <img className="social" src="https://i.imgur.com/40XDjRy.png" />
+                <img className="social" src="https://i.imgur.com/40XDjRy.png" alt="social" />
               </a>
               <a href="https://www.linkedin.com/in/katie-piele/">
-                <img className="social" src="https://i.imgur.com/LdJxIp7.png" />
+                <img className="social" src="https://i.imgur.com/LdJxIp7.png" alt="social" />
               </a>
             </div>
           </div>
@@ -56,10 +56,10 @@ function Footer() {
             <div className="contributor-name">PJ Singh</div>
             <div className="social-container">
               <a href="https://github.com/PjSingh22">
-                <img className="social" src="https://i.imgur.com/40XDjRy.png" />
+                <img className="social" src="https://i.imgur.com/40XDjRy.png" alt="social" />
               </a>
               <a href="https://www.linkedin.com/in/prabhjot-singh-software-developer/">
-                <img className="social" src="https://i.imgur.com/LdJxIp7.png" />
+                <img className="social" src="https://i.imgur.com/LdJxIp7.png" alt="social" />
               </a>
             </div>
           </div>
@@ -67,14 +67,14 @@ function Footer() {
 
         <div className="used">
           <h3>Technology Used:</h3>
-          <img className="tech" src={python} />
-          <img className="tech" src={postSQL} />
-          <img className="tech" src={flask} />
-          <img className="tech" src={reactpic} />
-          <img className="tech" src={redux} />
-          <img className="tech" src={aws} />
-          <img className="tech" src={css} />
-          <img className="tech" src={html} />
+          <img className="tech" src={python} alt="python" />
+          <img className="tech" src={postSQL} alt="postSql" />
+          <img className="tech" src={flask} alt="flask" />
+          <img className="tech" src={reactpic} alt="react" />
+          <img className="tech" src={redux} alt="redux" />
+          <img className="tech" src={aws} alt="aws" />
+          <img className="tech" src={css} alt="css" />
+          <img className="tech" src={html} alt="html" />
         </div>
       </div>
     </>

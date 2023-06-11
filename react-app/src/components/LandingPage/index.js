@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { login } from "../../store/session";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
@@ -48,7 +48,7 @@ function LandingPage() {
         <div className="landing-container">
           <div className="left-side">
             <div className="logo">
-              <img src={title} className="friendzone"/>
+              <img src={title} className="friendzone" alt="logo"/>
             </div>
             <h3 className="slogan">A place where you can force a friendship</h3>
             <p>Click a demo user or create an account</p>
@@ -56,21 +56,21 @@ function LandingPage() {
               <div onClick={demoUser} className="demo-card">
                 <img
                   src="https://marketplace.canva.com/EAE_4-ugJng/1/0/1600w/canva-blue-yellow-simple-professional-instagram-profile-picture-kpwvs_syWG8.jpg"
-                  className="demo-face"
+                  className="demo-face" alt="demo-1"
                 />
                 <div className="demo-name">Demo User</div>
               </div>
               <div onClick={demoUser2} className="demo-card">
                 <img
                   src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
-                  className="demo-face"
+                  className="demo-face" alt="demo-2"
                 />
                 <div className="demo-name">Marnie Demo</div>
               </div>
               <div onClick={demoUser3} className="demo-card">
                 <img
                   src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
-                  className="demo-face"
+                  className="demo-face" alt="demo-3"
                 />
                 <div className="demo-name">Bobbie Demo</div>
               </div>
