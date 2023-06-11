@@ -142,7 +142,7 @@ function PostDetailModal({ post }) {
               </button>
             </div>
           </div>
-          <div className="post-card__content">
+          <div className="post-card__content post-modal__content">
             <p>{content}</p>
           </div>
         </div>
@@ -172,7 +172,7 @@ function PostDetailModal({ post }) {
         })}
       </div> */}
         <div className="post-card__details">
-          <div className="post-card__engagement">
+          <div className="post-card__engagement post-modal__engagement">
             <Tippy
               content={
                 <span style={{ display: "flex", flexDirection: "column" }}>
