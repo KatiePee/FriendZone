@@ -8,8 +8,6 @@ import { singleUserThunk } from "../../store/users";
 import { userPostsThunk } from "../../store/posts";
 import { othersFriendsThunk } from "../../store/friends";
 
-
-
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   // const user = useSelector(state => state.session.user)
@@ -37,20 +35,18 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const redirectUserProfile = (e) => {
-    dispatch(singleUserThunk(user.id))
+    dispatch(singleUserThunk(user.id));
     dispatch(userPostsThunk(user.id));
-    dispatch(othersFriendsThunk(user.id))
-    history.push(`/users/${user.id}`)
-
-  }
+    dispatch(othersFriendsThunk(user.id));
+    history.push(`/users/${user.id}`);
+  };
 
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
     await dispatch(cleanUpFriendsThunk());
     await dispatch(cleanUpStoreThunk());
-    history.push("/")
-
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -60,13 +56,12 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} className="profile-button">
-        <img
-          src={user.profilePicURL}
-          className="post-card__profile-pic"
-          alt={user.firstName}
-        ></img>
-      </button>
+      <img
+        onClick={openMenu}
+        src={user.profilePicURL}
+        className="post-card__profile-pic"
+        alt={user.firstName}
+      ></img>
       <ul onClick={closeMenu} className={ulClassName} ref={ulRef}>
         <div className="profile-dropdown-link" onClick={redirectUserProfile}>
           <img
@@ -79,7 +74,10 @@ function ProfileButton({ user }) {
           </li>
         </div>
         <li className="profile-dropdown-logout">
-          <button onClick={handleLogout}>Log Out</button>
+          <button onClick={handleLogout}>
+            <i className="fas fa-sign-out-alt" />
+            <p>Log Out</p>
+          </button>
         </li>
       </ul>
     </>
