@@ -11,24 +11,25 @@ import { singleUserThunk } from "../../store/users";
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const postsState = useSelector((state) => state.posts.userPosts);
+  const postsState = useSelector((state) => state.posts.allPosts);
+
   const currentUser = useSelector((state) => state.session.user);
   const friendsObj = useSelector((state) => state.friends.friends);
   const user = useSelector((state) => state.users.singleUser);
   const history = useHistory()
   const friends = Object.values(friendsObj)
-  // const [isFriend, setIsFriend] = useState(false)
   const { userId } = useParams();
-  const posts = postsState ? Object.values(postsState).reverse() : [];
+  let posts = postsState ? Object.values(postsState).reverse() : [];
+  posts = posts.filter(post => post.author.id === +userId)
   const { firstName, lastName, profilePicURL, coverPhotoURL } = user;
   useEffect(() => {
-    dispatch(singleUserThunk(userId))
+    dispatch(singleUserThunk(userId));
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
   }, [dispatch]);
 
   if (!currentUser) return null
-  const isUser = userId == currentUser.id
+  const isUser = +userId === currentUser.id
   let isFriend = Object.keys(friendsObj).includes(`${currentUser.id}`)
 
 
