@@ -77,7 +77,7 @@ input {
 
 .demo-user-stuff {
     display: flex;
-    gap: .5rem;
+    gap: .75rem;
     padding-top: 1rem;
 }
 
@@ -99,17 +99,21 @@ input {
 
 .demo-name {
     text-align: center;
+    padding: 3px 0 5px 0;
+    /* border: 1px solid red; */
 }
 
 .demo-card {
     height: fit-content;
-    border: 1px solid gray;
-    border-radius: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    background-color: white;
 }
 
 .demo-face {
     height: 100%;
     width: 100px;
+    border-radius: 8px 8px 0 0;
 }
 
 .errors {
