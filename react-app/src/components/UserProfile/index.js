@@ -11,7 +11,7 @@ import { singleUserThunk } from "../../store/users";
 
 function UserProfile() {
   const dispatch = useDispatch();
-  const postsState = useSelector((state) => state.posts.allPosts);
+  const postsState = useSelector((state) => state.posts.userPosts);
   const currentUser = useSelector((state) => state.session.user);
   const friendsObj = useSelector((state) => state.friends.friends);
   const user = useSelector((state) => state.users.singleUser);

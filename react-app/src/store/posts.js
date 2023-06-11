@@ -2,6 +2,7 @@ const ALL_POSTS = 'posts/allPosts'
 const SINGLE_POST = 'posts/singlePosts'
 const DELETE_POST = 'posts/deletePost'
 const EDIT_POST = 'posts/editPost'
+const USER_POSTS = 'posts/userPosts'
 
 const ADD_COMMENT = 'comments/addComment'
 const EDIT_COMMENT = 'comments/editComment'
@@ -52,6 +53,11 @@ const deleteCommentAction = (postId, commentId) => ({
     postId,
     commentId
   }
+})
+
+const userPostsAction = (posts) => ({
+  type: USER_POSTS,
+  payload: posts
 })
 
 const allPostsAction = (posts) => ({
@@ -218,7 +224,7 @@ export const userPostsThunk = (userId) => async (dispatch) => {
   try {
     const res = await fetch(`/api/posts/users/${userId}`);
     const posts = await res.json()
-    await dispatch(allPostsAction(posts))
+    await dispatch(userPostsAction(posts))
     return res
   } catch (e) {
     return e
@@ -239,11 +245,15 @@ export const editPostThunk = (post, postId) => async (dispatch) => {
   }
 }
 
-const initialState = { allPosts: {}, singlePost: {} }
+const initialState = { allPosts: {}, singlePost: {}, userPosts: {} }
 
 const postReducer = (state = initialState, action) => {
   let newState = {}
   switch (action.type) {
+    case USER_POSTS:
+      let myPosts = { ...state, userPosts: {} };
+      action.payload.forEach(post => myPosts.userPosts[post.id] = post);
+      return myPosts;
     case ALL_POSTS:
       newState = { ...state, allPosts: {}, singlePost: {} }
       action.payload.forEach(post => {
