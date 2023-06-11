@@ -14,11 +14,23 @@ function LandingPage() {
   const [errors, setErrors] = useState([]);
   const history = useHistory();
 
+  let formErrors = {}
+
+  const _handelErrors = () => {
+    email || (formErrors.email = 'email is required');
+    password || (formErrors.password = 'password is required')
+    setErrors(formErrors)
+  }
+  //need to handle the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    _handelErrors();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+
+      formErrors.validations = 'invalid credentials'
+      console.log('😈~~~~~~~~~~~', formErrors)
+      setErrors({ ...formErrors });
       return
     }
     history.push(`/home`);
@@ -48,7 +60,7 @@ function LandingPage() {
         <div className="landing-container">
           <div className="left-side">
             <div className="logo">
-              <img src={title} className="friendzone"/>
+              <img src={title} className="friendzone" />
             </div>
             <h3 className="slogan">A place where you can force a friendship</h3>
             <p>Click a demo user or create an account</p>
@@ -78,12 +90,10 @@ function LandingPage() {
           </div>
 
           <div className="login-signup">
-            <form onSubmit={handleSubmit} className="form-info">
-              <div className="errors">
-                {errors.map((error, idx) => (
-                  <li key={idx}>{error}</li>
-                ))}
-              </div>
+            <form className="form-info">
+              <p className="errors">
+                <p className='errors form__errors'>{errors.validations}</p>
+              </p>
               <div className="email-div">
                 <label>
                   <input
@@ -95,6 +105,8 @@ function LandingPage() {
                     required
                   />
                 </label>
+                <p className='errors form__errors'>{errors.email}</p>
+
               </div>
               <div className="password-div">
                 <label>
@@ -107,9 +119,11 @@ function LandingPage() {
                     required
                   />
                 </label>
+                <p className='errors form__errors'>{errors.password}</p>
+
               </div>
               <div className="login-button">
-                <button className="submit-button" type="submit">
+                <button className="submit-button" type="submit" onClick={handleSubmit}>
                   Log In
                 </button>
               </div>
