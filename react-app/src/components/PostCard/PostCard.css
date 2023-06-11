@@ -116,6 +116,10 @@
   font-size: medium;
 }
 
+.add-comment:hover {
+  cursor: text;
+}
+
 .edit-delete__container {
   display: flex;
   gap: 10px;
