@@ -20,7 +20,7 @@ export default function FriendsBar() {
 
   return (
     <div className='user-profile__friends friends-bar'>
-      <p>FriendZoned</p>
+      <p className="friends-bar__title">FriendZoned</p>
       {friends.map(friend => (
         <div className="friends-bar__friends" onClick={e => redirectUserProfile(friend.id)}>
 

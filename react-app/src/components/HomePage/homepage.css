@@ -1,7 +1,7 @@
 .home-page-wrapper {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 10px;;
+  padding-bottom: 10px;
 }
 
 .home-page__side-nav {

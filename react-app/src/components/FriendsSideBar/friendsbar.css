@@ -1,23 +1,43 @@
 .friends-bar {
   text-align: center;
   position: fixed;
-  right: 50px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
-.friends-bar > p {
+.friends-bar__title {
   font-size: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid lightgray;
+  margin: 20px 0;
+  padding-left: 0.5rem;
+  font-weight: bold;
+  text-align: left;
+  font-size: 25px;
+  /* border-bottom: 1px solid lightgray; */
 }
 
 .friends-bar__friends {
   display: flex;
   align-items: center;
   gap: 10px;
+  border-radius: 8px;
+  padding: 0.5rem 4rem 0.5rem 0.5rem;
 }
 
-.friends-bar__friends > p, .friends-bar__friends > img {
-  margin-bottom: 20px;
-  font-size: 20px;
+.friends-bar__friends:hover {
+  cursor: pointer;
+  background-color: #e4e6eb;
+}
+
+
+.friends-bar__friends > p,
+.friends-bar__friends > img {
+  /* margin-bottom: 20px; */
+  font-size: 18px;
   font-weight: bolder;
+}
+
+.friends-bar__friends > img {
+  width: 40px;
+  height: 40px;
 }
