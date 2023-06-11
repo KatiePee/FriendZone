@@ -24,7 +24,7 @@ export default function FriendsBar() {
       {friends.map(friend => (
         <div className="friends-bar__friends" onClick={e => redirectUserProfile(friend.id)}>
 
-          <img className="post-card__profile-pic" src={friend.profilePicURL} alt={`${friend.firstName} ${friend.lastName}`}/>
+          <img src={friend.profilePicURL} alt={`${friend.firstName} ${friend.lastName}`}/>
           <p>{friend.firstName}</p>
         </div>
       ))}

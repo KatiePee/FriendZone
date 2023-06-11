@@ -55,7 +55,6 @@ function PostCard({ post }) {
   }
 
   const redirectUserProfile = (e) => {
-
     history.push(`/users/${author.id}`)
   }
 
@@ -110,7 +109,7 @@ function PostCard({ post }) {
               onClick={redirectUserProfile}
             />
             <div className="profile-info__left-side">
-              <p onClick={redirectUserProfile}>
+              <p className="post-modal__author" onClick={redirectUserProfile}>
                 {firstName} {lastName}
               </p>
               <div className="profile-info__post-date">
