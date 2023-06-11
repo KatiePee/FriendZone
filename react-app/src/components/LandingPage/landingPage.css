@@ -35,7 +35,8 @@ input {
 .input-info {
     padding: .7rem;
     border-radius: 8px;
-    border: 1px solid #dcdfe2
+    border: 1px solid #dcdfe2;
+    font-size: medium;
 }
 
 

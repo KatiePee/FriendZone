@@ -174,7 +174,7 @@ function PostCard({ post }) {
             </div>
           </Tippy>
           {postCommentLength > 0 ? (
-            <div>{postCommentLength} Comments</div>
+            <div className="above-comment">{postCommentLength === 1 ? <>{postCommentLength} Comment</> : <>{postCommentLength} Comments</>}</div>
           ) : null}
         </div>
         <div className="post-card__buttons">
@@ -188,7 +188,7 @@ function PostCard({ post }) {
             </button>
           )}
           <OpenModalButton
-            buttonText="Comment"
+            buttonText={<><i class="far fa-comment"></i> Comment</>}
             onItemClick={closeModal}
             modalComponent={<PostDetailModal post={post} />}
           />

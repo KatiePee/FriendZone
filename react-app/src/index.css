@@ -36,19 +36,12 @@ button::before {
 button:hover {
   background-color: #f0d5d5;
   cursor: pointer;
+  color: black;
 }
 
 button:hover::before {
   opacity: 1;
 }
-
-
-
-
-
-
-
-
 
 .edit:hover {
   opacity: .5;
