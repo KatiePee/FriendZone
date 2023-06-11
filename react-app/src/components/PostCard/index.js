@@ -58,6 +58,10 @@ function PostCard({ post }) {
     history.push(`/users/${author.id}`)
   }
 
+  const redirectCurrentUserProfile = (e) => {
+    history.push(`/users/${user.id}`)
+  }
+
 
   const timeAgo = (dateObj) => {
     const date = new Date(dateObj);
@@ -193,6 +197,7 @@ function PostCard({ post }) {
         </div>
         <div className="post-card__comment-bar">
           <img
+            onClick={redirectCurrentUserProfile}
             className="post-card__profile-pic"
             src={user.profilePicURL}
             alt="profile"
