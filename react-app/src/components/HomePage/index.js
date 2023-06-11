@@ -3,13 +3,11 @@ import { useSelector, useDispatch } from "react-redux"
 import { Redirect } from "react-router-dom"
 import { allPostsThunk } from "../../store/posts";
 import PostCard from "../PostCard";
-import OpenModalButton from '../OpenModalButton'
 import "./homepage.css"
-import PostFormModal from "../PostFormModal";
 import CreatePost from "../CreatePost/CreatePost";
 import SideNav from "../SideNav";
 import FriendsBar from "../FriendsSideBar";
-import { othersFriendsThunk } from "../../store/friends";
+import { myHomiesThunk } from "../../store/friends";
 
 
 function HomePage() {
@@ -20,7 +18,8 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(allPostsThunk());
-    dispatch(othersFriendsThunk(user.id))
+    dispatch(myHomiesThunk());
+    // dispatch(othersFriendsThunk(user.id))
   }, [dispatch])
 
   if (!user) {

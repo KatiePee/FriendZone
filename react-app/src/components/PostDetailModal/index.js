@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addCommentThunk } from "../../store/posts";
 import { createLikeThunk, removeLikeThunk } from "../../store/posts";
-import { allPostsThunk } from "../../store/posts";
 import Comment from "../Comment";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "./PostDetailModal.css";
 
 function PostDetailModal({ post }) {
-  const { id, content, numLikes, author, postImages, likedBy, createdAt } =
+  const { id, content, author, postImages, likedBy, createdAt } =
     post;
 
   const { firstName, lastName, profilePicURL } = author;

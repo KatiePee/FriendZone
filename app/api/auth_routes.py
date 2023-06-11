@@ -76,8 +76,6 @@ def sign_up():
         db.session.add(user)
         db.session.commit()
         new_user = user.to_dict()
-        print('🤡~🤡~🤡~🤡~🤡~🤡~~~~~~~~user to dict', new_user)
-        print('🤡~🤡~🤡~🤡~🤡~🤡~~~~~~~~user to dict id', new_user["id"])
         # friendship = insert(friendships).values(userA_id=new_user["id"], userB_id=4)
         # db.session.execute(friendship)
         # db.session.commit()
