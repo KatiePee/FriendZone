@@ -14,25 +14,25 @@ function LandingPage() {
   const [errors, setErrors] = useState([]);
   const history = useHistory();
 
-  let formErrors = {}
-
-  const _handelErrors = () => {
-    email || (formErrors.email = 'email is required');
-    password || (formErrors.password = 'password is required')
-    setErrors(formErrors)
-  }
-  //need to handle the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    _handelErrors();
     const data = await dispatch(login(email, password));
     if (data) {
-
-
-      formErrors.validations = 'invalid credentials'
-      setErrors({ ...formErrors });
-      return
-
+      const formErrors = {};
+      // console.log("🚀 ~ file: index.js:21 ~ handleSubmit ~ data:", data)
+      for (let err of data) {
+        // console.log("🚀 ~ file: index.js:23 ~ handleSubmit ~ err:", err)
+        if (err.startsWith("email")) {
+          formErrors.email = err.slice(8);
+          // console.log('email error', err.slice(8));
+        } else if (err.startsWith("password")) {
+          formErrors.password = err.slice(11);
+          // console.log('pw error', err.slice(11));
+        }
+      }
+      setErrors(formErrors);
+      console.log("🚀 ~ file: index.js:37 ~ handleSubmit ~ errors:", errors);
+      return;
     }
     history.push(`/home`);
   };
@@ -61,7 +61,6 @@ function LandingPage() {
         <div className="landing-container">
           <div className="left-side">
             <div className="logo">
-
               <img src={title} className="friendzone" alt="logo" />
             </div>
             <h3 className="slogan">A place where you can force a friendship</h3>
@@ -94,13 +93,8 @@ function LandingPage() {
             </div>
           </div>
 
-
-          <div className="login-signup">
-            <form className="form-info">
-              <p className="errors">
-                <p className='errors form__errors'>{errors.validations}</p>
-              </p>
-
+          <div className="login-form">
+            <form onSubmit={handleSubmit} className="form-info">
               <div className="email-div">
                 <label>
                   <input
@@ -112,8 +106,6 @@ function LandingPage() {
                   />
                   <p className="errors">{errors.email}</p>
                 </label>
-                <p className='errors form__errors'>{errors.email}</p>
-
               </div>
               <div className="password-div">
                 <label>
@@ -126,16 +118,10 @@ function LandingPage() {
                   />
                   <p className="errors">{errors.password}</p>
                 </label>
-                <p className='errors form__errors'>{errors.password}</p>
-
               </div>
-
-              <div className="login-button">
-                <button className="submit-button" type="submit" onClick={handleSubmit}>
-                  Log In
-                </button>
-              </div>
-
+              <button className="login-btn" type="submit">
+                Log In
+              </button>
             </form>
             <div className="sign-up">
               <OpenModalButton
