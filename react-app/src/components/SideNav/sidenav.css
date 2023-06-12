@@ -1,6 +1,5 @@
 .sidenav__container {
   background-color: none;
-  /* border: 1px solid red; */
   /* width: 30%; */
   /* position: absolute; */
   /* z-index: -1; */
@@ -8,17 +7,20 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  margin-top: 105px;
+  margin-top: 95px;
   padding: 10px;
   height: 100%;
 }
 
 .sidenav__container > button {
+  width: 100%;
   display: flex;
   font-size: 25px;
-  justify-content: space-around;
-  justify-content: center;
   align-items: center;
-  gap: 5px;
-  border-bottom: 1px solid lightgray
+  gap: 8px;
+  /* border-bottom: 1px solid lightgray */
+}
+
+.sidenav__container > button:hover {
+  background-color: #e4e6eb;
 }

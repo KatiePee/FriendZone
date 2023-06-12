@@ -239,7 +239,7 @@ export const editPostThunk = (post, postId) => async (dispatch) => {
   }
 }
 
-const initialState = { allPosts: {}, singlePost: {} }
+const initialState = { allPosts: {}, singlePost: {}, userPosts: {} }
 
 const postReducer = (state = initialState, action) => {
   let newState = {}
