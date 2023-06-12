@@ -65,6 +65,18 @@
   margin-bottom: 1rem;
 }
 
+.post-modal__content {
+  margin-bottom: 1rem;
+}
+
+.post-modal__engagement {
+  margin: 0.5rem 0;
+}
+
+.post-modal__image {
+  margin-bottom: 0.5rem;
+}
+
 .post-modal__inner {
   max-height: inherit;
   overflow-y: auto;

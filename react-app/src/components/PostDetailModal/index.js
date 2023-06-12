@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { addCommentThunk } from "../../store/posts";
 import { createLikeThunk, removeLikeThunk } from "../../store/posts";
-import { allPostsThunk } from "../../store/posts";
 import Comment from "../Comment";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "./PostDetailModal.css";
 
 function PostDetailModal({ post }) {
-  const { id, content, numLikes, author, postImages, likedBy, createdAt } =
+  const { id, content, author, postImages, likedBy, createdAt } =
     post;
 
   const { firstName, lastName, profilePicURL } = author;
@@ -143,7 +142,7 @@ function PostDetailModal({ post }) {
               </button>
             </div>
           </div>
-          <div className="post-card__content">
+          <div className="post-card__content post-modal__content">
             <p>{content}</p>
           </div>
         </div>
@@ -173,7 +172,7 @@ function PostDetailModal({ post }) {
         })}
       </div> */}
         <div className="post-card__details">
-          <div className="post-card__engagement">
+          <div className="post-card__engagement post-modal__engagement">
             <Tippy
               content={
                 <span style={{ display: "flex", flexDirection: "column" }}>

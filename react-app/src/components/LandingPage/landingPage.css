@@ -11,7 +11,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     background-color: #F0F2F5;
-    height: 100vh;
+    height: 95vh;
 }
 
 .landing-container {
@@ -23,7 +23,7 @@ h1 {
 .form-info {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: .75rem;
     width: 95%;
     border-bottom: 1px solid lightgray;
 }
@@ -35,17 +35,18 @@ input {
 .input-info {
     padding: .7rem;
     border-radius: 8px;
-    border: 1px solid #dcdfe2
+    border: 1px solid #dcdfe2;
+    font-size: medium;
 }
 
 
-.login-signup {
+.login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 30%;
-    height: 18rem;
+    padding: 1rem 0.5rem;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0px 0px 10px grey;
@@ -59,9 +60,9 @@ input {
     height: 50px;
 }
 
-.submit-button {
-    margin-bottom: 2.5rem;
-    padding: .5rem 1rem;
+.login-btn {
+    margin-bottom: 1.75rem;
+    padding: .7rem 1rem;
     background-color: #1877f2;
     border: 1px solid #1877f2;
     color: white;
@@ -76,12 +77,13 @@ input {
 
 .demo-user-stuff {
     display: flex;
-    gap: .5rem;
+    gap: .75rem;
     padding-top: 1rem;
 }
 
 .sign-up > button {
-    padding: .5rem 1rem;
+    padding: .7rem 1rem;
+    margin-bottom: 0.5rem;
     width: 100%;
     background-color: #42b72a;
     border-radius: 8px;
@@ -97,17 +99,21 @@ input {
 
 .demo-name {
     text-align: center;
+    padding: 3px 0 5px 0;
+    /* border: 1px solid red; */
 }
 
 .demo-card {
     height: fit-content;
-    border: 1px solid gray;
-    border-radius: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    background-color: white;
 }
 
 .demo-face {
     height: 100%;
     width: 100px;
+    border-radius: 8px 8px 0 0;
 }
 
 .errors {

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { login } from "../../store/session";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
-import title from '../../assets/friendzone-title.png'
+import title from "../../assets/friendzone-title.png";
 import "./landingPage.css";
 
 function LandingPage() {
@@ -18,8 +18,21 @@ function LandingPage() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
-      return
+      const formErrors = {};
+      // console.log("🚀 ~ file: index.js:21 ~ handleSubmit ~ data:", data)
+      for (let err of data) {
+        // console.log("🚀 ~ file: index.js:23 ~ handleSubmit ~ err:", err)
+        if (err.startsWith("email")) {
+          formErrors.email = err.slice(8);
+          // console.log('email error', err.slice(8));
+        } else if (err.startsWith("password")) {
+          formErrors.password = err.slice(11);
+          // console.log('pw error', err.slice(11));
+        }
+      }
+      setErrors(formErrors);
+      console.log("🚀 ~ file: index.js:37 ~ handleSubmit ~ errors:", errors);
+      return;
     }
     history.push(`/home`);
   };
@@ -48,7 +61,7 @@ function LandingPage() {
         <div className="landing-container">
           <div className="left-side">
             <div className="logo">
-              <img src={title} className="friendzone"/>
+              <img src={title} className="friendzone" alt="logo" />
             </div>
             <h3 className="slogan">A place where you can force a friendship</h3>
             <p>Click a demo user or create an account</p>
@@ -57,6 +70,7 @@ function LandingPage() {
                 <img
                   src="https://marketplace.canva.com/EAE_4-ugJng/1/0/1600w/canva-blue-yellow-simple-professional-instagram-profile-picture-kpwvs_syWG8.jpg"
                   className="demo-face"
+                  alt="demo-1"
                 />
                 <div className="demo-name">Demo User</div>
               </div>
@@ -64,6 +78,7 @@ function LandingPage() {
                 <img
                   src="https://pub-static.fotor.com/assets/projects/pages/d5bdd0513a0740a8a38752dbc32586d0/fotor-03d1a91a0cec4542927f53c87e0599f6.jpg"
                   className="demo-face"
+                  alt="demo-2"
                 />
                 <div className="demo-name">Marnie Demo</div>
               </div>
@@ -71,19 +86,15 @@ function LandingPage() {
                 <img
                   src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
                   className="demo-face"
+                  alt="demo-3"
                 />
                 <div className="demo-name">Bobbie Demo</div>
               </div>
             </div>
           </div>
 
-          <div className="login-signup">
+          <div className="login-form">
             <form onSubmit={handleSubmit} className="form-info">
-              <div className="errors">
-                {errors.map((error, idx) => (
-                  <li key={idx}>{error}</li>
-                ))}
-              </div>
               <div className="email-div">
                 <label>
                   <input
@@ -92,8 +103,8 @@ function LandingPage() {
                     value={email}
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                   />
+                  <p className="errors">{errors.email}</p>
                 </label>
               </div>
               <div className="password-div">
@@ -104,15 +115,13 @@ function LandingPage() {
                     value={password}
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
-                    required
                   />
+                  <p className="errors">{errors.password}</p>
                 </label>
               </div>
-              <div className="login-button">
-                <button className="submit-button" type="submit">
-                  Log In
-                </button>
-              </div>
+              <button className="login-btn" type="submit">
+                Log In
+              </button>
             </form>
             <div className="sign-up">
               <OpenModalButton

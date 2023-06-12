@@ -34,6 +34,13 @@
 .used {
     display: flex;
     gap: .3rem;
+    margin-left: 2rem;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.used > h3 {
+    text-align: right;
 }
 
 .tech {

@@ -8,7 +8,6 @@ import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import "./PostCard.css";
 import { createLikeThunk, removeLikeThunk } from "../../store/posts";
-import { allPostsThunk } from "../../store/posts";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 
@@ -56,8 +55,11 @@ function PostCard({ post }) {
   }
 
   const redirectUserProfile = (e) => {
-
     history.push(`/users/${author.id}`)
+  }
+
+  const redirectCurrentUserProfile = (e) => {
+    history.push(`/users/${user.id}`)
   }
 
 
@@ -111,7 +113,7 @@ function PostCard({ post }) {
               onClick={redirectUserProfile}
             />
             <div className="profile-info__left-side">
-              <p onClick={redirectUserProfile}>
+              <p className="post-modal__author" onClick={redirectUserProfile}>
                 {firstName} {lastName}
               </p>
               <div className="profile-info__post-date">
@@ -174,7 +176,7 @@ function PostCard({ post }) {
             </div>
           </Tippy>
           {postCommentLength > 0 ? (
-            <div>{postCommentLength} Comments</div>
+            <div className="above-comment">{postCommentLength === 1 ? <>{postCommentLength} Comment</> : <>{postCommentLength} Comments</>}</div>
           ) : null}
         </div>
         <div className="post-card__buttons">
@@ -188,13 +190,14 @@ function PostCard({ post }) {
             </button>
           )}
           <OpenModalButton
-            buttonText="Comment"
+            buttonText={<><i class="far fa-comment"></i> Comment</>}
             onItemClick={closeModal}
             modalComponent={<PostDetailModal post={post} />}
           />
         </div>
         <div className="post-card__comment-bar">
           <img
+            onClick={redirectCurrentUserProfile}
             className="post-card__profile-pic"
             src={user.profilePicURL}
             alt="profile"
