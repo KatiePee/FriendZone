@@ -8,6 +8,7 @@ import CreatePost from "../CreatePost/CreatePost";
 import SideNav from "../SideNav";
 import FriendsBar from "../FriendsSideBar";
 import { myHomiesThunk } from "../../store/friends";
+import { allUsersThunk } from "../../store/users";
 
 
 function HomePage() {
@@ -19,6 +20,7 @@ function HomePage() {
   useEffect(() => {
     dispatch(allPostsThunk());
     dispatch(myHomiesThunk());
+    // dispatch(allUsersThunk());
     // dispatch(othersFriendsThunk(user.id))
   }, [dispatch])
 

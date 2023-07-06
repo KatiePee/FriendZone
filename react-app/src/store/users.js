@@ -12,7 +12,7 @@ const singleUserAction = (user) => ({
 })
 
 export const allUsersThunk = () => async (dispatch) => {
-    const res = await fetch("/api/users")
+    const res = await fetch("/api/users/")
     if (res.ok) {
         const users = await res.json()
         await dispatch(allUsersAction(users))
@@ -41,14 +41,14 @@ const usersReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case ALL_USERS: {
-            newState = { ...state, allUsers: {}, singleUser: {} }
+            newState = { ...state, allUsers: {} }
             for (let user of action.payload) {
                 newState.allUsers[user.id] = user
             }
             return newState
         }
         case SINGLE_USER: {
-            newState = { ...state, allUsers: {}, singleUser: {} }
+            newState = { ...state, singleUser: {} }
             newState.singleUser = action.payload
             return newState
         }
