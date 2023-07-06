@@ -5,7 +5,7 @@ from app.models import Post, User, PostImage, db, friendships, likes, Comment
 like_routes = Blueprint('likes', __name__)
 
 
-#Get all likes by User Id - NEED TESTING
+#Get all likes by User Id
 @like_routes.route('/users/<int:id>')
 @login_required
 def likes_by_user(id):
@@ -21,7 +21,7 @@ def likes_by_user(id):
     return likes_list
 
 
-#Get all likes by Post Id - NEED TESTING
+#Get all likes by Post Id
 @like_routes.route('/posts/<int:id>')
 @login_required
 def likes_by_post(id):
@@ -41,7 +41,7 @@ def likes_by_post(id):
 
     return post_likes_list
 
-#like a post by post ID - NEED TESTING
+#Like a post by post ID
 @like_routes.route('/posts/<int:id>', methods=["POST"])
 @login_required
 def like_a_post(id):
@@ -58,7 +58,7 @@ def like_a_post(id):
     return {"message": "Successfully Liked!"}
 
 
-#Remove a like - NEED TESTING
+#Remove a like by post ID
 @like_routes.route('/posts/<int:id>', methods=["DELETE"])
 @login_required
 def remove_a_like_post(id):

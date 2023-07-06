@@ -137,12 +137,18 @@ Throughout this process, we learned many new skills and developed as software de
 --------- | ------- | -----------
 GET '/api/auth/' | Fetches the current logged in user or returns null | { id: int, username: STRING, email: STRING } |
 POST '/api/auth/login' | Logs in user | { id: int, email: STRING, firstName: STRING, lastName: STRING, profilePicURL: STRING, coverPhotoURL: STRING,  gender: STRING, createdAt: DATETIME } |
-GET '/api/auth/logout' | Logsout user | {'message': 'User logged out'} |
-POST /api/auth/signup | Signs up user | { id: int, username: STRING, email: STRING } |
-GET /api/likes/ | get likes of a post | { user_id: INT, listing_id: INT, totalReviews: INT, avgReviews: INT, owner: user obj, images: ARRAY }
-POST /api/likes/listing/:id | add like to listing | { "message": "listing added to likes" }
-DELETE /api/likes/listing/:id | remove like from listing | { "message": "listing removed from likes" }
-GET /api/listings | get all listings | { id: INT, name: STRING, userId: INT, price: INT, category: STRING, description: STRING, totalReviews: INT, avgRating: INT, owner: user, images: ARRAY }
+GET '/api/auth/logout' | Logs out user | {'message': 'User logged out'} |
+POST /api/auth/signup | Signs up user | { id: int, email: STRING, firstName: STRING, lastName: STRING, profilePicURL: STRING, coverPhotoURL: STRING,  gender: STRING, createdAt: DATETIME } |
+GET '/api/posts/' | get all posts | [{ id: INT, userId: INT, content: INT, postImages: ARRAY, comments: ARRAY, numLikes: INT, likedBy: ARRAY, author: USER_OBJ images: ARRAY }, ...] |
+POST '/api/posts/new' | create a post | { id: INT, userId: INT, content: INT, postImages: ARRAY, comments: ARRAY, numLikes: INT, likedBy: ARRAY, author: USER_OBJ images: ARRAY } |
+DELETE '/api/posts/:postId' | delete a post by post id | {'message': 'Post successfully deleted'}
+GET 'api/posts/:postId' | get a  single post | { id: INT, userId: INT, content: INT, postImages: ARRAY, comments: ARRAY, numLikes: INT, likedBy: ARRAY, author: USER_OBJ images: ARRAY } |
+PUT 'api/posts/:postId' | Update a post | { id: INT, userId: INT, content: INT, postImages: ARRAY, comments: ARRAY, numLikes: INT, likedBy: ARRAY, author: USER_OBJ images: ARRAY } |
+GET '/api/posts/users/:userId' | get all posts by userId
+GET '/api/likes/posts/:postId' | Get all likes for a post by post ID | [{id: INT, firstName: STRING, lastName: STRING, profilePicURL: STRING}] |
+POST '/api/likes/posts/:postId' | Create a like for a post by post ID | {"message": "Successfully Liked!"} |
+DELETE '/api/likes/posts/:postId' | Remove a like for a post by post ID | {"message": "Successfully unliked!"} |
+
 
 <!-- # Flask React Project
 
