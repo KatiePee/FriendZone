@@ -22,11 +22,12 @@ function UserProfile() {
   let posts = postsState ? Object.values(postsState).reverse() : [];
   posts = posts.filter(post => post.author.id === +userId)
   const { firstName, lastName, profilePicURL, coverPhotoURL } = user;
+
   useEffect(() => {
     dispatch(singleUserThunk(userId));
     dispatch(userPostsThunk(userId));
     dispatch(othersFriendsThunk(userId))
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   if (!currentUser) return null
   const isUser = +userId === currentUser.id

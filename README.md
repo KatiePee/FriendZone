@@ -8,6 +8,7 @@ and force someone to be your friend or ... friendzone someone!
 
 Live site: https://friendzone-0ev3.onrender.com/
 
+
 ## Overview
 
 App Academy January 2023 Cohort
@@ -20,21 +21,9 @@ Throughout this process, we learned many new skills and developed as software de
 - This is our first time creating a project from scratch including creating the Database Schema, API Documentations, and creating the React app.
 - We learned to work as a group and communicate better using proper Git work flow.
 - We gained more experience in using React/Redux Store.
-- We learned that Facebook is very hard to clone.
+- We successfully created a git work flow to ensure proper versionc ontrol and team work flow
 
-## Wiki Links
-- [API Documentation](https://github.com/KatiePee/FriendZone/wiki/API-Documentation)
-- [Database Schema](https://github.com/KatiePee/FriendZone/wiki/Database-Schema)
-- [Feature List](https://github.com/KatiePee/FriendZone/wiki/Feature-List)
-- [User Stories](https://github.com/KatiePee/FriendZone/wiki/User-Stories)
 
-## Technologies Used
-- Python
-- PostgresSQL
-- Flask
-- React/Redux
-- AWS
-- HTML/CSS
 
 
 ## Meet The Developers
@@ -47,6 +36,113 @@ Throughout this process, we learned many new skills and developed as software de
 <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/katie-piele/) <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/KatiePee)
 - PJ Singh
 <img src="https://i.imgur.com/YxvVUbL.png" width=20> [LinkedIn](https://www.linkedin.com/in/prabhjot-singh-software-developer/) <img src="https://i.imgur.com/e3EquH6.png" width=20> [GitHub](https://github.com/PjSingh22)
+
+
+
+## Technologies Used
+- Python
+- PostgresSQL
+- Flask
+- React/Redux
+- AWS
+- HTML/CSS
+
+
+
+## Wiki Links
+- [API Documentation](https://github.com/KatiePee/FriendZone/wiki/API-Documentation)
+- [Database Schema](https://github.com/KatiePee/FriendZone/wiki/Database-Schema)
+- [Feature List](https://github.com/KatiePee/FriendZone/wiki/Feature-List)
+- [User Stories](https://github.com/KatiePee/FriendZone/wiki/User-Stories)
+
+
+
+## Getting Started
+1. Clone this repository:
+* `https://github.com/KatiePee/FriendZone.git`
+
+2. Install denpendencies into the Backed and the Frontend
+   * `npm install and pipenv install`
+
+3. Create a .env file using the .envexample provided
+
+4. Set up your database with information from your .env and then run the following to create your database, migrate, and seed:
+
+* `pipenv run flask db migrate`
+* `pipenv run flask db upgrade`
+* `pipenv run flask seed all `
+
+5. Start the app for both backend and frontend using:
+
+* `pipenv run flask run`
+* `npm start`
+
+6. Now you can use the Demo User or Create an account
+
+
+## Amazon Web Services S3
+* For setting up your AWS refer to this [guide](https://github.com/jdrichardsappacad/aws-s3-pern-demo)
+
+# Features
+
+## 🙎‍♀️ New account creation, log in, log out, and guest/demo login
+
+* Users can sign up, log in, and log out.
+* Users can use a demo log in to try the site.
+* Users must be logged in to view, like, and comment on posts.
+* Logged in users are directed to their timeline which displays posts from themselves and their friends.
+* Logged out users are directed to the landing page where they can sign up or log in.
+
+## 📜 Posts
+
+* Logged in users can see their own posts and friends' posts on the homepage.
+* Logged in users can see all posts a user has made on a user's profile page.
+* Logged in users can make posts from the home page.
+* Logged in users can edit and delete their own posts.
+
+## ✏️ Comments
+
+* Logged in users can see comments on all visible posts.
+* Logged in users can post comments on posts, including their own.
+* Logged in users can edit and delete their own comments.
+
+## ❤️ Likes
+
+* Logged in users can see how many users have liked a post or comment.
+* Logged in users can like posts and comments, including their own.
+* Logged in users can remove their own like from posts and comments.
+
+## 💃 Friends
+
+* Logged in users can make other users their friends.
+* Logged in users can delete friends from their friends list.
+* Users can view other users friends.
+
+
+
+
+## Future Implementation Goals
+
+### Direct Messaging
+* Implement web sockets to enable users to live chat wuth each other
+
+### Spotify Radio Player
+* Implement a music player so users can listen to music while browsing on FriendZone.
+* Utilize the Spotify API, enabling users to connect to their own spotify account and play music
+
+
+# Endpoints
+
+| Request | Purpose | Return Value
+--------- | ------- | -----------
+GET '/api/auth/' | Fetches the current logged in user or returns null | { id: int, username: STRING, email: STRING } |
+POST '/api/auth/login' | Logs in user | { id: int, email: STRING, firstName: STRING, lastName: STRING, profilePicURL: STRING, coverPhotoURL: STRING,  gender: STRING, createdAt: DATETIME } |
+GET '/api/auth/logout' | Logsout user | {'message': 'User logged out'} |
+POST /api/auth/signup | Signs up user | { id: int, username: STRING, email: STRING } |
+GET /api/likes/ | get likes of a post | { user_id: INT, listing_id: INT, totalReviews: INT, avgReviews: INT, owner: user obj, images: ARRAY }
+POST /api/likes/listing/:id | add like to listing | { "message": "listing added to likes" }
+DELETE /api/likes/listing/:id | remove like from listing | { "message": "listing removed from likes" }
+GET /api/listings | get all listings | { id: INT, name: STRING, userId: INT, price: INT, category: STRING, description: STRING, totalReviews: INT, avgRating: INT, owner: user, images: ARRAY }
 
 <!-- # Flask React Project
 
