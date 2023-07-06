@@ -23,6 +23,9 @@ function PostDetailModal({ post }) {
     (state) => state.posts.allPosts[post.id].likedBy
   );
   const likedUser = likedPeeps.find((liker) => liker.id === user.id);
+  const postCommentLength = useSelector(
+    (state) => state.posts.allPosts[post.id].comments
+  ).length;
   const [liked, setLiked] = useState(likedUser !== undefined);
   const [text, setText] = useState("");
   const [errors, setErrors] = useState({});

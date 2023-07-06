@@ -15,7 +15,8 @@ def users():
     Query for all users and returns them in a list of user dictionaries
     """
     users = User.query.all()
-    return {'users': [user.to_dict() for user in users]}
+    allUsers = [user.to_dict() for user in users]
+    return allUsers
 
 
 @user_routes.route('/<int:id>')
@@ -55,7 +56,7 @@ def add_friend(id):
     Post new friendship current user is adding new user based on userid
     """
     # current_user = User.query.get(current_user.id)
-    
+
     new_friend = User.query.get(id)
 
     # current_user.freindships.append(new_friend)

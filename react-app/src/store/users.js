@@ -12,7 +12,7 @@ const singleUserAction = (user) => ({
 })
 
 export const allUsersThunk = () => async (dispatch) => {
-    const res = await fetch("/api/users")
+    const res = await fetch("/api/users/")
     if (res.ok) {
         const users = await res.json()
         await dispatch(allUsersAction(users))
